@@ -33,6 +33,8 @@ import RazorPay from "./components/RazorPay";
 import ForgotPassword from "./pages/ForgotPassword";
 import SendingEmail from "./pages/SendingEmail";
 import SendingOtp from "./pages/SendingOtp";
+import HasnainAbout from "./pages/HasnainAbout";
+import AlfezAbout from "./pages/AlfezAbout";
 
 function App() {
   return (
@@ -75,6 +77,9 @@ function App() {
         <Route path="/sendingemail" element={<SendingEmail />} />
         <Route path="/sendingotp" element={<SendingOtp />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/hasnainabout" element={<HasnainAbout />} />
+        <Route path="/alfezabout" element={<AlfezAbout />} />
+
 
         <Route
           path="/"

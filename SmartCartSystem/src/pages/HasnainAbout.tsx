@@ -30,16 +30,17 @@ interface GitHubRepo {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const TECH_STACK = [
-  { name: "MongoDB",      icon: "🍃", color: "from-green-50   to-green-100/50  border-green-300  text-green-700"  },
-  { name: "Express.js",   icon: "⚡", color: "from-yellow-50  to-yellow-100/50 border-yellow-300 text-yellow-700" },
-  { name: "React",        icon: "⚛️", color: "from-cyan-50    to-cyan-100/50   border-cyan-300   text-cyan-700"   },
-  { name: "Node.js",      icon: "🟢", color: "from-lime-50    to-lime-100/50   border-lime-300   text-lime-700"   },
-  { name: "TypeScript",   icon: "🔷", color: "from-blue-50    to-blue-100/50   border-blue-300   text-blue-700"   },
-  { name: "Tailwind CSS", icon: "🎨", color: "from-teal-50    to-teal-100/50   border-teal-300   text-teal-700"   },
-  { name: "Redux",        icon: "🔄", color: "from-purple-50  to-purple-100/50 border-purple-300 text-purple-700" },
-  { name: "REST APIs",    icon: "🔗", color: "from-orange-50  to-orange-100/50 border-orange-300 text-orange-700" },
-  { name: "JWT Auth",     icon: "🔐", color: "from-red-50     to-red-100/50    border-red-300    text-red-700"    },
-  { name: "Git",          icon: "🐙", color: "from-slate-50   to-slate-100/50  border-slate-300  text-slate-700"  },
+  { name: "Node.js",          icon: "🟢", color: "from-lime-50 to-lime-100/50 border-lime-300 text-lime-700" },
+  { name: "Express.js",       icon: "🚀", color: "from-emerald-50 to-emerald-100/50 border-emerald-300 text-emerald-700" },
+  { name: "MySql",            icon: "🐬", color: "from-blue-50 to-blue-100/50 border-blue-300 text-blue-700" },
+  { name: "Sequelize",        icon: "🗃️", color: "from-cyan-50 to-cyan-100/50 border-cyan-300 text-cyan-700" },
+  { name: "NodeMailer",       icon: "📧", color: "from-sky-50 to-sky-100/50 border-sky-300 text-sky-700" },
+  { name: "RazorPay",         icon: "💳", color: "from-indigo-50 to-indigo-100/50 border-indigo-300 text-indigo-700" },
+  { name: "Cloudinary",       icon: "☁️", color: "from-slate-50 to-slate-100/50 border-slate-300 text-slate-700" },
+  { name: "ES6 (ECMAScript)", icon: "🟨", color: "from-amber-50 to-amber-100/50 border-amber-300 text-amber-700" },
+  { name: "REST APIs",        icon: "🌐", color: "from-orange-50 to-orange-100/50 border-orange-300 text-orange-700" },
+  { name: "JWT Auth",         icon: "🔐", color: "from-red-50 to-red-100/50 border-red-300 text-red-700" },
+  { name: "Git",              icon: "🌿", color: "from-orange-50 to-orange-100/50 border-orange-300 text-orange-700" },
 ];
 
 const LANG_COLORS: Record<string, string> = {
@@ -55,8 +56,8 @@ const LANG_COLORS: Record<string, string> = {
 const E_COMMERCE_PROJECT = {
   name: "E-Commerce Platform",
   description:
-    "A full-stack MERN e-commerce application with complete shopping experience — product listings, cart management, secure checkout, order tracking, and an admin dashboard for inventory & order management.",
-  tags: ["MongoDB", "Express", "React", "Node.js", "JWT", "Redux", "Stripe"],
+    "A Backend e-commerce application with complete shopping experience — product listings, cart management, secure checkout, and an admin dashboard for inventory & order management.",
+  tags: ["MySql","Sequelize", "Express", "React", "Node.js", "JWT", "Redux", "RazorPay"],
   highlights: [
     "User authentication & authorization with JWT",
     "Product search, filter & pagination",
@@ -232,7 +233,7 @@ function RepoCard({ repo }: { repo: GitHubRepo }) {
 }
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
-export default function AboutPage() {
+function HasnainAbout() {
   const [user, setUser]       = useState<GitHubUser | null>(null);
   const [repos, setRepos]     = useState<GitHubRepo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -241,8 +242,8 @@ export default function AboutPage() {
     async function fetchGitHub() {
       try {
         const [userRes, reposRes] = await Promise.all([
-          fetch("https://api.github.com/users/hardipsolanki22"),
-          fetch("https://api.github.com/users/hardipsolanki22/repos?sort=updated&per_page=6"),
+          fetch("https://api.github.com/users/HasnainMakati"),
+          fetch("https://api.github.com/users/HasnainMakati/repos?sort=updated&per_page=6"),
         ]);
         const userData: GitHubUser    = await userRes.json();
         const reposData: GitHubRepo[] = await reposRes.json();
@@ -291,14 +292,14 @@ export default function AboutPage() {
               <div className="space-y-5 sm:space-y-7 order-2 lg:order-1">
                 <div className="inline-flex items-center gap-2.5 text-xs font-mono-dm text-indigo-600 uppercase tracking-widest border border-indigo-200 bg-indigo-50 px-4 py-2 rounded-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-                  MERN Stack Developer
+                  Backend Developer
                 </div>
 
                 <div className="space-y-2 sm:space-y-3">
                   <h1 className="font-syne font-extrabold text-4xl sm:text-5xl xl:text-7xl leading-[0.95] tracking-tight text-slate-900">
-                    {user?.name?.split(" ")[0] ?? "Hardip"}{" "}
+                    {user?.name?.split(" ")[0] ?? "Hasnain"}{" "}
                     <span className="gradient-text">
-                      {user?.name?.split(" ").slice(1).join(" ") ?? "Solanki"}
+                      {user?.name?.split(" ").slice(1).join(" ") ?? "Makati"}
                     </span>
                   </h1>
                   <p className="font-mono-dm text-slate-500 text-xs sm:text-sm tracking-wide">
@@ -307,7 +308,7 @@ export default function AboutPage() {
                 </div>
 
                 <p className="text-slate-600 text-sm sm:text-[15px] leading-relaxed max-w-md">
-                  {user?.bio ?? "Passionate full-stack developer crafting scalable web applications with the MERN stack."}
+                  {user?.bio ?? "Backend Developer with hands-on experience in Node.js, Express.js, MySQL, and Sequelize."}
                 </p>
 
                 {/* Meta pills */}
@@ -328,7 +329,7 @@ export default function AboutPage() {
                 {/* CTAs */}
                 <div className="flex flex-wrap gap-3 pt-2">
                   <a
-                    href={user?.html_url ?? "https://github.com/hardipsolanki22"}
+                    href={user?.html_url ?? "https://github.com/HasnainMakati"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-200"
@@ -349,7 +350,7 @@ export default function AboutPage() {
                     </a>
                   )}
                   <a
-                    href="mailto:hardipsolanki22@gmail.com"
+                    href="mailto:novotrends2@gmail.com"
                     className="flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-white border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50 text-slate-700 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
                   >
                     ✉️ Contact
@@ -404,9 +405,7 @@ export default function AboutPage() {
               <div className="grid grid-cols-1 md:grid-cols-5 gap-6 sm:gap-8 mt-6 sm:mt-8">
                 <div className="md:col-span-3 space-y-4 text-slate-600 text-sm sm:text-[15px] leading-relaxed">
                   <p>
-                    I'm <span className="text-slate-900 font-semibold">Hardip Solanki</span>, a dedicated MERN Stack Developer
-                    who loves building full-featured web applications from database to deployment. My stack of choice —
-                    MongoDB, Express.js, React, and Node.js — gives me the power to own every layer of the product.
+                    I'm <span className="text-slate-900 font-semibold">Hasnain Makati</span>, a passionate Frontend Developer. I enjoy building scalable web applications using React and TailwindCss. I love solving real-world problems through clean and efficient code.
                   </p>
                   <p>
                     I enjoy writing clean, maintainable code with TypeScript and designing intuitive interfaces with
@@ -419,7 +418,7 @@ export default function AboutPage() {
                 </div>
                 <div className="md:col-span-2 flex flex-col gap-1">
                   {[
-                    { label: "Speciality", value: "Full-Stack MERN"  },
+                    { label: "Speciality", value: "Frontend Developer"  },
                     { label: "Focus",      value: "Scalable Web Apps" },
                     { label: "Education",  value: "Computer Science"  },
                     { label: "Status",     value: "Open to Work 🟢"   },
@@ -447,7 +446,7 @@ export default function AboutPage() {
                       <span className="text-3xl sm:text-4xl">{E_COMMERCE_PROJECT.icon}</span>
                       <div>
                         <h3 className="font-syne font-bold text-xl sm:text-2xl text-slate-900">{E_COMMERCE_PROJECT.name}</h3>
-                        <p className="font-mono-dm text-xs text-indigo-600 tracking-widest mt-0.5">MERN Stack Application</p>
+                        <p className="font-mono-dm text-xs text-indigo-600 tracking-widest mt-0.5">Full Stack Application</p>
                       </div>
                     </div>
                     <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{E_COMMERCE_PROJECT.description}</p>
@@ -459,7 +458,7 @@ export default function AboutPage() {
                       ))}
                     </div>
                     <a
-                      href={user?.html_url ?? "https://github.com/hardipsolanki22"}
+                      href={user?.html_url ?? "https://github.com/HasnainMakati"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors group"
@@ -528,13 +527,13 @@ export default function AboutPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                   <a
-                    href="mailto:hardipsolanki22@gmail.com"
+                    href="mailto:novotrends2@gmail.com"
                     className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-200"
                   >
                     ✉️ Send me an email
                   </a>
                   <a
-                    href={user?.html_url ?? "https://github.com/hardipsolanki22"}
+                    href={user?.html_url ?? "https://github.com/HasnainMakati"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl bg-white border border-slate-200 hover:border-indigo-300 text-slate-700 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
@@ -548,7 +547,7 @@ export default function AboutPage() {
 
           {/* ── Footer ── */}
           <footer className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-3 text-slate-400 text-xs font-mono-dm">
-            <span>© {new Date().getFullYear()} {user?.name ?? "Hardip Solanki"}. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} {user?.name ?? "Hasnain Makati"}. All rights reserved.</span>
             <span>Built with React · TypeScript · Tailwind CSS</span>
           </footer>
         </div>
@@ -556,3 +555,5 @@ export default function AboutPage() {
     </>
   );
 }
+
+export default HasnainAbout;

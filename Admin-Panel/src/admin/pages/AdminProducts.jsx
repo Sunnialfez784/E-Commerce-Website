@@ -130,7 +130,8 @@ function AdminProducts({searchTerm = ""}) {
       formData.append("productDetails", form.productDetails);
       formData.append("productAddress", form.productAddress);
       formData.append("productStock", form.productStock);
-
+      formData.append("product_id", session.product_id);
+      
       if (form.imageFile) {
         formData.append("productImage", form.imageFile);
       }
