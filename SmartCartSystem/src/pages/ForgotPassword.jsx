@@ -1,0 +1,96 @@
+import React, {useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {LogIn} from "lucide-react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {BASE_URL} from "../apis";
+
+const ForgotPassword = () => {
+  const [visible, setVisible] = useState(false);
+  const [password, setPassword] = useState("");
+  const {state} = useLocation()
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!password) {
+      alert("Please enter your password");
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("registeredUsers"));
+
+    const {email} = state;
+    console.log(user,'user');
+    
+
+    if (!email) {
+      alert("User not found");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BASE_URL}/users/new-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await res.json();
+
+      console.log("PASSWORD RESPONSE =>", data);
+
+      if (data.success) {
+        localStorage.removeItem("registeredUsers");
+        navigate("/login");
+      } else {
+        alert(data.message || "Password update failed");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
+  };
+
+  return (
+    <>
+      <main className="flex min-height-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
+        <div className="w-full max-w-md">
+          <form onSubmit={handleSubmit} className="section-surface flex flex-col p-7 sm:p-9">
+            <span className="premium-pill mb-4 self-start">Change Password</span>
+
+            <h1 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Enter New Password.</h1>
+
+            <p className="mt-1.5 text-sm text-slate-500">Enter your details to continue.</p>
+
+            <div className="mt-6 flex flex-col gap-4">
+              <div className="relative">
+                <label className="premium-label">Password</label>
+
+                <input type={visible ? "text" : "password"} placeholder="Enter your password" className="premium-input pr-11" value={password} onChange={(e) => setPassword(e.target.value)} required />
+
+                <button type="button" onClick={() => setVisible(!visible)} className="absolute right-3.5 top-[2.45rem] text-slate-400 transition hover:text-slate-700">
+                  <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" className="premium-btn-primary mt-7 w-full py-3.5 text-base">
+              <LogIn className="h-4 w-4" />
+              Continue
+            </button>
+          </form>
+        </div>
+      </main>
+    </>
+  );
+};
+
+export default ForgotPassword;
