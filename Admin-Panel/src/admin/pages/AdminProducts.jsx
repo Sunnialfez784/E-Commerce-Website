@@ -74,11 +74,19 @@ function AdminProducts({searchTerm = ""}) {
     setForm((current) => ({...current, [name]: value}));
   }
 
-  function handleFile(event) {
-    const file = event.target.files?.[0];
+  function handleFile(e) {
+    console.log("handleFile Called");
+
+    const file = e.target.files?.[0];
+
+    console.log("Selected File =", file);
+
     if (!file) return;
 
-    updateField("imageFile", file);
+    setForm((prev) => ({
+      ...prev,
+      imageFile: file,
+    }));
 
     const reader = new FileReader();
 
@@ -88,7 +96,7 @@ function AdminProducts({searchTerm = ""}) {
 
     reader.readAsDataURL(file);
   }
-
+  
   function resetForm() {
     setForm({
       productName: "",
@@ -115,7 +123,7 @@ function AdminProducts({searchTerm = ""}) {
       console.log(error);
     }
   };
-
+  console.log("imageFile =>", form.imageFile);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -130,15 +138,18 @@ function AdminProducts({searchTerm = ""}) {
       formData.append("productDetails", form.productDetails);
       formData.append("productAddress", form.productAddress);
       formData.append("productStock", form.productStock);
-      formData.append("product_id", session.product_id);
-      
+
       if (form.imageFile) {
         formData.append("productImage", form.imageFile);
       }
 
+      for (const pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
       console.log("editingId =", editingId);
       if (editingId) {
-        formData.append("productId", editingId);
+        formData.append("product_id", editingId);
         console.log("CALLING EDIT API");
 
         await adminApi.editProduct(formData, accessToken);

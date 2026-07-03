@@ -35,6 +35,7 @@ import SendingEmail from "./pages/SendingEmail";
 import SendingOtp from "./pages/SendingOtp";
 import HasnainAbout from "./pages/HasnainAbout";
 import AlfezAbout from "./pages/AlfezAbout";
+import AboutSection from "./pages/AboutSection";
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/hasnainabout" element={<HasnainAbout />} />
         <Route path="/alfezabout" element={<AlfezAbout />} />
+        <Route path="/about" element={<AboutSection />} />
 
 
         <Route
