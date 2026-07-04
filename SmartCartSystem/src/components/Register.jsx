@@ -168,7 +168,7 @@ const Register = () => {
             <label className="premium-label">Password</label>
             <input type={visible ? "text" : "password"} placeholder="Password" className="premium-input pr-11" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-            <button type="button" onClick={() => setVisible(!visible)} className="absolute right-3.5 top-[2.15rem] text-slate-400 transition hover:text-slate-700" aria-label={visible ? "Hide password" : "Show password"}>
+            <button type="button" onClick={() => setVisible(!visible)} className="absolute right-3.5 top-[2.45rem] text-slate-400 transition hover:text-slate-700" aria-label={visible ? "Hide password" : "Show password"}>
               <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
             </button>
             {error.password && <p className="premium-field-error">{error.password}</p>}

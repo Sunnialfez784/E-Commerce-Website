@@ -36,6 +36,7 @@ import SendingOtp from "./pages/SendingOtp";
 import HasnainAbout from "./pages/HasnainAbout";
 import AlfezAbout from "./pages/AlfezAbout";
 import AboutSection from "./pages/AboutSection";
+import Books from "./pages/Books";
 
 function App() {
   return (
@@ -68,7 +69,7 @@ function App() {
           <Route path="/billingdetails" element={<BillingDetails />} />
           <Route path="/payment" element={<Payment />} />
           {/* <Route path='/productbill' element={<ProductBill />} /> */}
-        {/* <Route path="/invoice" element={<ProductBill />} />
+      {/* <Route path="/invoice" element={<ProductBill />} />
           <Route path="/razor" element={<RazorPay />} />
       </Routes> */}
 
@@ -81,7 +82,6 @@ function App() {
         <Route path="/hasnainabout" element={<HasnainAbout />} />
         <Route path="/alfezabout" element={<AlfezAbout />} />
         <Route path="/about" element={<AboutSection />} />
-
 
         <Route
           path="/"
@@ -276,7 +276,16 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
+        <Route
+          path="/books"
+          element={
+            <ProtectedRoute>
+              <Books />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/invoice" element={<ProductBill />} />
         <Route path="/razor" element={<RazorPay />} />
       </Routes>

@@ -456,7 +456,7 @@ function AlfezAbout() {
                       ))}
                     </div>
                     <a
-                      href={user?.html_url ?? "https://github.com/Sunnialfez784"}
+                      href={user?.html_url ?? "https://github.com/Sunnialfez784/E-Commerce-Website"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors group"

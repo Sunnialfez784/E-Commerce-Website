@@ -4,7 +4,7 @@ import Header from "./Header";
 import {MdCable, MdOutlineHome} from "react-icons/md";
 import {LiaCarSideSolid} from "react-icons/lia";
 import {RiMotorbikeLine, RiKey2Line} from "react-icons/ri";
-import {GiLaptop, GiLipstick, GiBearHead} from "react-icons/gi";
+import {GiLaptop, GiLipstick, GiBearHead, GiBlackBook} from "react-icons/gi";
 import {FaMobileScreen} from "react-icons/fa6";
 import {LuShirt} from "react-icons/lu";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -34,6 +34,7 @@ const NAV_ITEMS = [
   {to: "/Speaker", label: "Speaker", Icon: () => <Speaker size={16} strokeWidth={3} />},
   {to: "/instrument", label: "Instruments", Icon: () => <KeyboardMusic size={16} strokeWidth={3} />},
   {to: "/beauty", label: "Beauty", Icon: () => <GiLipstick size={16} />},
+  {to: "/books", label: "Books", Icon: () => <GiBlackBook size={16} />},
 ];
 
 const SCROLL_AMOUNT = 200;
@@ -84,14 +85,14 @@ const Navbar = ({isButton=false, isAbout=false,activeTab,setActiveTab}) => {
             {isAbout ? (
               <ul className="flex flex-1 items-center gap-1 overflow-x-auto font-medium sm:gap-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <li className="shrink-0">
-                  <button onClick={()=>setActiveTab('frontend')}  className={`${activeTab == 'frontend' ? navLinkClass : 'bg-transparent'} flex items-center gap-2 px-4 py-2 font-semibold`}>
+                  <button onClick={()=>setActiveTab('frontend')}  className={`${activeTab == 'frontend' ? `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-200 whitespace-nowrap sm:gap-2 sm:px-4 sm:py-2 sm:text-sm bg-slate-950 text-white shadow-lg shadow-slate-950/15` : 'bg-transparent'} flex items-center gap-2 px-4 py-2 font-semibold`}>
                     <FaReact className="h-4 w-4 sm:h-5 sm:w-5" />
                     Frontend Developer
                   </button>
                 </li>
 
                 <li className="shrink-0">
-                  <button onClick={()=>setActiveTab('backend')} className={`${activeTab == 'backend' ? navLinkClass : 'bg-transparent'} flex items-center gap-2 px-4 py-2 font-semibold`}>
+                  <button onClick={()=>setActiveTab('backend')} className={`${activeTab == 'backend' ? `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-200 whitespace-nowrap sm:gap-2 sm:px-4 sm:py-2 sm:text-sm bg-slate-950 text-white shadow-lg shadow-slate-950/15` : 'bg-transparent'} flex items-center gap-2 px-4 py-2 font-semibold`}>
                     <FaNode className="h-4 w-4 sm:h-5 sm:w-5" />
                     Backend Developer
                   </button>

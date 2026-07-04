@@ -1,8 +1,8 @@
 import React from "react";
 
-const Loader = () => {
+const Loader = ({isLoader}) => {
   return (
-    <div className="flex min-h-[420px] w-full flex-col items-center justify-center gap-4 py-12" role="status" aria-live="polite">
+    <div className={`flex w-full flex-col items-center justify-center ${isLoader ? "gap-2 py-0 max-h-8" : "gap-4 py-12 min-h-[420px]"}`} role="status" aria-live="polite">
       <div className="loading scale-110">
         <span></span>
         <span></span>

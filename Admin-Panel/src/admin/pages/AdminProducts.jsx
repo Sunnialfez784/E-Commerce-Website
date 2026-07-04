@@ -11,7 +11,7 @@ import {AddIcon, EditIcon, TrashIcon, SearchIcon, GridViewIcon, ListViewIcon, Pu
 import {adminCardClass, adminInputClass, adminPrimaryButtonClass, adminGhostButtonClass} from "../utils/theme";
 import {products} from "../data/mockAdminData";
 
-const categories = ["all", "cars", "bikes", "laptops", "mobiles", "fashion", "toys", "sports", "furniture", "keychain", "camera", "headset", "shoes", "watch", "speaker", "instrument", "beauty"];
+const categories = ["all", "cars", "bikes", "laptops", "mobiles", "fashion", "toys", "sports", "furniture", "keychain", "camera", "headset", "shoes", "watch", "speaker", "instrument", "beauty", 'books'];
 
 function createId() {
   return `PRD-${Math.floor(1000 + Math.random() * 9000)}`;

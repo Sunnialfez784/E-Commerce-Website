@@ -76,7 +76,7 @@ const ProductBill = () => {
                 <div>
                   <h3 className="mb-2 text-sm font-semibold text-slate-950">Order Details</h3>
                   <p className="text-sm text-slate-600">
-                    <span className="font-medium text-slate-800">Order ID:</span> {bill.orderId}
+                    <span className="font-medium text-slate-800">Order ID:</span> {bill.order_item_id}
                   </p>
                   <p className="mt-1.5 text-sm leading-6 text-slate-600">
                     <span className="font-medium text-slate-800">Sold By:</span> {bill.seller_address}
