@@ -74,8 +74,24 @@ function App() {
       </Routes> */}
 
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route
+          path="/login"
+          element={
+            <ProtectedRoute>
+              <Login />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/forgotpassword"
+          element={
+            <ProtectedRoute>
+              <ForgotPassword />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/sendingemail" element={<SendingEmail />} />
         <Route path="/sendingotp" element={<SendingOtp />} />
         <Route path="/Register" element={<Register />} />
