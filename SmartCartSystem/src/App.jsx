@@ -41,48 +41,9 @@ import Books from "./pages/Books";
 function App() {
   return (
     <div className="w-full min-h-screen bg-[#f7f7fb] overflow-x-hidden">
-      {/* <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/Register" element={<Register />} />
-
-          <Route path="/" element={<Home />} />
-          <Route path="/cars" element={<Cars />} />
-          <Route path="/bikes" element={<Bikes />} />
-          <Route path="/laptops" element={<Laptops />} />
-          <Route path="/mobiles" element={<Mobiles />} />
-          <Route path="/details/:id" element={<Details />} />
-          <Route path="/addtocard" element={<AddToCard />} />
-          <Route path="/orders" element={<Order />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/fashion" element={<Fashion />} />
-          <Route path="/furniture" element={<Furniture />} />
-          <Route path="/sports" element={<Sports />} />
-          <Route path="/kids" element={<Toys />} />
-          <Route path="/keychain" element={<Keychain />} />
-          <Route path="/camera" element={<Camera />} />
-          <Route path="/headset" element={<Headset />} />
-          <Route path="/shoes" element={<Shoes />} />
-          <Route path="/watch" element={<Watch />} />
-          <Route path="/speaker" element={<Speaker />} />
-          <Route path="/instrument" element={<Instrument />} />
-          <Route path="/charging" element={<Charging />} />
-          <Route path="/billingdetails" element={<BillingDetails />} />
-          <Route path="/payment" element={<Payment />} />
-          {/* <Route path='/productbill' element={<ProductBill />} /> */}
-      {/* <Route path="/invoice" element={<ProductBill />} />
-          <Route path="/razor" element={<RazorPay />} />
-      </Routes> */}
-
       <Routes>
-        <Route
-          path="/login"
-          element={
-            <ProtectedRoute>
-              <Login />
-            </ProtectedRoute>
-          }
-        />
-        
+        <Route path="/login" element={<Login />} />
+
         <Route
           path="/forgotpassword"
           element={
