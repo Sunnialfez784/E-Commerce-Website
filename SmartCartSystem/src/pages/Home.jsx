@@ -16,7 +16,7 @@ import {PackageSearch} from "lucide-react";
 import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
-import {Link} from "react-router-dom";
+import {data, Link} from "react-router-dom";
 
 const Home = () => {
   const image = [Laptop1, Bike1, Car1, Phone1, watch1, haedPhones1, mivi1, shoes1, instrument1];
@@ -36,8 +36,13 @@ const Home = () => {
       },
     })
       .then((res) => res.json())
-      .then(({data}) => setProduct(data))
-      .catch((err) => console.error("Error fetching products:", err))
+      .then((result) => {
+        setProduct(result.data || []);
+      })
+      .catch((err) => {
+        console.error(err);
+        setProduct([]);
+      })
       .finally(() => setLoading(false));
   }, [token]);
 
