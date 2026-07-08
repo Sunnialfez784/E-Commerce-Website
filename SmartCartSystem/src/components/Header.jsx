@@ -99,7 +99,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="relative z-50 flex items-center gap-2 overflow-visible lg:hidden">
           <button
             onClick={() => setSearchOpen(!searchOpen)}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900"
@@ -108,7 +108,7 @@ const Header = () => {
             {searchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
           </button>
 
-          <div className="relative flex items-center">
+          <div className="relative z-50 flex items-center overflow-visible">
             <button
               onClick={() => setDropDown(!dropDown)}
               className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900"
@@ -119,7 +119,7 @@ const Header = () => {
             {dropDown && (
               <div
                 ref={dropdownRef}
-                className="absolute right-0 top-12 z-50 w-64 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur"
+                 className="absolute right-0 top-12 z-[60] w-64 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur pointer-events-auto"
               >
                 <ul className="px-1 pb-1 text-sm font-medium text-slate-700">
                   <li>
@@ -151,6 +151,12 @@ const Header = () => {
 
           <Link to="/addtocard">
             <button className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Cart">
+              <ShoppingBag className="h-4 w-4" />
+            </button>
+          </Link>
+
+          <Link to="/about">
+            <button className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="About">
               <ShoppingBag className="h-4 w-4" />
             </button>
           </Link>
