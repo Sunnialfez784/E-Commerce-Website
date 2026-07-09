@@ -44,11 +44,11 @@ const Header = () => {
       }
     };
 
-    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("click", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("click", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
