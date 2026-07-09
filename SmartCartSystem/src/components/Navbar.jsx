@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect, useCallback} from "react";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useLocation} from "react-router-dom";
 import Header from "./Header";
 import {MdCable, MdOutlineHome} from "react-icons/md";
 import {LiaCarSideSolid} from "react-icons/lia";
@@ -39,11 +39,12 @@ const NAV_ITEMS = [
 
 const SCROLL_AMOUNT = 200;
 
-const Navbar = ({isButton=false, isAbout=false,activeTab,setActiveTab}) => {
+const Navbar = ({isButton = false, isAbout = false, activeTab, setActiveTab}) => {
   const scrollRef = useRef(null);
+  const itemRefs = useRef({});
+  const location = useLocation();
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-
 
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current;
@@ -65,18 +66,26 @@ const Navbar = ({isButton=false, isAbout=false,activeTab,setActiveTab}) => {
     };
   }, [updateScrollState]);
 
+  useEffect(() => {
+    const activeItem = NAV_ITEMS.find(({to}) => (to === "/" ? location.pathname === "/" : location.pathname.startsWith(to)));
+    const el = activeItem && itemRefs.current[activeItem.to];
+    if (el) {
+      el.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"});
+    }
+  }, [location.pathname]);
+
   const scrollBy = (dir) => {
     scrollRef.current?.scrollBy({left: dir * SCROLL_AMOUNT, behavior: "smooth"});
   };
 
   const navLinkClass = ({isActive}) => `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-200 whitespace-nowrap sm:gap-2 sm:px-4 sm:py-2 sm:text-sm ${isActive ? "bg-slate-950 text-white shadow-lg shadow-slate-950/15" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`;
-  
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/60 bg-white/85 text-black shadow-[0_12px_40px_-20px_rgba(15,23,42,0.35)] backdrop-blur-xl">
       <nav className={`${isAbout ? "flex flex-col items-center" : ""} page-shell py-3 sm:py-4`}>
         <Header />
 
-        <div className={`${isAbout ? 'w-auto' : ''} mt-3 rounded-[28px] border border-slate-200 bg-white/90 px-2 py-2 shadow-sm sm:mt-5 sm:px-3 sm:py-2.5`}>
+        <div className={`${isAbout ? "w-auto" : ""} mt-3 rounded-[28px] border border-slate-200 bg-white/90 px-2 py-2 shadow-sm sm:mt-5 sm:px-3 sm:py-2.5`}>
           <div className="relative flex items-center gap-1">
             <button onClick={() => scrollBy(-1)} disabled={!canScrollLeft} aria-label="Scroll left" className={`shrink-0 flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition-all duration-200 sm:h-8 sm:w-8 ${canScrollLeft ? "hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300" : "opacity-30 cursor-not-allowed"}`}>
               <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -85,14 +94,14 @@ const Navbar = ({isButton=false, isAbout=false,activeTab,setActiveTab}) => {
             {isAbout ? (
               <ul className="flex flex-1 items-center gap-1 overflow-x-auto font-medium sm:gap-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <li className="shrink-0">
-                  <button onClick={()=>setActiveTab('frontend')}  className={`${activeTab == 'frontend' ? `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-200 whitespace-nowrap sm:gap-2 sm:px-4 sm:py-2 sm:text-sm bg-slate-950 text-white shadow-lg shadow-slate-950/15` : 'bg-transparent'} flex items-center gap-2 px-4 py-2 font-semibold`}>
+                  <button onClick={() => setActiveTab("frontend")} className={`${activeTab == "frontend" ? `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-200 whitespace-nowrap sm:gap-2 sm:px-4 sm:py-2 sm:text-sm bg-slate-950 text-white shadow-lg shadow-slate-950/15` : "bg-transparent"} flex items-center gap-2 px-4 py-2 font-semibold`}>
                     <FaReact className="h-4 w-4 sm:h-5 sm:w-5" />
                     Frontend Developer
                   </button>
                 </li>
 
                 <li className="shrink-0">
-                  <button onClick={()=>setActiveTab('backend')} className={`${activeTab == 'backend' ? `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-200 whitespace-nowrap sm:gap-2 sm:px-4 sm:py-2 sm:text-sm bg-slate-950 text-white shadow-lg shadow-slate-950/15` : 'bg-transparent'} flex items-center gap-2 px-4 py-2 font-semibold`}>
+                  <button onClick={() => setActiveTab("backend")} className={`${activeTab == "backend" ? `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-200 whitespace-nowrap sm:gap-2 sm:px-4 sm:py-2 sm:text-sm bg-slate-950 text-white shadow-lg shadow-slate-950/15` : "bg-transparent"} flex items-center gap-2 px-4 py-2 font-semibold`}>
                     <FaNode className="h-4 w-4 sm:h-5 sm:w-5" />
                     Backend Developer
                   </button>
@@ -102,7 +111,7 @@ const Navbar = ({isButton=false, isAbout=false,activeTab,setActiveTab}) => {
               <ul ref={scrollRef} className="flex flex-1 items-center gap-1 overflow-x-auto font-medium sm:gap-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {NAV_ITEMS.map(({to, label, Icon}) => (
                   <li key={to} className="shrink-0">
-                    <NavLink to={to} className={navLinkClass} end={to === "/"}>
+                    <NavLink to={to} ref={(el) => (itemRefs.current[to] = el)} className={navLinkClass} end={to === "/"}>
                       <Icon />
                       {label}
                     </NavLink>
