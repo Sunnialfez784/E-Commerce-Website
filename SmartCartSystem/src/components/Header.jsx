@@ -81,6 +81,7 @@ const Header = () => {
   return (
     <div className="w-full space-y-3 sm:space-y-4">
       <div className="flex items-center justify-between gap-3">
+        <Link to='/'>
         <div className="flex items-center gap-3 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
           <img src={Appsile} alt="Novo Trends" className="h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm sm:h-12 sm:w-12" />
           <div>
@@ -88,6 +89,7 @@ const Header = () => {
             <p className="hidden text-xs font-medium uppercase tracking-[0.24em] text-slate-500 sm:block">Premium shopping experience</p>
           </div>
         </div>
+        </Link>
 
         <div className="relative z-50 flex items-center gap-2 overflow-visible lg:hidden">
           <button onClick={() => setSearchOpen(!searchOpen)} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Toggle search">
