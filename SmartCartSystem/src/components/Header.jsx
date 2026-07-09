@@ -5,7 +5,7 @@ import {useAuth} from "../context/AuthContext";
 import {BASE_URL} from "../apis";
 import {Search, ShoppingBag, UserRound, X} from "lucide-react";
 import {FaJediOrder} from "react-icons/fa6";
-import appsile2 from "../assets/Nav/shop6.png";
+import appsile2 from "../assets/Nav/shop7.png";
 import {TiShoppingCart} from "react-icons/ti";
 
 const Header = () => {
@@ -165,10 +165,9 @@ const Header = () => {
     <div className="w-full space-y-3 sm:space-y-4">
       <div className="flex items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-3 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
-          {/* Tablet, Laptop & Desktop */}
+
           <img src={Appsile} alt="Novo Trends" className="hidden md:block h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm lg:h-12 lg:w-12" />
 
-          {/* Mobile */}
           <img src={appsile2} alt="Novo Trends" className="block md:hidden h-10 w-auto object-contain" />
 
           <div>
