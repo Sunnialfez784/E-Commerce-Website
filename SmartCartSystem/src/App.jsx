@@ -37,6 +37,7 @@ import HasnainAbout from "./pages/HasnainAbout";
 import AlfezAbout from "./pages/AlfezAbout";
 import AboutSection from "./pages/AboutSection";
 import Books from "./pages/Books";
+import Layout from "./components/Layout";
 
 function App() {
   return (
@@ -68,200 +69,202 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/cars"
-          element={
-            <ProtectedRoute>
-              <Cars />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/bikes"
-          element={
-            <ProtectedRoute>
-              <Bikes />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/laptops"
-          element={
-            <ProtectedRoute>
-              <Laptops />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/mobiles"
-          element={
-            <ProtectedRoute>
-              <Mobiles />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/details/:id"
-          element={
-            <ProtectedRoute>
-              <Details />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/addtocard"
-          element={
-            <ProtectedRoute>
-              <AddToCard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/orders"
-          element={
-            <ProtectedRoute>
-              <Order />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/fashion"
-          element={
-            <ProtectedRoute>
-              <Fashion />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/furniture"
-          element={
-            <ProtectedRoute>
-              <Furniture />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/sports"
-          element={
-            <ProtectedRoute>
-              <Sports />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/kids"
-          element={
-            <ProtectedRoute>
-              <Toys />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/keychain"
-          element={
-            <ProtectedRoute>
-              <Keychain />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/camera"
-          element={
-            <ProtectedRoute>
-              <Camera />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/headset"
-          element={
-            <ProtectedRoute>
-              <Headset />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/shoes"
-          element={
-            <ProtectedRoute>
-              <Shoes />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/watch"
-          element={
-            <ProtectedRoute>
-              <Watch />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/speaker"
-          element={
-            <ProtectedRoute>
-              <Speaker />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/instrument"
-          element={
-            <ProtectedRoute>
-              <Instrument />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/beauty"
-          element={
-            <ProtectedRoute>
-              <Beauty />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/billingdetails"
-          element={
-            <ProtectedRoute>
-              <BillingDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/payment"
-          element={
-            <ProtectedRoute>
-              <Payment />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<Layout />}>
+          <Route
+            path="/cars"
+            element={
+              <ProtectedRoute>
+                <Cars />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bikes"
+            element={
+              <ProtectedRoute>
+                <Bikes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/laptops"
+            element={
+              <ProtectedRoute>
+                <Laptops />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mobiles"
+            element={
+              <ProtectedRoute>
+                <Mobiles />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/details/:id"
+            element={
+              <ProtectedRoute>
+                <Details />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/addtocard"
+            element={
+              <ProtectedRoute>
+                <AddToCard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute>
+                <Order />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/fashion"
+            element={
+              <ProtectedRoute>
+                <Fashion />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/furniture"
+            element={
+              <ProtectedRoute>
+                <Furniture />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/sports"
+            element={
+              <ProtectedRoute>
+                <Sports />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/kids"
+            element={
+              <ProtectedRoute>
+                <Toys />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/keychain"
+            element={
+              <ProtectedRoute>
+                <Keychain />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/camera"
+            element={
+              <ProtectedRoute>
+                <Camera />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/headset"
+            element={
+              <ProtectedRoute>
+                <Headset />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/shoes"
+            element={
+              <ProtectedRoute>
+                <Shoes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/watch"
+            element={
+              <ProtectedRoute>
+                <Watch />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/speaker"
+            element={
+              <ProtectedRoute>
+                <Speaker />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/instrument"
+            element={
+              <ProtectedRoute>
+                <Instrument />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/beauty"
+            element={
+              <ProtectedRoute>
+                <Beauty />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/billingdetails"
+            element={
+              <ProtectedRoute>
+                <BillingDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/productbill"
-          element={
-            <ProtectedRoute>
-              <ProductBill />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/productbill"
+            element={
+              <ProtectedRoute>
+                <ProductBill />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/books"
-          element={
-            <ProtectedRoute>
-              <Books />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/books"
+            element={
+              <ProtectedRoute>
+                <Books />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
 
         <Route path="/invoice" element={<ProductBill />} />
         <Route path="/razor" element={<RazorPay />} />

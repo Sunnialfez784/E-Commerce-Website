@@ -35,9 +35,7 @@ const Furniture = () => {
   }, []);
 
   return (
-    <>
-      <Navbar />
-      
+    <>      
       <main className="app-shell w-full text-black">
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface p-5 sm:p-6">

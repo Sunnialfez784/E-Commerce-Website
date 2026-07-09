@@ -34,9 +34,9 @@ const Watch = () => {
       });
   }, []);
 
-  return <>
-    <Navbar />
-    <main className="app-shell w-full text-black">
+  return (
+    <>
+      <main className="app-shell w-full text-black">
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-5">
@@ -45,7 +45,9 @@ const Watch = () => {
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Watch</h2>
               </div>
               {!loading && (
-                <span className="premium-pill">{watch.length} {watch.length === 1 ? "product" : "products"}</span>
+                <span className="premium-pill">
+                  {watch.length} {watch.length === 1 ? "product" : "products"}
+                </span>
               )}
             </div>
 
@@ -69,8 +71,8 @@ const Watch = () => {
           </section>
         </div>
       </main>
-    
-  </>;
+    </>
+  );
 };
 
 export default Watch;

@@ -59,8 +59,6 @@ const Payment = () => {
 
   return (
     <>
-      <Navbar />
-
       <main className="app-shell w-full text-black">
         <div className="page-shell flex justify-center py-6 lg:py-10">
           <div className="w-full max-w-md">
