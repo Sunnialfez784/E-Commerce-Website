@@ -5,6 +5,8 @@ import {useAuth} from "../context/AuthContext";
 import {BASE_URL} from "../apis";
 import {Search, ShoppingBag, UserRound, X} from "lucide-react";
 import {FaJediOrder} from "react-icons/fa6";
+import appsile2 from "../assets/Nav/shop6.png";
+import { TiShoppingCart } from "react-icons/ti";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -122,6 +124,16 @@ const Header = () => {
         </Link>
       </li>
       <li>
+        <Link to="/addtocard" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" aria-label="Cart">
+          <TiShoppingCart className="h-4 w-4 me-2" /> Card
+        </Link>
+      </li>
+      <li>
+        <Link to="/about" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" aria-label="About">
+          <ShoppingBag className="h-4 w-4 me-2" /> About
+        </Link>
+      </li>
+      <li>
         <button type="button" onClick={handleLogout} className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 text-rose-600 transition hover:bg-rose-50">
           <svg className="w-4 h-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
@@ -153,9 +165,10 @@ const Header = () => {
     <div className="w-full space-y-3 sm:space-y-4">
       <div className="flex items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-3 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
-          <img src={Appsile} alt="Novo Trends" className="h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm sm:h-12 sm:w-12" />
+          <img src={Appsile} alt="Novo Trends" className="hidden md:block h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm sm:h-12 sm:w-12" />
+          <img src={appsile2} alt="Novo Trends" className="md:hidden h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm sm:h-12 sm:w-12" />
           <div>
-            <div>Novo Trends</div>
+            <div className="hidden md:block">Novo Trends</div>
             <p className="hidden text-xs font-medium uppercase tracking-[0.24em] text-slate-500 sm:block">Premium shopping experience</p>
           </div>
         </Link>
@@ -171,21 +184,24 @@ const Header = () => {
             </button>
             {dropDown && <div className="absolute right-0 top-12 z-[60] w-64 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur pointer-events-auto">{accountMenu}</div>}
           </div>
-
-          <Link to="/addtocard" className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Cart">
-            <ShoppingBag className="h-4 w-4" />
-          </Link>
         </div>
-
-        <Link to="/about" className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="About">
-          <ShoppingBag className="h-4 w-4" />
-        </Link>
       </div>
 
       {searchOpen && (
         <div ref={mobileSearchRef} className="relative w-full lg:hidden">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-          <input autoFocus type="text" placeholder="Search products…" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => { if (e.key === "Escape") closeSearch(); }} className="premium-input pl-11 pr-4" aria-label="Search products" />
+          <input
+            autoFocus
+            type="text"
+            placeholder="Search products…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") closeSearch();
+            }}
+            className="premium-input pl-11 pr-4"
+            aria-label="Search products"
+          />
           {search && <div className="absolute z-50 mt-3 w-full max-h-72 overflow-y-auto rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur">{productResults(closeSearch)}</div>}
         </div>
       )}
@@ -193,7 +209,18 @@ const Header = () => {
       <div className="hidden lg:flex lg:items-center lg:gap-3">
         <div ref={desktopSearchRef} className="relative flex-1">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
-          <input id="ghjkhj" type="text" placeholder="Search products, brands, categories" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => { if (e.key === "Escape") setSearch(""); }} className="premium-input pl-11 pr-4" aria-label="Search products" />
+          <input
+            id="ghjkhj"
+            type="text"
+            placeholder="Search products, brands, categories"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") setSearch("");
+            }}
+            className="premium-input pl-11 pr-4"
+            aria-label="Search products"
+          />
           {search && <div className="absolute z-50 mt-3 w-full max-h-72 overflow-y-auto rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur">{productResults(() => setSearch(""))}</div>}
         </div>
 
@@ -205,16 +232,6 @@ const Header = () => {
             </button>
             {dropDown && <div className="absolute right-0 top-12 z-10 mt-2 w-72 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur">{accountMenu}</div>}
           </div>
-
-          <Link to="/addtocard" className="premium-btn-secondary min-w-[132px] px-4 py-3">
-            <ShoppingBag className="h-4 w-4" />
-            Cart
-          </Link>
-
-          <Link to="/about" className="premium-btn-secondary min-w-[132px] px-4 py-3">
-            <ShoppingBag className="h-4 w-4" />
-            About
-          </Link>
         </div>
       </div>
     </div>
