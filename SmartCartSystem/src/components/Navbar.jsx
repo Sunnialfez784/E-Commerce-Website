@@ -72,8 +72,8 @@ const Navbar = ({isButton=false, isAbout=false,activeTab,setActiveTab}) => {
   const navLinkClass = ({isActive}) => `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-200 whitespace-nowrap sm:gap-2 sm:px-4 sm:py-2 sm:text-sm ${isActive ? "bg-slate-950 text-white shadow-lg shadow-slate-950/15" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`;
   
   return (
-    <header className={`sticky top-0 z-50 w-full border-b border-white/60 bg-white/85 text-black shadow-[0_12px_40px_-20px_rgba(15,23,42,0.35)] backdrop-blur-xl`}>
-      <nav className={`${isAbout ? 'flex flex-col items-center page-shell py-3 sm:py-4' : ''}page-shell py-3 sm:py-4`}>
+    <header className="sticky top-0 z-50 w-full border-b border-white/60 bg-white/85 text-black shadow-[0_12px_40px_-20px_rgba(15,23,42,0.35)] backdrop-blur-xl">
+      <nav className={`${isAbout ? "flex flex-col items-center" : ""} page-shell py-3 sm:py-4`}>
         <Header />
 
         <div className={`${isAbout ? 'w-auto' : ''} mt-3 rounded-[28px] border border-slate-200 bg-white/90 px-2 py-2 shadow-sm sm:mt-5 sm:px-3 sm:py-2.5`}>

@@ -64,7 +64,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <main className="flex min-height-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
+      <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
         <div className="relative w-full max-w-md">
           <form onSubmit={handleSubmit} className={`section-surface flex flex-col p-7 sm:p-9 transition-all duration-200 ${loading ? "blur-sm pointer-events-none select-none" : ""}`}>
             <span className="premium-pill mb-4 self-start">Change Password</span>

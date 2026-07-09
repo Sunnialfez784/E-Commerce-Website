@@ -66,8 +66,8 @@ const Home = () => {
                 <h1 className="text-3xl font-semibold leading-tight tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">India's Smart Hub</h1>
                 <h1 className="mt-1 text-3xl font-semibold leading-tight tracking-tight text-slate-600 sm:text-4xl lg:text-5xl">for Tech &amp; Vehicles</h1>
                 <p className="mt-4 max-w-xl text-base leading-7 text-slate-500">A premium storefront for products, accessories, and essentials with a cleaner, more professional shopping experience.</p>
-                <Link to="/laptops">
-                  <button className="premium-btn-primary mt-6 self-start px-6 py-3.5 text-base">Shop Now</button>
+                <Link to="/laptops" className="premium-btn-primary mt-6 self-start px-6 py-3.5 text-base">
+                  Shop Now
                 </Link>
               </div>
 

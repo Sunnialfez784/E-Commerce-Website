@@ -64,10 +64,8 @@ const Order = () => {
                           {order.message && <p className="text-xs text-slate-400">{order.message}</p>}
                         </div>
 
-                        <Link to="/invoice" state={{order_item_id: order.order_item_id}}>
-                          <button className="icon-btn h-11 w-11 text-rose-700 hover:text-rose-700" aria-label="View invoice" type="button">
-                            <FaFileInvoice className="h-4 w-4" />
-                          </button>
+                        <Link to="/invoice" state={{order_item_id: order.order_item_id}} className="icon-btn h-11 w-11 text-rose-700 hover:text-rose-700" aria-label="View invoice">
+                          <FaFileInvoice className="h-4 w-4" />
                         </Link>
                       </div>
                     </div>
