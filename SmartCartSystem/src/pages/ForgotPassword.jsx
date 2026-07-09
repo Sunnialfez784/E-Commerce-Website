@@ -75,9 +75,9 @@ const ForgotPassword = () => {
 
             <div className="mt-6 flex flex-col gap-4">
               <div className="relative">
-                <label className="premium-label">Password</label>
+                <label className="premium-label">New Password</label>
 
-                <input type={visible ? "text" : "password"} placeholder="Enter your password" className="premium-input pr-11" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                <input type={visible ? "text" : "password"} placeholder="Set new password" className="premium-input pr-11" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
                 <button type="button" onClick={() => setVisible(!visible)} className="absolute right-3.5 top-[2.45rem] text-slate-400 transition hover:text-slate-700">
                   <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />

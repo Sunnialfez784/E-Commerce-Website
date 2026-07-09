@@ -11,48 +11,48 @@ const SendingOtp = () => {
   const [loading, setLoading] = useState(false);
 
   const handleOtpChange = (e) => {
-    const value = e.target.value;
+    // const value = e.target.value;
 
-    if (/^\d*$/.test(value) && value.length <= 6) {
-      setOtp(value);
-    }
+    // if (/^\d*$/.test(value) && value.length <= 6) {
+    //   setOtp(value);
+    // }
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
-    if (otp.length !== 6) {
-      alert("Please enter valid 6 digit OTP");
-      return;
-    }
+    // if (otp.length !== 6) {
+    //   alert("Please enter valid 6 digit OTP");
+    //   return;
+    // }
 
-    try {
-      setLoading(true);
-      const res = await fetch(`${BASE_URL}/users/check-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          otp,
-        }),
-      });
+    // try {
+    //   setLoading(true);
+    //   const res = await fetch(`${BASE_URL}/users/check-otp`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       otp,
+    //     }),
+    //   });
 
-      const data = await res.json();
+    //   const data = await res.json();
 
-      console.log("OTP RESPONSE =>", data);
+    //   console.log("OTP RESPONSE =>", data);
 
-      if (data.success) {
-        navigate("/forgotpassword", {state});
-      } else {
-        alert(data.message || "Wrong OTP!");
-      }
-    } catch (error) {
-      console.log(error);
-      alert("Wrong OTP!");
-    } finally {
-      setLoading(false);
-    }
+    //   if (data.success) {
+    //     navigate("/forgotpassword", {state});
+    //   } else {
+    //     alert(data.message || "Wrong OTP!");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   alert("Wrong OTP!");
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

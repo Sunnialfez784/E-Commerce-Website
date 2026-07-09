@@ -32,7 +32,6 @@ const Header = () => {
       }
 
       if (!refsContainTarget([mobileSearchRef, desktopSearchRef, searchToggleRef], e.target)) {
-        // 👆 searchToggleRef add kiya
         setSearch("");
         setSearchOpen(false);
       }
@@ -126,11 +125,6 @@ const Header = () => {
         </Link>
       </li>
       <li>
-        <Link to="/addtocard" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" aria-label="Cart">
-          <TiShoppingCart className="h-4 w-4 me-2" /> Card
-        </Link>
-      </li>
-      <li>
         <Link to="/about" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" aria-label="About">
           <ShoppingBag className="h-4 w-4 me-2" /> About
         </Link>
@@ -171,8 +165,8 @@ const Header = () => {
 
           <img src={appsile2} alt="Novo Trends" className="block md:hidden h-10 w-10 object-contain" />
 
-          <div>
-            <div>Novo Trends</div>
+          <div className="">
+            <div className="">Novo Trends</div>
             <p className="hidden sm:block text-xs font-medium uppercase tracking-[0.24em] text-slate-500">Premium shopping experience</p>
           </div>
         </Link>
@@ -181,6 +175,10 @@ const Header = () => {
           <button ref={searchToggleRef} type="button" onClick={() => setSearchOpen((prev) => !prev)} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Toggle search" aria-expanded={searchOpen} aria-haspopup="dialog">
             {searchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
           </button>
+
+          <Link to="/addtocard" className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Cart">
+            <TiShoppingCart className="h-5 w-5" />
+          </Link>
 
           <div ref={mobileDropdownRef} className="relative z-50 flex items-center overflow-visible">
             <button type="button" onClick={() => setDropDown((prev) => !prev)} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Account" aria-expanded={dropDown} aria-haspopup="menu">
@@ -235,6 +233,13 @@ const Header = () => {
               Account
             </button>
             {dropDown && <div className="absolute right-0 top-12 z-10 mt-2 w-72 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur">{accountMenu}</div>}
+          </div>
+          <div className="relative flex items-center">
+            <button className="premium-btn-secondary min-w-[112px] px-4 py-0.5">
+              <Link to="/addtocard" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" aria-label="Cart">
+                <TiShoppingCart className="h-4 w-4 me-2" /> Cart
+              </Link>
+            </button>
           </div>
         </div>
       </div>

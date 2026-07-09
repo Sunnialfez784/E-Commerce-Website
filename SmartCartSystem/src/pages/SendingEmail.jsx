@@ -21,7 +21,7 @@ const SendingEmail = () => {
 
     try {
       setLoading(true);
-      const res = await fetch(`${BASE_URL}/users/send-otp`, {
+      const res = await fetch(`${BASE_URL}/users/send-email`, {
         method: "POST",
 
         headers: {
@@ -38,7 +38,7 @@ const SendingEmail = () => {
       console.log("OTP RESPONSE =>", data);
 
       if (data.success) {
-        navigate("/sendingotp", {
+        navigate("/forgotpassword", {
           state: {
             email,
           },

@@ -11,7 +11,7 @@ import haedPhones1 from "../assets/Images/h1.png";
 import mivi1 from "../assets/Images/mivi1.png";
 import shoes1 from "../assets/Images/shoes1.png";
 import instrument1 from "../assets/Images/instrument1.png";
-import {PackageSearch} from "lucide-react";
+import {PackageSearch, ChevronLeft, ChevronRight} from "lucide-react";
 
 import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
@@ -23,6 +23,13 @@ const Home = () => {
   const {token} = useAuth();
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + image.length) % image.length);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % image.length);
+  };
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -51,7 +58,7 @@ const Home = () => {
       setCurrentIndex((prev) => (prev + 1) % image.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [currentIndex]);
 
   return (
     <>
@@ -74,11 +81,20 @@ const Home = () => {
               <div className="flex items-center justify-center">
                 <div className="relative w-full max-w-xl rounded-[30px] bg-gradient-to-br from-white to-slate-100 p-4 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.45)]">
                   <div className="absolute left-5 top-5 z-10 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm backdrop-blur">New arrivals</div>
+
                   <img src={image[currentIndex]} alt="slider" className="h-[220px] w-full object-contain transition duration-500 ease-in-out hover:scale-[1.02] sm:h-[320px] lg:h-[380px]" />
 
-                  <div className="mt-3 flex justify-center gap-1.5">
+                  <button onClick={goToPrev} aria-label="Previous slide" className="absolute left-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-900 sm:h-9 sm:w-9">
+                    <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </button>
+
+                  <button onClick={goToNext} aria-label="Next slide" className="absolute right-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-900 sm:h-9 sm:w-9">
+                    <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </button>
+
+                  <div className="mt-3 flex items-center justify-center gap-1.5">
                     {image.map((_, i) => (
-                      <button key={i} onClick={() => setCurrentIndex(i)} className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? "w-6 bg-slate-950" : "w-1.5 bg-slate-300"}`} aria-label={`Go to slide ${i + 1}`} />
+                      <button key={i} onClick={() => setCurrentIndex(i)} className={`shrink-0 appearance-none border-0 bg-transparent p-0 outline-none rounded-full transition-all duration-300 h-1 w-1 sm:h-1.5 sm:w-1.5 ${i === currentIndex ? "w-4 sm:w-6 bg-slate-950" : "bg-slate-300"}`} aria-label={`Go to slide ${i + 1}`} />
                     ))}
                   </div>
                 </div>

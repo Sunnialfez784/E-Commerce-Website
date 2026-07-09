@@ -45,14 +45,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/forgotpassword"
-          element={
-            <ProtectedRoute>
-              <ForgotPassword />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
 
         <Route path="/sendingemail" element={<SendingEmail />} />
         <Route path="/sendingotp" element={<SendingOtp />} />
@@ -69,6 +62,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/details/:id"
+          element={
+            <ProtectedRoute>
+              <Details />
+            </ProtectedRoute>
+          }
+        />
+
         <Route element={<Layout />}>
           <Route
             path="/cars"
@@ -102,38 +105,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/details/:id"
-            element={
-              <ProtectedRoute>
-                <Details />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/addtocard"
-            element={
-              <ProtectedRoute>
-                <AddToCard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/orders"
-            element={
-              <ProtectedRoute>
-                <Order />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
+
           <Route
             path="/fashion"
             element={
@@ -248,15 +220,6 @@ function App() {
           />
 
           <Route
-            path="/productbill"
-            element={
-              <ProtectedRoute>
-                <ProductBill />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
             path="/books"
             element={
               <ProtectedRoute>
@@ -265,6 +228,42 @@ function App() {
             }
           />
         </Route>
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/addtocard"
+          element={
+            <ProtectedRoute>
+              <AddToCard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/productbill"
+          element={
+            <ProtectedRoute>
+              <ProductBill />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Order />
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/invoice" element={<ProductBill />} />
         <Route path="/razor" element={<RazorPay />} />
