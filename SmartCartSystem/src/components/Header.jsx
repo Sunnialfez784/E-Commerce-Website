@@ -23,13 +23,18 @@ const Header = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setDropDown(false);
       }
+
       if (searchRef.current && !searchRef.current.contains(e.target)) {
         setSearch("");
         setSearchOpen(false);
       }
     };
+
     document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
 
   useEffect(() => {
