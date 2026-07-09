@@ -165,19 +165,27 @@ const Header = () => {
     <div className="w-full space-y-3 sm:space-y-4">
       <div className="flex items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-3 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
-
           <img src={Appsile} alt="Novo Trends" className="hidden md:block h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm lg:h-12 lg:w-12" />
 
-          <img src={appsile2} alt="Novo Trends" className="block md:hidden h-10 w-auto object-contain" />
+          <img src={appsile2} alt="Novo Trends" className="block md:hidden h-10 w-10 object-contain" />
 
           <div>
-            <div className="hidden md:block">Novo Trends</div>
+            <div>Novo Trends</div>
             <p className="hidden sm:block text-xs font-medium uppercase tracking-[0.24em] text-slate-500">Premium shopping experience</p>
           </div>
         </Link>
 
         <div className="relative z-50 flex items-center gap-2 overflow-visible lg:hidden">
-          <button type="button" onClick={() => setSearchOpen((prev) => !prev)} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Toggle search" aria-expanded={searchOpen} aria-haspopup="dialog">
+          <button
+            type="button"
+            onClick={() => {
+              if (searchOpen) {
+                closeSearch();
+              } else {
+                setSearchOpen(true);
+              }
+            }}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900">
             {searchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
           </button>
 
