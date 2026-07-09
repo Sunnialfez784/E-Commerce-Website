@@ -96,12 +96,12 @@ const Header = () => {
             {searchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
           </button>
 
-          <div className="relative z-50 flex items-center overflow-visible">
+          <div ref={dropdownRef} className="relative z-50 flex items-center overflow-visible">
             <button onClick={() => setDropDown(!dropDown)} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Account">
               <UserRound className="h-4 w-4" />
             </button>
             {dropDown && (
-              <div ref={dropdownRef} className="absolute right-0 top-12 z-[60] w-64 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur pointer-events-auto">
+              <div className="absolute right-0 top-12 z-[60] w-64 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur pointer-events-auto">
                 <ul className="px-1 pb-1 text-sm font-medium text-slate-700">
                   <li>
                     <Link to="/profile" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" onClick={() => setDropDown(false)}>
@@ -202,13 +202,13 @@ const Header = () => {
         </div>
 
         <div className="flex shrink-0 items-center gap-3">
-          <div className="relative flex items-center">
+          <div ref={dropdownRef} className="relative flex items-center">
             <button onClick={() => setDropDown(!dropDown)} className="premium-btn-secondary min-w-[112px] px-4 py-3" type="button">
               <UserRound className="h-5 w-5" />
               Account
             </button>
             {dropDown && (
-              <div ref={dropdownRef} className="z-10 absolute right-0 top-12 mt-2 w-72 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur">
+              <div className="z-10 absolute right-0 top-12 mt-2 w-72 rounded-3xl border border-slate-200 bg-white/95 p-2 shadow-2xl shadow-slate-900/10 backdrop-blur">
                 <ul className="px-1 pb-1 text-sm font-medium text-slate-700">
                   <li>
                     <Link to="/profile" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50">
