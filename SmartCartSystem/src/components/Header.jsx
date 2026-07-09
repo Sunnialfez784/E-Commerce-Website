@@ -166,7 +166,7 @@ const Header = () => {
       <div className="flex items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-3 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
           <img src={Appsile} alt="Novo Trends" className="hidden md:block h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm sm:h-12 sm:w-12" />
-          <img src={appsile2} alt="Novo Trends" className="md:hidden h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm sm:h-12 sm:w-12" />
+          <img src={appsile2} alt="Novo Trends" className="md:hidden h-10 w-10 rounded-2xl shadow-sm sm:h-12 sm:w-12" />
           <div>
             <div className="hidden md:block">Novo Trends</div>
             <p className="hidden text-xs font-medium uppercase tracking-[0.24em] text-slate-500 sm:block">Premium shopping experience</p>
