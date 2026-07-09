@@ -21,6 +21,7 @@ const Header = () => {
   const desktopDropdownRef = useRef(null);
   const mobileSearchRef = useRef(null);
   const desktopSearchRef = useRef(null);
+  const searchToggleRef = useRef(null);
 
   useEffect(() => {
     const refsContainTarget = (refs, target) => refs.some((ref) => ref.current && ref.current.contains(target));
@@ -30,7 +31,8 @@ const Header = () => {
         setDropDown(false);
       }
 
-      if (!refsContainTarget([mobileSearchRef, desktopSearchRef], e.target)) {
+      if (!refsContainTarget([mobileSearchRef, desktopSearchRef, searchToggleRef], e.target)) {
+        // 👆 searchToggleRef add kiya
         setSearch("");
         setSearchOpen(false);
       }
@@ -44,11 +46,11 @@ const Header = () => {
       }
     };
 
-    document.addEventListener("click", handlePointerDown);
+    document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("click", handlePointerDown);
+      document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
@@ -176,16 +178,7 @@ const Header = () => {
         </Link>
 
         <div className="relative z-50 flex items-center gap-2 overflow-visible lg:hidden">
-          <button
-            type="button"
-            onClick={() => {
-              if (searchOpen) {
-                closeSearch();
-              } else {
-                setSearchOpen(true);
-              }
-            }}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900">
+          <button ref={searchToggleRef} type="button" onClick={() => setSearchOpen((prev) => !prev)} className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Toggle search" aria-expanded={searchOpen} aria-haspopup="dialog">
             {searchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
           </button>
 
