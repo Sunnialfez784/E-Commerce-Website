@@ -7,6 +7,9 @@ import {Search, ShoppingBag, UserRound, X} from "lucide-react";
 import {FaJediOrder} from "react-icons/fa6";
 import appsile2 from "../assets/Nav/shop7.png";
 import {TiShoppingCart} from "react-icons/ti";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -126,7 +129,7 @@ const Header = () => {
       </li>
       <li>
         <Link to="/about" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" aria-label="About">
-          <ShoppingBag className="h-4 w-4 me-2" /> About
+          <FontAwesomeIcon icon={faCircleInfo} className="h-4 w-4 me-2" /> About
         </Link>
       </li>
       <li>

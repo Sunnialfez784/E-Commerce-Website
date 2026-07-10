@@ -114,9 +114,9 @@ const Login = () => {
             Login
           </button>
 
-          <div className="mt-5 flex items-center justify-center gap-1.5 text-sm text-slate-500">
-            Don't have an account?
-            <Link to="/register" className="font-semibold text-slate-950 hover:underline">
+          <div className="mt-5 flex flex-nowrap items-center justify-center gap-1.5 text-sm text-slate-500 whitespace-nowrap">
+            <span>Don't have an account?</span>
+            <Link to="/register" className="font-semibold text-slate-950 hover:underline whitespace-nowrap">
               Create one
             </Link>
           </div>
