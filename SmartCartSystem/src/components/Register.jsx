@@ -6,12 +6,12 @@ import {BASE_URL} from "../apis";
 import {UserPlus} from "lucide-react";
 
 const Register = () => {
-  const [firstName, setFirstName] = useState("")
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("")
+  const [gender, setGender] = useState("");
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState({});
 
@@ -23,12 +23,12 @@ const Register = () => {
 
     if (!firstName || !lastName || !password || !email || !phone || !gender) {
       setError({
-        firstName: !firstName && 'Firstname required',
+        firstName: !firstName && "Firstname required",
         lastName: !lastName && "Name required",
         password: !password && "Password required",
         email: !email && "Email required",
         phone: !phone && "Phone required",
-        gender: !gender && 'Gender required'
+        gender: !gender && "Gender required",
       });
       return;
     }
@@ -91,7 +91,7 @@ const Register = () => {
         email,
         phone,
         gender,
-        role:'user'
+        role: "user",
       }),
     })
       .then((response) => response.json())
@@ -140,38 +140,28 @@ const Register = () => {
             <label className="premium-label">Gender</label>
             <div className="flex flex-wrap items-center gap-3">
               <label className={`premium-radio-tile ${gender === "male" ? "is-active" : ""}`}>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  checked={gender === "male"}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="h-4 w-4 text-slate-950 focus:ring-slate-950" />
+                <input type="radio" name="gender" value="male" checked={gender === "male"} onChange={(e) => setGender(e.target.value)} className="h-4 w-4 text-slate-950 focus:ring-slate-950" />
                 <span className="text-sm font-medium text-slate-800">Male</span>
               </label>
 
               <label className={`premium-radio-tile ${gender === "female" ? "is-active" : ""}`}>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  checked={gender === "female"}
-                  onChange={(e)=> setGender(e.target.value)}
-                  className="h-4 w-4 text-slate-950 focus:ring-slate-950" />
+                <input type="radio" name="gender" value="female" checked={gender === "female"} onChange={(e) => setGender(e.target.value)} className="h-4 w-4 text-slate-950 focus:ring-slate-950" />
                 <span className="text-sm font-medium text-slate-800">Female</span>
               </label>
               {error.gender && <p className="premium-field-error">{error.gender}</p>}
             </div>
           </div>
 
-          <div className="relative">
+          <div>
             <label className="premium-label">Password</label>
-            <input type={visible ? "text" : "password"} placeholder="Password" className="premium-input pr-11" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-            <button type="button" onClick={() => setVisible(!visible)} className="absolute right-3.5 top-[2.45rem] text-slate-400 transition hover:text-slate-700" aria-label={visible ? "Hide password" : "Show password"}>
-              <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
-            </button>
-            {error.password && <p className="premium-field-error">{error.password}</p>}
+            <div className="relative">
+              <input type={visible ? "text" : "password"} placeholder="Enter your password" className="premium-input pr-12" value={password} onChange={(e) => setPassword(e.target.value)} required />
+
+              <button type="button" onClick={() => setVisible(!visible)} className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-slate-400 hover:text-slate-700" aria-label={visible ? "Hide password" : "Show password"}>
+                <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} className="text-lg" />
+              </button>
+            </div>
           </div>
         </div>
 

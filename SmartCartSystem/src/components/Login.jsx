@@ -95,13 +95,16 @@ const Login = () => {
               <input type="email" placeholder="Enter your email" className="premium-input" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
 
-            <div className="relative">
+            <div>
               <label className="premium-label">Password</label>
-              <input type={visible ? "text" : "password"} placeholder="Enter your password" className="premium-input pr-11" value={password} onChange={(e) => setPassword(e.target.value)} required />
 
-              <button type="button" onClick={() => setVisible(!visible)} className="absolute right-3.5 top-[2.15rem] text-slate-400 transition hover:text-slate-700" aria-label={visible ? "Hide password" : "Show password"}>
-                <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} />
-              </button>
+              <div className="relative">
+                <input type={visible ? "text" : "password"} placeholder="Enter your password" className="premium-input pr-12" value={password} onChange={(e) => setPassword(e.target.value)} required />
+
+                <button type="button" onClick={() => setVisible(!visible)} className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-slate-400 hover:text-slate-700" aria-label={visible ? "Hide password" : "Show password"}>
+                  <FontAwesomeIcon icon={visible ? faEyeSlash : faEye} className="text-lg" />
+                </button>
+              </div>
             </div>
 
             <Link to="/sendingemail" className="premium-label ml-3">
