@@ -49,7 +49,7 @@ function Invoice({invoice}) {
             <h1 className="mb-2 text-sm font-semibold text-slate-950">Order Details</h1>
 
             <p className="text-gray-700">
-              <span className="font-medium text-slate-800">Order ID:</span> {invoice.orderId}
+              <span className="font-medium text-slate-800">Order ID:</span> {invoice.order_item_id}
             </p>
 
             <p className="mt-1.5 text-sm leading-6 text-slate-600">
