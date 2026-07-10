@@ -55,7 +55,7 @@ const LANG_COLORS: Record<string, string> = {
 
 const E_COMMERCE_PROJECT = {
   name: "E-Commerce Platform",
-  description: "A Backend e-commerce application with complete shopping experience — product listings, cart management, secure checkout, and an admin dashboard for inventory & order management.",
+  description: "A full-stack e-commerce application with complete shopping experience — product listings, cart management, secure checkout, and an admin dashboard for inventory & order management.",
   tags: ["MySql", "Sequelize", "Express", "React", "Node.js", "JWT", "Redux", "RazorPay"],
   highlights: ["User authentication & authorization with JWT", "Product search, filter & pagination", "Cart & wishlist with persistent state via Redux", "Secure payment integration", "Admin dashboard — manage products, orders & users", "Responsive UI with Tailwind CSS"],
   icon: "🛒",

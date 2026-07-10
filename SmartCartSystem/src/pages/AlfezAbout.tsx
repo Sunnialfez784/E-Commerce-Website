@@ -54,7 +54,7 @@ const LANG_COLORS: Record<string, string> = {
 const E_COMMERCE_PROJECT = {
   name: "E-Commerce Platform",
   description:
-    "A full-stack MERN e-commerce application with complete shopping experience — product listings, cart management, secure checkout, and an admin dashboard for inventory & order management.",
+    "A full-stack e-commerce application with complete shopping experience — product listings, cart management, secure checkout, and an admin dashboard for inventory & order management.",
   tags: ["MySql","Sequelize", "Express", "React.js", "Node.js", "JWT", "RazorPay"],
   highlights: [
     "User authentication & authorization with JWT",
