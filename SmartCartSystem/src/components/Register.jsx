@@ -53,7 +53,8 @@ const Register = () => {
       return;
     }
 
-    const userExists = registeredUsers.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
+    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    const userExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
 
     if (userExists) {
       alert("User already exists with this email");
@@ -70,6 +71,7 @@ const Register = () => {
       gender,
     };
 
+    localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
     setRegisteredUsers((prevUsers) => [...prevUsers, newUser]);
 
     setFirstName("");

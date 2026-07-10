@@ -99,6 +99,7 @@ const Header = () => {
     } catch (err) {
       console.log(err);
     } finally {
+      localStorage.removeItem("accessToken");
       logout();
       setLoading(false);
       navigate("/login");
