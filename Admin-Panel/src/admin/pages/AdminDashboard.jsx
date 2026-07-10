@@ -148,34 +148,7 @@ function AdminDashboard() {
           </CardBody>
         </Card>
 
-        <Card className={adminCardClass}>
-          <CardBody className="p-5">
-            <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">Order status split</p>
-            <h3 className="text-xl font-semibold text-slate-900 dark:text-white">Orders distribution</h3>
-            <div className="mt-4 h-[17rem]">
-              <Doughnut
-                data={orderChart}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {legend: {position: "bottom"}},
-                }}
-              />
-            </div>
-            <div className="mt-4 grid gap-3">
-              {[
-                ["Conversion rate", "4.8%"],
-                ["Avg. order value", "$58"],
-                ["Repeat customers", "36%"],
-              ].map(([label, value]) => (
-                <div key={label} className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3 dark:bg-white/5">
-                  <span className="text-sm text-slate-600 dark:text-slate-300">{label}</span>
-                  <span className="text-sm font-semibold text-slate-900 dark:text-white">{value}</span>
-                </div>
-              ))}
-            </div>
-          </CardBody>
-        </Card>
+        
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1.35fr_0.95fr]">
