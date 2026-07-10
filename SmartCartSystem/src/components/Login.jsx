@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {BASE_URL} from "../apis";
 import {useAuth} from "../context/AuthContext";
 import {AlertCircle, LogIn} from "lucide-react";
+import Loader from "./Loader";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,10 +18,10 @@ const Login = () => {
   const {login} = useAuth();
 
   const handleLogin = async (e) => {
-    setLoading(true);
     e.preventDefault();
 
     try {
+      setLoading(true);
       const res = await fetch(`${BASE_URL}/users/login-user`, {
         method: "POST",
         headers: {
