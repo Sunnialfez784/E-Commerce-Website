@@ -122,7 +122,7 @@ function Invoice({invoice}) {
           </div>
         </div>
 
-        <div className="bg-slate-950 py-4 text-center text-sm text-white">Thank you for shopping with Appsile ❤️</div>
+        <div className="bg-slate-950 py-4 text-center text-xl text-white">Thank you for shopping with Appsile ❤️</div>
       </div>
     </main>
   );
