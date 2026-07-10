@@ -23,14 +23,14 @@ function Invoice({invoice}) {
                 <h1 className="text-lg font-semibold leading-none tracking-tight text-slate-950 sm:text-xl">Novo Trends Retail Pvt. Ltd.</h1>
 
                 <div className="mt-2 space-y-1">
-                  <p className="flex items-center text-sm text-slate-500">
-                    <Phone className="mr-2 h-3.5 w-3.5 shrink-0 self-center" />
-                    <span className="leading-none">1800 208 9898</span>
+                  <p className="flex items-center gap-2 text-sm text-slate-500">
+                    <Phone className="h-4 w-4 shrink-0 flex-shrink-0 translate-y-[1px]" strokeWidth={2} />
+                    <span className="text-lg">1800 208 9898</span>
                   </p>
 
-                  <p className="flex items-center text-sm text-slate-500">
-                    <Mail className="mr-2 h-3.5 w-3.5 shrink-0 self-center" />
-                    <span className="leading-none">cs@novotrends.com</span>
+                  <p className="flex items-center gap-2 text-sm text-slate-500">
+                    <Mail className="h-4 w-4 shrink-0 flex-shrink-0 translate-y-[1px]" strokeWidth={2} />
+                    <span className="text-lg">novotrends2@gmail.com</span>
                   </p>
                 </div>
               </div>
