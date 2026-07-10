@@ -16,33 +16,33 @@ const BillingDetails = () => {
   const [error, setError] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [userAddresses, setUserAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const {token, user} = useAuth();
+  const {token, user, savedAddresses, setSavedAddresses} = useAuth();
 
   useEffect(() => {
     if (user) {
       setEmail(user.email || "");
       setFullName(user.name || "");
-      const allAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
-      const userAddresses = allAddresses.filter((item) => item.email === user.email);
-      setSavedAddresses(userAddresses);
-      if (userAddresses.length > 0) {
-        setSelectedAddress(userAddresses[0]);
+      const currentUserAddresses = savedAddresses.filter((item) => item.email === user.email);
+      setUserAddresses(currentUserAddresses);
+      if (currentUserAddresses.length > 0) {
+        setSelectedAddress(currentUserAddresses[0]);
+        setShowForm(false);
       } else {
+        setSelectedAddress(null);
         setShowForm(true);
       }
     }
-  }, []);
+    }, [savedAddresses, user]);
 
   const deleteAddress = (deleteItem) => {
-    const allAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
-    const updatedAddresses = allAddresses.filter(
+    const updatedAddresses = savedAddresses.filter(
       (item) => !(item.email === deleteItem.email && item.address === deleteItem.address)
     );
-    localStorage.setItem("savedAddresses", JSON.stringify(updatedAddresses));
+    setSavedAddresses(updatedAddresses);
     const currentUserAddresses = updatedAddresses.filter((item) => item.email === email);
-    setSavedAddresses(currentUserAddresses);
+    setUserAddresses(currentUserAddresses);
     if (selectedAddress?.address === deleteItem.address) {
       setSelectedAddress(currentUserAddresses[0] || null);
     }
@@ -73,11 +73,10 @@ const BillingDetails = () => {
     }
 
     const billingData = {fullName, country, address, city, state, pincode, email, phone};
-    const oldAddresses = JSON.parse(localStorage.getItem("savedAddresses")) || [];
-    oldAddresses.push(billingData);
-    localStorage.setItem("savedAddresses", JSON.stringify(oldAddresses));
-    const currentUserAddresses = oldAddresses.filter((item) => item.email === email);
-    setSavedAddresses(currentUserAddresses);
+    const updatedAddresses = [...savedAddresses, billingData];
+    setSavedAddresses(updatedAddresses);
+    const currentUserAddresses = updatedAddresses.filter((item) => item.email === email);
+    setUserAddresses(currentUserAddresses);
     setSelectedAddress(billingData);
     setShowForm(false);
   };
@@ -187,7 +186,7 @@ const BillingDetails = () => {
             </button>
 
             <div className="max-h-[50vh] space-y-3 overflow-y-auto">
-              {savedAddresses.map((item, index) => (
+              {userAddresses.map((item, index) => (
                 <div
                   key={index}
                   onClick={() => setSelectedAddress(item)}

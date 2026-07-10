@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {BASE_URL} from "../apis";
 import {UserPlus} from "lucide-react";
+import {useAuth} from "../context/AuthContext";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -16,6 +17,7 @@ const Register = () => {
   const [error, setError] = useState({});
 
   const navigate = useNavigate();
+  const {registeredUsers, setRegisteredUsers} = useAuth();
 
   const addUser = (e) => {
     setError("");
@@ -51,8 +53,7 @@ const Register = () => {
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    const userExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
+    const userExists = registeredUsers.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
 
     if (userExists) {
       alert("User already exists with this email");
@@ -69,7 +70,7 @@ const Register = () => {
       gender,
     };
 
-    localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
+    setRegisteredUsers((prevUsers) => [...prevUsers, newUser]);
 
     setFirstName("");
     setLastName("");
@@ -98,7 +99,6 @@ const Register = () => {
       .then((data) => console.log("Success:", data))
       .catch((error) => console.log("Error:", error));
 
-    console.log({firstName, lastName, email, password, phone, role});
   };
 
   return (

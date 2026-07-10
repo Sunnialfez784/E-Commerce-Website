@@ -22,10 +22,7 @@ const ForgotPassword = () => {
       return;
     }
 
-    const user = JSON.parse(localStorage.getItem("registeredUsers"));
-
-    const {email} = state;
-    console.log(user, "user");
+    const email = state?.email;
 
     if (!email) {
       alert("User not found");

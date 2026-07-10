@@ -7,9 +7,8 @@ import {Search, ShoppingBag, UserRound, X} from "lucide-react";
 import {FaJediOrder} from "react-icons/fa6";
 import appsile2 from "../assets/Nav/shop7.png";
 import {TiShoppingCart} from "react-icons/ti";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -82,13 +81,14 @@ const Header = () => {
   const filteredProducts = search ? allProducts.filter((item) => item.productName?.toLowerCase().includes(search.toLowerCase())) : [];
 
   const handleLogout = async () => {
+    if (!token) {
+      logout();
+      navigate("/login");
+      return;
+    }
+
     setLoading(true);
     try {
-      if (!token) {
-        navigate("/login");
-        return;
-      }
-
       await fetch(`${BASE_URL}/users/logout-user`, {
         method: "POST",
         headers: {
@@ -99,7 +99,6 @@ const Header = () => {
     } catch (err) {
       console.log(err);
     } finally {
-      localStorage.removeItem("accessToken");
       logout();
       setLoading(false);
       navigate("/login");
@@ -163,13 +162,12 @@ const Header = () => {
   return (
     <div className="w-full space-y-3 sm:space-y-4">
       <div className="flex items-center justify-between gap-3">
-        <Link to="/" className="flex items-center gap-3 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
-          <img src={Appsile} alt="Novo Trends" className="hidden md:block h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm lg:h-12 lg:w-12" />
+        <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-3 text-slate-900">
+          <img src={Appsile} alt="Novo Trends" className=" h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm lg:h-12 lg:w-12" />
+          
+          <div className="min-w-0">
+            <h1 className="whitespace-nowrap text-lg font-semibold tracking-tight sm:text-xl lg:text-2xl">Novo Trends</h1>
 
-          <img src={appsile2} alt="Novo Trends" className="block md:hidden h-10 w-10 object-contain" />
-
-          <div className="">
-            <div className="">Novo Trends</div>
             <p className="hidden sm:block text-xs font-medium uppercase tracking-[0.24em] text-slate-500">Premium shopping experience</p>
           </div>
         </Link>

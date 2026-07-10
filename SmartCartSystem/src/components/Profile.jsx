@@ -65,10 +65,6 @@ const Profile = () => {
         gender,
       };
 
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-
-      localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-
       setUser(updatedUser);
 
       alert("Profile Updated Successfully");

@@ -1,11 +1,12 @@
-import {useState, useCallback} from "react";
+import {useCallback, useState} from "react";
 import {AuthContext} from "./AuthContext";
 
 export const AuthProvider = ({children}) => {
   const [quantities, setQuantities] = useState({});
-  const [token, setToken] = useState(localStorage.getItem("accessToken") || "");
-
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
+  const [token, setToken] = useState("");
+  const [user, setUser] = useState(null);
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+  const [savedAddresses, setSavedAddresses] = useState([]);
 
   const setCartQuantity = (product_id, quantity) => {
     setQuantities((prev) => ({
@@ -38,19 +39,15 @@ export const AuthProvider = ({children}) => {
   );
 
   const login = ({user, accessToken}) => {
-    localStorage.setItem("user", JSON.stringify(user));
-
-    localStorage.setItem("accessToken", accessToken);
-
     setUser(user);
     setToken(accessToken);
   };
 
   const logout = () => {
-    localStorage.clear();
-
     setUser(null);
     setToken("");
+    setRegisteredUsers([]);
+    setSavedAddresses([]);
   };
 
   return (
@@ -64,6 +61,12 @@ export const AuthProvider = ({children}) => {
 
         token,
         user,
+        setUser,
+        setToken,
+        registeredUsers,
+        setRegisteredUsers,
+        savedAddresses,
+        setSavedAddresses,
 
         login,
         logout,
