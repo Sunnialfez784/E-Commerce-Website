@@ -76,7 +76,7 @@ const Login = () => {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
-      <div className="w-full max-w-md">
+      <div className="relative mx-auto w-full max-w-md">
         {showError && (
           <div role="alert" className="mb-4 flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
@@ -84,7 +84,7 @@ const Login = () => {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className={`section-surface flex flex-col p-7 sm:p-9 ${loading ? "pointer-events-none select-none" : ""}`}>
+        <form onSubmit={handleLogin} className={`section-surface flex flex-col p-5 sm:p-7 md:p-9 ${loading ? "pointer-events-none select-none" : ""}`}>
           <span className="premium-pill mb-4 self-start">Welcome back</span>
           <h1 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Log in to your account</h1>
           <p className="mt-1.5 text-sm text-slate-500">Enter your details to continue shopping.</p>
@@ -114,9 +114,10 @@ const Login = () => {
             Login
           </button>
 
-          <div className="mt-5 flex flex-nowrap items-center justify-center gap-1.5 text-sm text-slate-500 whitespace-nowrap">
-            <span>Don't have an account?</span>
-            <Link to="/register" className="font-semibold text-slate-950 hover:underline whitespace-nowrap">
+          <div className="mt-5 text-center text-xs sm:text-sm text-slate-500">
+            <span>Don't have an account? </span>
+
+            <Link to="/register" className="inline font-semibold text-slate-950 hover:underline">
               Create one
             </Link>
           </div>

@@ -180,9 +180,9 @@ const Register = () => {
           Submit
         </button>
 
-        <div className="mt-5 flex items-center justify-center gap-1.5 text-sm text-slate-500">
+        <div className="mt-5 text-center flex gap-1 justify-center text-xs sm:text-sm text-slate-500">
           Already have an account?
-          <Link to="/login" className="font-semibold text-slate-950 hover:underline">
+          <Link to="/login" className="inline font-semibold text-slate-950 hover:underline">
             Log in.
           </Link>
         </div>
