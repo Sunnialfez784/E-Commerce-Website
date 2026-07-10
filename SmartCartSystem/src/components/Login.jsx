@@ -11,11 +11,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [showError, setShowError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const {login} = useAuth();
 
   const handleLogin = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     try {
@@ -54,18 +56,20 @@ const Login = () => {
         gender: data?.data?.gender,
       };
 
-      console.log('Before Login',accessToken)
+      console.log("Before Login", accessToken);
       login({
         user,
         accessToken,
       });
 
-      console.log("after Login")
+      console.log("after Login");
 
       navigate("/", {replace: true});
     } catch (err) {
       console.log(err);
       setShowError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,7 +83,7 @@ const Login = () => {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="section-surface flex flex-col p-7 sm:p-9">
+        <form onSubmit={handleLogin} className={`section-surface flex flex-col p-7 sm:p-9 ${loading ? "pointer-events-none select-none" : ""}`}>
           <span className="premium-pill mb-4 self-start">Welcome back</span>
           <h1 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Log in to your account</h1>
           <p className="mt-1.5 text-sm text-slate-500">Enter your details to continue shopping.</p>
@@ -99,7 +103,9 @@ const Login = () => {
               </button>
             </div>
 
-            <Link to='/sendingemail' className="premium-label ml-3">Forgot Password</Link>
+            <Link to="/sendingemail" className="premium-label ml-3">
+              Forgot Password
+            </Link>
           </div>
 
           <button type="submit" className="premium-btn-primary mt-7 w-full py-3.5 text-base">
@@ -114,6 +120,11 @@ const Login = () => {
             </Link>
           </div>
         </form>
+        {loading && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-white/40 backdrop-blur-[2px]">
+            <Loader isLoader />
+          </div>
+        )}
       </div>
     </main>
   );
