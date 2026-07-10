@@ -34,12 +34,10 @@ const BillingDetails = () => {
         setShowForm(true);
       }
     }
-    }, [savedAddresses, user]);
+  }, [savedAddresses, user]);
 
   const deleteAddress = (deleteItem) => {
-    const updatedAddresses = savedAddresses.filter(
-      (item) => !(item.email === deleteItem.email && item.address === deleteItem.address)
-    );
+    const updatedAddresses = savedAddresses.filter((item) => !(item.email === deleteItem.email && item.address === deleteItem.address));
     setSavedAddresses(updatedAddresses);
     const currentUserAddresses = updatedAddresses.filter((item) => item.email === email);
     setUserAddresses(currentUserAddresses);
@@ -57,28 +55,62 @@ const BillingDetails = () => {
     if (!city) newError.city = "City required";
     if (!state) newError.state = "State required";
     if (!pincode) newError.pincode = "Pincode required";
-    if (Object.keys(newError).length > 0) { setError(newError); return; }
+    if (Object.keys(newError).length > 0) {
+      setError(newError);
+      return;
+    }
 
     try {
       const res = await fetch(`${BASE_URL}/users/user-address`, {
         method: "POST",
-        headers: {Authorization: `Bearer ${token}`, "Content-Type": "application/json"},
-        body: JSON.stringify({fullName, pincode, state, city, address, country}),
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName,
+          pincode,
+          state,
+          city,
+          address,
+          country,
+        }),
       });
+
       const data = await res.json();
-      if (data.success) { alert("Address added successfully"); }
-      else { alert(data.message); }
+
+      if (!res.ok || !data.success) {
+        alert(data.message);
+        return; // IMPORTANT
+      }
+
+      alert("Address added successfully");
+
+      const billingData = {
+        fullName,
+        country,
+        address,
+        city,
+        state,
+        pincode,
+        email,
+        phone,
+      };
+
+      const updatedAddresses = [...savedAddresses, billingData];
+
+      setSavedAddresses(updatedAddresses);
+
+      const currentUserAddresses = updatedAddresses.filter((item) => item.email === email);
+
+      setUserAddresses(currentUserAddresses);
+
+      setSelectedAddress(billingData);
+
+      setShowForm(false);
     } catch (error) {
       alert("Something went wrong");
     }
-
-    const billingData = {fullName, country, address, city, state, pincode, email, phone};
-    const updatedAddresses = [...savedAddresses, billingData];
-    setSavedAddresses(updatedAddresses);
-    const currentUserAddresses = updatedAddresses.filter((item) => item.email === email);
-    setUserAddresses(currentUserAddresses);
-    setSelectedAddress(billingData);
-    setShowForm(false);
   };
 
   return (
@@ -159,7 +191,9 @@ const BillingDetails = () => {
                 </div>
               </div>
 
-              <button type="submit" className="premium-btn-primary mt-2 w-full py-3.5 text-base">Save Address</button>
+              <button type="submit" className="premium-btn-primary mt-2 w-full py-3.5 text-base">
+                Save Address
+              </button>
             </form>
           </div>
         </div>
@@ -178,34 +212,36 @@ const BillingDetails = () => {
             </div>
 
             <button
-              onClick={() => { setShowForm(true); setShowModal(false); }}
-              className="mb-4 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50"
-            >
+              onClick={() => {
+                setShowForm(true);
+                setShowModal(false);
+              }}
+              className="mb-4 flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-slate-300 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50">
               <Plus className="h-4 w-4" />
               Add New Address
             </button>
 
             <div className="max-h-[50vh] space-y-3 overflow-y-auto">
               {userAddresses.map((item, index) => (
-                <div
-                  key={index}
-                  onClick={() => setSelectedAddress(item)}
-                  className={`cursor-pointer rounded-2xl border p-4 transition ${
-                    selectedAddress?.address === item.address
-                      ? "border-slate-950 bg-slate-50 shadow-sm"
-                      : "border-slate-200 hover:border-slate-300"
-                  }`}
-                >
+                <div key={index} onClick={() => setSelectedAddress(item)} className={`cursor-pointer rounded-2xl border p-4 transition ${selectedAddress?.address === item.address ? "border-slate-950 bg-slate-50 shadow-sm" : "border-slate-200 hover:border-slate-300"}`}>
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex gap-3">
                       <input type="radio" checked={selectedAddress?.address === item.address} readOnly className="mt-1 h-4 w-4 shrink-0 text-slate-950 focus:ring-slate-950" />
                       <div>
                         <h3 className="text-sm font-semibold text-slate-900">{item.fullName}</h3>
-                        <p className="mt-0.5 text-sm text-slate-500">{item.address}, {item.city}, {item.state} – {item.pincode}</p>
+                        <p className="mt-0.5 text-sm text-slate-500">
+                          {item.address}, {item.city}, {item.state} – {item.pincode}
+                        </p>
                         {item.phone && <p className="text-sm text-slate-500">{item.phone}</p>}
                       </div>
                     </div>
-                    <button onClick={(e) => { e.stopPropagation(); deleteAddress(item); }} className="icon-btn h-9 w-9 shrink-0" aria-label="Delete address">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteAddress(item);
+                      }}
+                      className="icon-btn h-9 w-9 shrink-0"
+                      aria-label="Delete address">
                       <TrashIcon className="h-4 w-4" />
                     </button>
                   </div>
