@@ -110,8 +110,7 @@ const Register = () => {
         console.log(err);
       });
 
-      console.log('Testing Project');
-    console.log({firstName, lastName, email, password, phone, role});
+    console.log("Testing Project");
   };
 
   return (
