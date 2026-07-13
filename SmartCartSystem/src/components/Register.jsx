@@ -54,10 +54,10 @@ const Register = () => {
     // const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
     // const userExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
 
-    if (userExists) {
-      alert("User already exists with this email");
-      return;
-    }
+    // if (userExists) {
+    //   alert("User already exists with this email");
+    //   return;
+    // }
 
     // const newUser = {
     //   id: Date.now(),
@@ -70,12 +70,6 @@ const Register = () => {
     // };
 
     // localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
-
-    setFirstName("");
-    setLastName("");
-    setPassword("");
-    setEmail("");
-    setPhone("");
 
     fetch(`${BASE_URL}/users/register-user`, {
       method: "POST",
@@ -92,8 +86,20 @@ const Register = () => {
         role: "user",
       }),
     })
-      .then((response) => response.json())
-      .then((data) => {
+      .then(async (response) => {
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+
+        setFirstName("");
+        setLastName("");
+        setPassword("");
+        setEmail("");
+        setPhone("");
+        setGender("");
+
         alert("Registration successful");
         navigate("/login", {replace: true});
       })
