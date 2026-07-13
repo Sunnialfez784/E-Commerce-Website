@@ -15,11 +15,11 @@ import fashion from "../assets/Images/fashion.png";
 import kids from "../assets/Images/kids.webp";
 import sports from "../assets/Images/sports.webp";
 import furniture from "../assets/Images/furniture.webp";
-import keychain from "../../../Admin-Panel/src/assets/img/keychain.webp";
 import camera from "../assets/Images/camera.webp";
-import speaker from "../../../Admin-Panel/src/assets/img/speaker.webp";
-import beauty from "../../../Admin-Panel/src/assets/img/beauty.webp";
-import books from "../../../../Admin-Panel/src/assets/img/books.webp";
+import keychain from "../assets/Images/keychain.webp";
+import speaker from "../assets/Images/speaker.webp";
+import beauty from "../assets/Images/beauty.webp";
+import books from "../assets/Images/books.webp";
 import {PackageSearch, ChevronLeft, ChevronRight} from "lucide-react";
 
 import {BASE_URL} from "../apis";
