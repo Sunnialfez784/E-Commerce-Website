@@ -17,114 +17,105 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  // const addUser = (e) => {
-  //   setError({});
-  //   e.preventDefault();
-
-  //   if (!firstName || !lastName || !password || !email || !phone || !gender) {
-  //     setError({
-  //       firstName: !firstName && "Firstname required",
-  //       lastName: !lastName && "Name required",
-  //       password: !password && "Password required",
-  //       email: !email && "Email required",
-  //       phone: !phone && "Phone required",
-  //       gender: !gender && "Gender required",
-  //     });
-  //     return;
-  //   }
-
-  //   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
-  //   if (!emailRegex.test(email)) {
-  //     setError({email: "Invalid email format"});
-  //     return;
-  //   }
-
-  //   const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%]).{8,}$/;
-  //   if (!passwordRegex.test(password)) {
-  //     setError({password: "Weak password"});
-  //     return;
-  //   }
-
-  //   const phoneRegex = /^(\+91[\-\s]?)?[6-9]\d{9}$/;
-  //   if (!phoneRegex.test(phone)) {
-  //     setError({phone: "Invalid phone number"});
-  //     return;
-  //   }
-
-  //   // const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-  //   // const userExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
-
-  //   // if (userExists) {
-  //   //   alert("User already exists with this email");
-  //   //   return;
-  //   // }
-
-  //   // const newUser = {
-  //   //   id: Date.now(),
-  //   //   firstName: firstName.trim(),
-  //   //   lastName: lastName.trim(),
-  //   //   password,
-  //   //   email: email.trim().toLowerCase(),
-  //   //   phone: phone.trim(),
-  //   //   gender,
-  //   // };
-
-  //   // localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
-
-  //   fetch(`${BASE_URL}/users/register-user`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       firstName,
-  //       lastName,
-  //       password,
-  //       email,
-  //       phone,
-  //       gender,
-  //       role: "user",
-  //     }),
-  //   })
-  //     .then(async (response) => {
-  //       const data = await response.json();
-
-  //       if (!response.ok) {
-  //         throw new Error(data.message);
-  //       }
-
-  //       setFirstName("");
-  //       setLastName("");
-  //       setPassword("");
-  //       setEmail("");
-  //       setPhone("");
-  //       setGender("");
-
-  //       alert("Registration successful");
-  //       navigate("/login", {replace: true});
-
-  //       console.log("BASE_URL =", BASE_URL);
-  //       console.log("ENV =", import.meta.env.VITE_BASE_URL);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-
-  // console.log({firstName, lastName, email, password, phone, role});
-  // };
-
   const addUser = (e) => {
+    setError({});
     e.preventDefault();
 
-    console.log("Submit clicked");
-    alert("Submit clicked");
+    if (!firstName || !lastName || !password || !email || !phone || !gender) {
+      setError({
+        firstName: !firstName && "Firstname required",
+        lastName: !lastName && "Name required",
+        password: !password && "Password required",
+        email: !email && "Email required",
+        phone: !phone && "Phone required",
+        gender: !gender && "Gender required",
+      });
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      setError({email: "Invalid email format"});
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError({password: "Weak password"});
+      return;
+    }
+
+    const phoneRegex = /^(\+91[\-\s]?)?[6-9]\d{9}$/;
+    if (!phoneRegex.test(phone)) {
+      setError({phone: "Invalid phone number"});
+      return;
+    }
+
+    // const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    // const userExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
+
+    // if (userExists) {
+    //   alert("User already exists with this email");
+    //   return;
+    // }
+
+    // const newUser = {
+    //   id: Date.now(),
+    //   firstName: firstName.trim(),
+    //   lastName: lastName.trim(),
+    //   password,
+    //   email: email.trim().toLowerCase(),
+    //   phone: phone.trim(),
+    //   gender,
+    // };
+
+    // localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
+
+    fetch(`${BASE_URL}/users/register-user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        password,
+        email,
+        phone,
+        gender,
+        role: "user",
+      }),
+    })
+      .then(async (response) => {
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message);
+        }
+
+        setFirstName("");
+        setLastName("");
+        setPassword("");
+        setEmail("");
+        setPhone("");
+        setGender("");
+
+        alert("Registration successful");
+        navigate("/login", {replace: true});
+
+        console.log("BASE_URL =", BASE_URL);
+        console.log("ENV =", import.meta.env.VITE_BASE_URL);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+      console.log('Testing Project');
+    console.log({firstName, lastName, email, password, phone, role});
   };
-
-
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
-      <button onClick={()=>console.log('i m clicked')} className="p-4 bg-black text-white">brtn</button>
       <form onSubmit={addUser} className="section-surface flex w-full max-w-xl flex-col p-7 sm:p-9">
         <span className="premium-pill mb-4 self-start">Create account</span>
         <h1 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Join Novo Trends</h1>
