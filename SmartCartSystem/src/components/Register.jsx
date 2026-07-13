@@ -18,7 +18,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const addUser = (e) => {
-    setError("");
+    setError({});
     e.preventDefault();
 
     if (!firstName || !lastName || !password || !email || !phone || !gender) {
@@ -51,33 +51,31 @@ const Register = () => {
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    const userExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
+    // const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
+    // const userExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
 
     if (userExists) {
       alert("User already exists with this email");
       return;
     }
 
-    const newUser = {
-      id: Date.now(),
-      firstName: firstName.trim(),
-      lastName: lastName.trim(),
-      password,
-      email: email.trim().toLowerCase(),
-      phone: phone.trim(),
-      gender,
-    };
+    // const newUser = {
+    //   id: Date.now(),
+    //   firstName: firstName.trim(),
+    //   lastName: lastName.trim(),
+    //   password,
+    //   email: email.trim().toLowerCase(),
+    //   phone: phone.trim(),
+    //   gender,
+    // };
 
-    localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
+    // localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
 
     setFirstName("");
     setLastName("");
     setPassword("");
     setEmail("");
     setPhone("");
-    alert("Registration successful. Please login.");
-    navigate("/login", {replace: true});
 
     fetch(`${BASE_URL}/users/register-user`, {
       method: "POST",
@@ -95,8 +93,13 @@ const Register = () => {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log("Success:", data))
-      .catch((error) => console.log("Error:", error));
+      .then((data) => {
+        alert("Registration successful");
+        navigate("/login", {replace: true});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     // console.log({firstName, lastName, email, password, phone, role});
   };
