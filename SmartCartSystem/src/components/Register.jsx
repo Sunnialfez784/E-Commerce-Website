@@ -102,6 +102,9 @@ const Register = () => {
 
         alert("Registration successful");
         navigate("/login", {replace: true});
+
+        console.log("BASE_URL =", BASE_URL);
+        console.log("ENV =", import.meta.env.VITE_BASE_URL);
       })
       .catch((err) => {
         console.log(err);
