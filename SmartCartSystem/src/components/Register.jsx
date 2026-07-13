@@ -120,8 +120,11 @@ const Register = () => {
     alert("Submit clicked");
   };
 
+
+
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
+      <button onClick={()=>console.log('i m clicked')}>brtn</button>
       <form onSubmit={addUser} className="section-surface flex w-full max-w-xl flex-col p-7 sm:p-9">
         <span className="premium-pill mb-4 self-start">Create account</span>
         <h1 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl">Join Novo Trends</h1>
