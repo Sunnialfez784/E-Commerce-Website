@@ -110,14 +110,14 @@ const Register = () => {
   //       console.log(err);
   //     });
 
+  // console.log({firstName, lastName, email, password, phone, role});
+  // };
+
   const addUser = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  console.log("Submit clicked");
-  alert("Submit clicked");
-};
-
-    // console.log({firstName, lastName, email, password, phone, role});
+    console.log("Submit clicked");
+    alert("Submit clicked");
   };
 
   return (
