@@ -78,7 +78,23 @@ const Header = () => {
     fetchData();
   }, [token]);
 
-  const filteredProducts = search ? allProducts.filter((item) => item.productName?.toLowerCase().includes(search.toLowerCase())) : [];
+  const filteredProducts = search
+    ? allProducts.filter((item) => {
+        const keyword = search.toLowerCase().trim();
+
+        return Object.values(item).some((value) => {
+          if (typeof value === "string") {
+            return value.toLowerCase().includes(keyword);
+          }
+
+          if (typeof value === "object" && value !== null) {
+            return Object.values(value).some((v) => typeof v === "string" && v.toLowerCase().includes(keyword));
+          }
+
+          return false;
+        });
+      })
+    : []; 
 
   const handleLogout = async () => {
     if (!token) {
@@ -165,7 +181,7 @@ const Header = () => {
       <div className="flex items-center justify-between gap-3">
         <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-3 text-slate-900">
           <img src={Appsile} alt="Novo Trends" className=" h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm lg:h-12 lg:w-12" />
-          
+
           <div className="min-w-0">
             <h1 className="whitespace-nowrap text-lg font-semibold tracking-tight sm:text-xl lg:text-2xl">Novo Trends</h1>
 

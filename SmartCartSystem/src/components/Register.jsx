@@ -1,10 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {BASE_URL} from "../apis";
 import {UserPlus} from "lucide-react";
-import {useAuth} from "../context/AuthContext";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -17,7 +16,6 @@ const Register = () => {
   const [error, setError] = useState({});
 
   const navigate = useNavigate();
-  const {registeredUsers, setRegisteredUsers} = useAuth();
 
   const addUser = (e) => {
     setError("");
@@ -72,7 +70,6 @@ const Register = () => {
     };
 
     localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
-    setRegisteredUsers((prevUsers) => [...prevUsers, newUser]);
 
     setFirstName("");
     setLastName("");
@@ -101,6 +98,7 @@ const Register = () => {
       .then((data) => console.log("Success:", data))
       .catch((error) => console.log("Error:", error));
 
+    // console.log({firstName, lastName, email, password, phone, role});
   };
 
   return (

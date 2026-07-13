@@ -83,6 +83,14 @@ const Details = () => {
           url = `${BASE_URL}/products/all-products-by-name?productType=toys`;
         } else if (state.productType === "watch") {
           url = `${BASE_URL}/products/all-products-by-name?productType=watch`;
+        } else if (state.productType === "speaker") {
+          url = `${BASE_URL}/products/all-products-by-name?productType=speaker`;
+        } else if (state.productType === "instrument") {
+          url = `${BASE_URL}/products/all-products-by-name?productType=instrument`;
+        } else if (state.productType === "beauty") {
+          url = `${BASE_URL}/products/all-products-by-name?productType=beauty`;
+        } else if (state.productType === "books") {
+          url = `${BASE_URL}/products/all-products-by-name?productType=books`;
         }
 
         console.log("PRODUCT TYPE =>", state.productType);
@@ -229,7 +237,7 @@ const Details = () => {
         )}
       </main>
       <div className="w-full max-w-[1360px] mx-auto px-5 lg:px-8 py-10">
-        <h2 className="mb-6 text-2xl font-bold text-slate-950">Related Bikes</h2>
+        <h2 className="mb-6 text-2xl font-bold text-slate-950">Related Products</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {relatedProducts.map((item) => (

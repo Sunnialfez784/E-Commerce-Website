@@ -11,6 +11,15 @@ import haedPhones1 from "../assets/Images/h1.png";
 import mivi1 from "../assets/Images/mivi1.png";
 import shoes1 from "../assets/Images/shoes1.png";
 import instrument1 from "../assets/Images/instrument1.png";
+import fashion from "../assets/Images/fashion.png";
+import kids from "../assets/Images/kids.webp";
+import sports from "../assets/Images/sports.webp";
+import furniture from "../assets/Images/furniture.webp";
+import keychain from "../../../Admin-Panel/src/assets/img/keychain.webp";
+import camera from "../assets/Images/camera.webp";
+import speaker from "../../../Admin-Panel/src/assets/img/speaker.webp";
+import beauty from "../../../Admin-Panel/src/assets/img/beauty.webp";
+import books from "../../../../Admin-Panel/src/assets/img/books.webp";
 import {PackageSearch, ChevronLeft, ChevronRight} from "lucide-react";
 
 import {BASE_URL} from "../apis";
@@ -19,16 +28,85 @@ import {useAuth} from "../context/AuthContext";
 import {data, Link} from "react-router-dom";
 
 const Home = () => {
-  const image = [Laptop1, Bike1, Car1, Phone1, watch1, haedPhones1, mivi1, shoes1, instrument1];
+  const sliderItems = [
+    {
+      image: Car1,
+      route: "/cars",
+    },
+    {
+      image: Bike1,
+      route: "/bikes",
+    },
+    {
+      image: Laptop1,
+      route: "/laptops",
+    },
+    {
+      image: Phone1,
+      route: "/mobiles",
+    },
+    {
+      image: fashion,
+      route: "/fashion",
+    },
+    {
+      image: kids,
+      route: "/kids",
+    },
+    {
+      image: sports,
+      route: "/sports",
+    },
+    {
+      image: furniture,
+      route: "/furniture",
+    },
+    {
+      image: keychain,
+      route: "/keychain",
+    },
+    {
+      image: camera,
+      route: "/camera",
+    },
+    {
+      image: haedPhones1,
+      route: "/headphones",
+    },
+    {
+      image: shoes1,
+      route: "/shoes",
+    },
+    {
+      image: watch1,
+      route: "/watches",
+    },
+    {
+      image: speaker,
+      route: "/speaker",
+    },
+    {
+      image: instrument1,
+      route: "/instruments",
+    },
+    {
+      image: beauty,
+      route: "/beauty",
+    },
+    {
+      image: books,
+      route: "/books",
+    },
+  ];
   const {token} = useAuth();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + image.length) % image.length);
+    setCurrentIndex((prev) => (prev - 1 + sliderItems.length) % sliderItems.length);
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % image.length);
+    setCurrentIndex((prev) => (prev + 1) % sliderItems.length);
   };
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,7 +133,7 @@ const Home = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % image.length);
+      setCurrentIndex((prev) => (prev + 1) % sliderItems.length);
     }, 5000);
     return () => clearInterval(interval);
   }, [currentIndex]);
@@ -73,7 +151,7 @@ const Home = () => {
                 <h1 className="text-3xl font-semibold leading-tight tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">India's Smart Hub</h1>
                 <h1 className="mt-1 text-3xl font-semibold leading-tight tracking-tight text-slate-600 sm:text-4xl lg:text-5xl">for Tech &amp; Vehicles</h1>
                 <p className="mt-4 max-w-xl text-base leading-7 text-slate-500">A premium storefront for products, accessories, and essentials with a cleaner, more professional shopping experience.</p>
-                <Link to="/laptops" className="premium-btn-primary mt-6 self-start px-6 py-3.5 text-base">
+                <Link to={sliderItems[currentIndex].route} className="premium-btn-primary mt-6 self-start px-6 py-3.5 text-base">
                   Shop Now
                 </Link>
               </div>
@@ -82,7 +160,7 @@ const Home = () => {
                 <div className="relative w-full max-w-xl rounded-[30px] bg-gradient-to-br from-white to-slate-100 p-4 shadow-[0_20px_60px_-30px_rgba(15,23,42,0.45)]">
                   <div className="absolute left-5 top-5 z-10 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm backdrop-blur">New arrivals</div>
 
-                  <img src={image[currentIndex]} alt="slider" className="h-[220px] w-full object-contain transition duration-500 ease-in-out hover:scale-[1.02] sm:h-[320px] lg:h-[380px]" />
+                  <img src={sliderItems[currentIndex].image} alt={sliderItems[currentIndex].category} className="h-[220px] w-full object-contain transition duration-500 ease-in-out hover:scale-[1.02] sm:h-[320px] lg:h-[380px]" />
 
                   <button onClick={goToPrev} aria-label="Previous slide" className="absolute left-2 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-900 sm:h-9 sm:w-9">
                     <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -93,7 +171,7 @@ const Home = () => {
                   </button>
 
                   <div className="mt-3 flex items-center justify-center gap-1.5">
-                    {image.map((_, i) => (
+                    {sliderItems.map((_, i) => (
                       <button key={i} onClick={() => setCurrentIndex(i)} className={`shrink-0 appearance-none border-0 bg-transparent p-0 outline-none rounded-full transition-all duration-300 h-1 w-1 sm:h-1.5 sm:w-1.5 ${i === currentIndex ? "w-4 sm:w-6 bg-slate-950" : "bg-slate-300"}`} aria-label={`Go to slide ${i + 1}`} />
                     ))}
                   </div>

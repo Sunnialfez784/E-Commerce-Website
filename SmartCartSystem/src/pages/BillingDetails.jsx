@@ -60,6 +60,13 @@ const BillingDetails = () => {
       return;
     }
 
+    const alreadyExist = userAddresses.some((item) => item.address.trim().toLowerCase() === address.trim().toLowerCase() && item.city.trim().toLowerCase() === city.trim().toLowerCase() && item.state.trim().toLowerCase() === state.trim().toLowerCase() && item.pincode === pincode);
+
+    if (alreadyExist) {
+      alert("Address already exists");
+      return;
+    }
+
     try {
       const res = await fetch(`${BASE_URL}/users/user-address`, {
         method: "POST",
@@ -80,8 +87,13 @@ const BillingDetails = () => {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        alert(data.message);
-        return; // IMPORTANT
+        if (data.errors?.length) {
+          alert(data.errors.join("\n"));
+        } else {
+          alert(data.message);
+        }
+
+        return;
       }
 
       alert("Address added successfully");
