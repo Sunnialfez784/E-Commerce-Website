@@ -21,6 +21,8 @@ const BillingDetails = () => {
   const {token, user, savedAddresses, setSavedAddresses} = useAuth();
 
   useEffect(() => {
+    if (!token) return;
+
     if (user) {
       setEmail(user.email || "");
       setFullName(user.name || "");
@@ -113,7 +115,7 @@ const BillingDetails = () => {
 
       setSavedAddresses(updatedAddresses);
 
-      const currentUserAddresses = updatedAddresses.filter((item) => item.email === email);
+      const currentUserAddresses = savedAddresses.filter((item) => item.email === user.email);
 
       setUserAddresses(currentUserAddresses);
 
