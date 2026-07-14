@@ -18,15 +18,13 @@ export const AuthProvider = ({children}) => {
   const addBtn = useCallback((product_id) => {
     setQuantities((prev) => ({
       ...prev,
-
-      [product_id]: (prev[product_id] || 1) + 1,
+      [product_id]: Math.min((prev[product_id] || 1) + 1, 5),
     }));
   }, []);
 
   const minusBtn = useCallback((product_id) => {
     setQuantities((prev) => ({
       ...prev,
-
       [product_id]: Math.max((prev[product_id] || 1) - 1, 1),
     }));
   }, []);
