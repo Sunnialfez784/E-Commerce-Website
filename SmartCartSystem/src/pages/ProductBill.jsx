@@ -104,7 +104,6 @@ const ProductBill = () => {
                     <thead>
                       <tr className="bg-slate-950 text-white">
                         <th className="rounded-tl-2xl px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">User</th>
-                        {/* <th className="rounded-tl-2xl px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Product</th> */}
                         <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Product</th>
                         <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Date</th>
                         <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Quantity</th>

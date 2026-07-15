@@ -43,9 +43,6 @@ function AdminUsers({ searchTerm = "" }) {
     return items ?? usersWithOrders;
   }, [items, usersWithOrders]);
 
-  console.log("SOURCE ITEMS", sourceItems);
-  console.log("USERS DATA", data);
-
   const filtered = useMemo(() => {
     const query = search.toLowerCase();
 
@@ -72,31 +69,6 @@ function AdminUsers({ searchTerm = "" }) {
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const paged = filtered.slice((page - 1) * pageSize, page * pageSize);
-
-  // function toggleBlock(id) {
-  //   setItems((current) => {
-  //     const currentItems = current ?? data ?? [];
-  //     const next = currentItems.map((user) => (user.id === id ? {...user, status: user.status === "Blocked" ? "Active" : "Blocked"} : user));
-  //     const updated = next.find((user) => user.id === id) || null;
-  //     setSelectedUserId(updated?.id || selectedUserId);
-  //     return next;
-  //   });
-  //   showToast("User access updated.", "info");
-  // }
-
-  // const toggleBlock = async (user) => {
-  //   try {
-  //     const action = user.ac_status === "active" ? "block" : "unblock";
-
-  //     await adminApi.userBlocked(user.user_id, accessToken, action);
-
-  //     reload();
-
-  //     showToast(action === "block" ? "User blocked successfully" : "User unblocked successfully", "info");
-  //   } catch (error) {
-  //     console.log(error.response?.data);
-  //   }
-  // };
 
   const toggleBlock = async (user) => {
     const ac_status = user.ac_status === "active" ? "block" : "active";
