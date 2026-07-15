@@ -36,8 +36,6 @@ const Login = () => {
 
       const data = await res.json();
 
-      console.log("API DATA:", data);
-
       if (data.success) {
         console.log("SUCCESS BLOCK");
       }
@@ -57,13 +55,10 @@ const Login = () => {
         gender: data?.data?.gender,
       };
 
-      console.log("Before Login", accessToken);
       login({
         user,
         accessToken,
       });
-
-      console.log("after Login");
 
       navigate("/", {replace: true});
     } catch (err) {
