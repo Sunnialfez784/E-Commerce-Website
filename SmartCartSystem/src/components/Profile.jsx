@@ -53,7 +53,7 @@ const Profile = () => {
       console.log("UPDATED DATA:", data);
 
       if (!response.ok) {
-        throw new Error(data.message || "Update failed");
+        throw new Error(data.errors[0]);
       }
 
       const updatedUser = {

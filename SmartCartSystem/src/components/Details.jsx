@@ -35,9 +35,9 @@ const Details = () => {
       });
       const data = await res.json();
       if (data.success) {
-        alert("Product added successfully");
+        alert("Product added successfully, Go to the cart Item!");
       } else {
-        alert(data.message);
+        alert(data.errors[0]);
       }
     } catch (error) {
       alert("Product not added");

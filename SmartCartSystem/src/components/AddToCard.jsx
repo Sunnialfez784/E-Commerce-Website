@@ -61,11 +61,18 @@ const AddToCard = () => {
       }
 
       if (paymentMethod === "COD") {
-        await fetch(`${BASE_URL}/orders/order-items`, {
+        const codRes = await fetch(`${BASE_URL}/orders/order-items`, {
           method: "POST",
           headers: {Authorization: `Bearer ${token}`, "Content-Type": "application/json"},
           body: JSON.stringify({productIds, quantity: quantities, paymentMethod: "COD"}),
         });
+        const codData = await codRes.json();
+
+        if (!codRes.ok || !codData.success) {
+          alert(codData.message || "Order could not be placed. Please try again.");
+          return;
+        }
+
         navigate("/payment", {state: {paymentMethod: "COD", subtotal}});
         return;
       }
@@ -77,10 +84,16 @@ const AddToCard = () => {
       });
       const orderData = await orderRes.json();
 
-      if (!orderData.success) { alert(orderData.message); return; }
+      if (!orderData.success) {
+        alert(orderData.message);
+        return;
+      }
 
       const razorpayOrder = orderData.data.order;
-      if (!window.Razorpay) { alert("Razorpay SDK failed to load"); return; }
+      if (!window.Razorpay) {
+        alert("Razorpay SDK failed to load");
+        return;
+      }
 
       const options = {
         key: "rzp_test_SsOcmRDBPuYc8e",
@@ -91,7 +104,8 @@ const AddToCard = () => {
         description: "Pay by any UPI",
         handler: async function (response) {
           if (!response.razorpay_order_id || !response.razorpay_payment_id || !response.razorpay_signature) {
-            alert("Payment verification data missing"); return;
+            alert("Payment verification data missing");
+            return;
           }
           try {
             const verifyRes = await fetch(`${BASE_URL}/orders/verify-payment`, {
@@ -102,23 +116,26 @@ const AddToCard = () => {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
                 razorpay_signature: response.razorpay_signature,
-                productIds, quantity: quantities,
+                productIds,
+                quantity: quantities,
               }),
             });
             const verifyData = await verifyRes.json();
             if (verifyData.success) {
               navigate("/orders", {state: {paymentMethod: "RAZORPAY", total: subtotal + 40}});
             } else {
-              alert(verifyData.message || "Payment verification failed");
+              alert(verifyData.errors[0] || "Payment verification failed");
             }
-          } catch (error) { console.log(error); }
+          } catch (error) {
+            console.log(error.errors[0]);
+          }
         },
         theme: {color: "#000000"},
       };
       const razor = new window.Razorpay(options);
       razor.open();
     } catch (error) {
-      console.log(error);
+      console.log(error.errors[0]);
     } finally {
       setLoading(false);
     }
@@ -134,14 +151,13 @@ const AddToCard = () => {
       const result = await res.json();
       if (result.success) setProducts(products.filter((item) => item.cart_item_id !== id));
     } catch (err) {
-      console.error(err);
+      alert("You have been blocked by admin for some reasons");
     } finally {
       setLoading(false);
     }
   };
 
-  const formatNumber = (num) =>
-    Number(num).toLocaleString("en-IN", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const formatNumber = (num) => Number(num).toLocaleString("en-IN", {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
   return (
     <>
@@ -156,12 +172,13 @@ const AddToCard = () => {
           <BillingDetails />
 
           <div className="mt-6 grid gap-6 lg:grid-cols-[1.6fr_1fr]">
-            {/* Cart items */}
             <section className="section-surface p-4 sm:p-6">
               <div className="flex items-center justify-between gap-4 border-b border-slate-200 pb-4">
                 <h2 className="text-xl font-semibold tracking-tight text-slate-950">Cart Items</h2>
                 {!loading && products.length > 0 && (
-                  <span className="premium-pill">{products.length} {products.length === 1 ? "item" : "items"}</span>
+                  <span className="premium-pill">
+                    {products.length} {products.length === 1 ? "item" : "items"}
+                  </span>
                 )}
               </div>
 
@@ -172,32 +189,20 @@ const AddToCard = () => {
                   {products.length > 0 ? (
                     <div className="flex flex-col gap-3">
                       {products.map((item) => (
-                        <div
-                          key={item.cart_item_id}
-                          className="rounded-2xl border border-slate-200 bg-white p-4 transition duration-200 hover:border-slate-300 hover:shadow-[0_8px_20px_-10px_rgba(15,23,42,0.2)]"
-                        >
-                          {/* Top row: checkbox + image + name */}
+                        <div key={item.cart_item_id} className="rounded-2xl border border-slate-200 bg-white p-4 transition duration-200 hover:border-slate-300 hover:shadow-[0_8px_20px_-10px_rgba(15,23,42,0.2)]">
                           <div className="flex items-start gap-3">
-                            <input
-                              type="checkbox"
-                              className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-slate-950 focus:ring-slate-950"
-                              checked={item.checked}
-                              onChange={() => handleCheckbox(item.cart_item_id)}
-                            />
+                            <input type="checkbox" className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-slate-950 focus:ring-slate-950" checked={item.checked} onChange={() => handleCheckbox(item.cart_item_id)} />
                             <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 p-2 sm:h-24 sm:w-24">
                               <img src={item.itemImage} alt={item.itemName} className="h-full w-full object-contain" />
                             </div>
                             <div className="min-w-0 flex-1">
                               <h3 className="text-sm font-semibold text-slate-950 sm:text-base line-clamp-2">{item.itemName}</h3>
                               <p className="mt-1 text-sm text-slate-500 line-clamp-1">{item.productDetails}</p>
-                              <p className="mt-2 text-lg font-bold tracking-tight text-slate-950">
-                                ₹{formatNumber((Number(item.itemPrice) / Number(item.itemQuantity || item.quantity || 1)) * getQuantity(item.product_id))}
-                              </p>
+                              <p className="mt-2 text-lg font-bold tracking-tight text-slate-950">₹{formatNumber((Number(item.itemPrice) / Number(item.itemQuantity || item.quantity || 1)) * getQuantity(item.product_id))}</p>
                             </div>
                           </div>
 
-                          {/* Bottom row: qty + delete */}
-                          <div className="mt-3 flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
+=                          <div className="mt-3 flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
                             <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1 shadow-sm">
                               <button onClick={() => minusBtn(item.product_id)} className="flex h-8 w-8 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100" aria-label="Decrease">
                                 <Minus className="h-3.5 w-3.5" />
@@ -228,7 +233,6 @@ const AddToCard = () => {
               )}
             </section>
 
-            {/* Order summary */}
             <aside className="h-fit lg:sticky lg:top-28">
               <div className="section-surface p-5 sm:p-6">
                 <h2 className="text-xl font-semibold tracking-tight text-slate-950">Order Summary</h2>
@@ -249,9 +253,7 @@ const AddToCard = () => {
 
                 <div className="flex items-center justify-between pt-5">
                   <span className="text-base font-semibold text-slate-950">Total</span>
-                  <span className="text-2xl font-bold tracking-tight text-slate-950">
-                    ₹{formatNumber(subtotal > 0 ? subtotal + 40 : 0)}
-                  </span>
+                  <span className="text-2xl font-bold tracking-tight text-slate-950">₹{formatNumber(subtotal > 0 ? subtotal + 40 : 0)}</span>
                 </div>
 
                 <div className="mt-6">
