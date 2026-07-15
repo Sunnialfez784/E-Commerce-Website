@@ -77,7 +77,7 @@ const AddToCard = () => {
       });
       const orderData = await orderRes.json();
 
-      if (!orderData.success) { alert("Order creation failed"); return; }
+      if (!orderData.success) { alert(orderData.message); return; }
 
       const razorpayOrder = orderData.data.order;
       if (!window.Razorpay) { alert("Razorpay SDK failed to load"); return; }

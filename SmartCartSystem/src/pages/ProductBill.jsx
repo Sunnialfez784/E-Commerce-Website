@@ -51,7 +51,7 @@ const ProductBill = () => {
                       </p>
                       <p className="flex items-center gap-1.5 text-sm text-slate-500">
                         <Mail className="h-3.5 w-3.5 shrink-0" />
-                        cs@novotrends.com
+                        novotrends2@gmail.com
                       </p>
                     </div>
                   </div>
@@ -83,10 +83,10 @@ const ProductBill = () => {
                   </p>
                 </div>
                 <div>
-                  <h3 className="mb-2 text-sm font-semibold text-slate-950">Billing Address</h3>
+                  <h3 className="mb-2 text-sm font-semibold text-slate-950">Shipped City & State</h3>
                   <div className="text-sm leading-6 text-slate-600">
-                    <p>{bill.buyer_address}</p>
-                    <p>{bill.buyer_city}</p>
+                    {/* <p>{bill.buyer_address}</p> */}
+                    <p>{bill.buyer_city_state}</p>
                   </div>
                 </div>
                 <div>
@@ -103,16 +103,21 @@ const ProductBill = () => {
                   <table className="w-full min-w-[480px] border-collapse">
                     <thead>
                       <tr className="bg-slate-950 text-white">
-                        <th className="rounded-tl-2xl px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Product</th>
+                        <th className="rounded-tl-2xl px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">User</th>
+                        {/* <th className="rounded-tl-2xl px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Product</th> */}
+                        <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Product</th>
                         <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Date</th>
+                        <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em]">Quantity</th>
                         <th className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.12em]">Price</th>
                         <th className="rounded-tr-2xl px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.12em]">Total</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr className="border-b border-slate-200 transition hover:bg-slate-50">
+                        <td className="px-4 py-4 font-medium text-slate-900">{bill.User.firstName} {bill.User.lastName}</td>
                         <td className="px-4 py-4 font-medium text-slate-900">{bill.productName}</td>
                         <td className="px-4 py-4 text-slate-500">{bill.bill_date}</td>
+                        <td className="px-4 py-4 text-slate-500">{bill.quantity}</td>
                         <td className="px-4 py-4 text-center text-slate-500">₹{bill.totalPrice}</td>
                         <td className="px-4 py-4 text-center font-semibold text-emerald-600">₹{bill.totalPrice}</td>
                       </tr>

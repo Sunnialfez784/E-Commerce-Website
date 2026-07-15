@@ -6,7 +6,21 @@ export const AuthProvider = ({children}) => {
   const [token, setToken] = useState(localStorage.getItem("accessToken") || "");
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
-  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [savedAddresses, setSavedAddressesState] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("savedAddresses")) || [];
+    } catch {
+      return [];
+    }
+  });
+
+  const setSavedAddresses = (addresses) => {
+    setSavedAddressesState((prev) => {
+      const next = typeof addresses === "function" ? addresses(prev) : addresses;
+      localStorage.setItem("savedAddresses", JSON.stringify(next));
+      return next;
+    });
+  };
 
   const setCartQuantity = (product_id, quantity) => {
     setQuantities((prev) => ({
@@ -47,9 +61,9 @@ export const AuthProvider = ({children}) => {
 
   const logout = () => {
     localStorage.clear();
-
     setUser(null);
     setToken("");
+    setSavedAddressesState([]);
   };
 
   return (

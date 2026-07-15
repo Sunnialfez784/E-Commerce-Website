@@ -21,32 +21,95 @@ const BillingDetails = () => {
   const {token, user, savedAddresses, setSavedAddresses} = useAuth();
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || !user) return;
 
-    if (user) {
-      setEmail(user.email || "");
-      setFullName(user.name || "");
-      const currentUserAddresses = savedAddresses.filter((item) => item.email === user.email);
-      setUserAddresses(currentUserAddresses);
-      if (currentUserAddresses.length > 0) {
-        setSelectedAddress(currentUserAddresses[0]);
-        setShowForm(false);
-      } else {
-        setSelectedAddress(null);
-        setShowForm(true);
-      }
+    setEmail(user.email || "");
+    setFullName(`${user.firstName || ""} ${user.lastName || ""}`);
+
+    setUserAddresses(savedAddresses || []);
+
+    if (savedAddresses?.length > 0) {
+      setSelectedAddress((prev) => prev || savedAddresses[0]);
+      setShowForm(false);
+    } else {
+      setSelectedAddress(null);
+      setShowForm(true);
     }
-  }, [savedAddresses, user]);
+  }, [savedAddresses, user, token]);
 
-  const deleteAddress = (deleteItem) => {
-    const updatedAddresses = savedAddresses.filter((item) => !(item.email === deleteItem.email && item.address === deleteItem.address));
-    setSavedAddresses(updatedAddresses);
-    const currentUserAddresses = updatedAddresses.filter((item) => item.email === email);
-    setUserAddresses(currentUserAddresses);
-    if (selectedAddress?.address === deleteItem.address) {
-      setSelectedAddress(currentUserAddresses[0] || null);
+  useEffect(() => {
+    console.log(savedAddresses);
+  }, [savedAddresses]);
+
+  // const deleteAddress = (deleteItem) => {
+  //   const updatedAddresses = savedAddresses.filter((item) => item && !(item.email === deleteItem.email && item.address === deleteItem.address));
+  //   setSavedAddresses(updatedAddresses);
+  //   const currentUserAddresses = savedAddresses.filter((item) => item && item.user_id === user?.id);
+  //   setUserAddresses(currentUserAddresses);
+  //   if (selectedAddress?.address === deleteItem.address) {
+  //     setSelectedAddress(currentUserAddresses[0] || null);
+  //   }
+  // };
+
+  const deleteAddress = async (deleteItem) => {
+    if (!window.confirm("Are you Sure ?")) return;
+
+    const addressId = deleteItem.id ?? deleteItem._id;
+
+    try {
+      const res = await fetch(`${BASE_URL}/users/delete-address?id=${addressId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        alert(data.message || "Address delete faild!");
+        return;
+      }
+
+      const updatedAddresses = savedAddresses.filter((item) => item && (item.id ?? item._id) !== addressId);
+
+      setSavedAddresses(updatedAddresses);
+      setUserAddresses(updatedAddresses);
+
+      if (selectedAddress && (selectedAddress.id ?? selectedAddress._id) === addressId) {
+        setSelectedAddress(updatedAddresses[0] || null);
+      }
+
+      alert("Address delete Sucessfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong while deleting address");
     }
   };
+
+  useEffect(() => {
+    if (!token) return;
+
+    fetch(`${BASE_URL}/users/get-address`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then(({data}) => {
+        setUserAddresses(data || []);
+        setSavedAddresses(data || []);
+
+        if (data?.length > 0) {
+          setSelectedAddress(data[0]);
+          setShowForm(false);
+        } else {
+          setSelectedAddress(null);
+          setShowForm(true);
+        }
+      })
+      .catch(console.error);
+  }, [token]);
 
   const addUserDetails = async (e) => {
     e.preventDefault();
@@ -77,12 +140,14 @@ const BillingDetails = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fullName,
+          fullName: fullName.trim().toLowerCase(),
           pincode,
-          state,
-          city,
-          address,
-          country,
+          state: state.trim().toLowerCase(),
+          city: city.trim().toLowerCase(),
+          address: address.trim().toLowerCase(),
+          country: country.trim().toLowerCase(),
+          email: user?.email?.trim().toLowerCase(),
+          phone: user?.phone,
         }),
       });
 
@@ -100,26 +165,20 @@ const BillingDetails = () => {
 
       alert("Address added successfully");
 
-      const billingData = {
-        fullName,
-        country,
-        address,
-        city,
-        state,
-        pincode,
-        email,
-        phone,
-      };
+      const response = await fetch(`${BASE_URL}/users/get-address`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      const updatedAddresses = [...savedAddresses, billingData];
+      const result = await response.json();
 
-      setSavedAddresses(updatedAddresses);
+      setSavedAddresses(result.data || []);
+      setUserAddresses(result.data || []);
 
-      const currentUserAddresses = savedAddresses.filter((item) => item.email === user.email);
-
-      setUserAddresses(currentUserAddresses);
-
-      setSelectedAddress(billingData);
+      if (result.data?.length > 0) {
+        setSelectedAddress(result.data[result.data.length - 1]);
+      }
 
       setShowForm(false);
     } catch (error) {
@@ -149,14 +208,13 @@ const BillingDetails = () => {
         </div>
       )}
 
-      {/* Add address modal */}
       {showForm && (
         <div className="fixed inset-0 z-[9999] flex items-end justify-center bg-slate-950/50 px-0 backdrop-blur-sm sm:items-center sm:px-4">
           <div className="relative max-h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white p-5 shadow-2xl sm:max-w-2xl sm:rounded-3xl sm:p-8">
             <button onClick={() => setShowForm(false)} className="icon-btn absolute right-4 top-4" aria-label="Close">
               <X className="h-4 w-4" />
             </button>
-            {/* Handle bar for mobile sheet */}
+
             <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-slate-200 sm:hidden" />
 
             <h2 className="text-xl font-semibold tracking-tight text-slate-950 sm:text-2xl">Add Address</h2>
@@ -195,7 +253,22 @@ const BillingDetails = () => {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="premium-label">Pincode</label>
-                  <input type="number" placeholder="Pincode" className="premium-input" value={pincode} onChange={(e) => setPincode(e.target.value)} />
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    placeholder="Pincode"
+                    className="premium-input"
+                    value={pincode}
+                    maxLength={6}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+
+                      if (value.length <= 6) {
+                        setPincode(value);
+                      }
+                    }}
+                  />
                   {error.pincode && <p className="premium-field-error">{error.pincode}</p>}
                 </div>
                 <div>
@@ -213,7 +286,6 @@ const BillingDetails = () => {
         </div>
       )}
 
-      {/* Select address modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/50 px-0 backdrop-blur-sm sm:items-center sm:px-4">
           <div className="w-full rounded-t-3xl bg-white p-5 shadow-2xl sm:max-w-md sm:rounded-3xl sm:p-6">
