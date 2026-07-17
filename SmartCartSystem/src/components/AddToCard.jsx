@@ -7,7 +7,7 @@ import {BASE_URL} from "../apis";
 import BillingDetails from "../pages/BillingDetails";
 import Loader from "./Loader";
 import {Minus, Plus, ShieldCheck, ShoppingBag, Truck} from "lucide-react";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddToCard = () => {
   const [products, setProducts] = useState([]);
