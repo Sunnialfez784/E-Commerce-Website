@@ -5,6 +5,8 @@ import {BASE_URL} from "../apis";
 import {useAuth} from "../context/AuthContext";
 import {useLocation} from "react-router-dom";
 import {Phone, Mail, Printer} from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const ProductBill = () => {
   const [bill, setBill] = useState(null);
@@ -24,7 +26,7 @@ const ProductBill = () => {
         const data = await res.json();
         setBill(data.data || []);
       } catch (error) {
-        console.log("Error:", error);
+        toast.error("Error:", error);
       }
     };
     Invoice();
@@ -34,17 +36,17 @@ const ProductBill = () => {
     <>
       <Navbar />
       <main className="app-shell w-full">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-10">
           {bill && (
             <div className="section-surface overflow-hidden">
-
               <div className="border-b border-slate-200 px-5 py-6 sm:px-8 sm:py-7">
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
                   <div className="flex items-center gap-4">
                     <img src={logo} alt="logo" className="h-14 w-14 rounded-2xl object-cover sm:h-16 sm:w-16" />
                     <div>
                       <h1 className="text-lg font-semibold tracking-tight text-slate-950 sm:text-xl">Novo Trends Retail Pvt. Ltd.</h1>
-                      
+
                       <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
                         <Phone className="h-3.5 w-3.5 shrink-0" />
                         1800 208 9898
@@ -61,11 +63,7 @@ const ProductBill = () => {
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Tax Invoice</p>
                       <h2 className="text-lg font-semibold text-slate-950">#{bill.invoiceId}</h2>
                     </div>
-                    <button
-                      onClick={() => window.print()}
-                      className="icon-btn"
-                      aria-label="Print invoice"
-                    >
+                    <button onClick={() => window.print()} className="icon-btn" aria-label="Print invoice">
                       <Printer className="h-4 w-4" />
                     </button>
                   </div>
@@ -113,7 +111,9 @@ const ProductBill = () => {
                     </thead>
                     <tbody>
                       <tr className="border-b border-slate-200 transition hover:bg-slate-50">
-                        <td className="px-4 py-4 font-medium text-slate-900">{bill.User.firstName} {bill.User.lastName}</td>
+                        <td className="px-4 py-4 font-medium text-slate-900">
+                          {bill.User.firstName} {bill.User.lastName}
+                        </td>
                         <td className="px-4 py-4 font-medium text-slate-900">{bill.productName}</td>
                         <td className="px-4 py-4 text-slate-500">{bill.bill_date}</td>
                         <td className="px-4 py-4 text-slate-500">{bill.quantity}</td>
@@ -138,9 +138,7 @@ const ProductBill = () => {
                 </div>
               </div>
 
-              <div className="bg-slate-950 py-4 text-center text-sm text-white">
-                Thank you for shopping with Novo Trends ❤️
-              </div>
+              <div className="bg-slate-950 py-4 text-center text-sm text-white">Thank you for shopping with Novo Trends ❤️</div>
             </div>
           )}
         </div>

@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import Navbar from "../components/Navbar";
 import Cards from "../components/Cards";
-import { BASE_URL } from "../apis";
+import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
-import { useAuth } from "../context/AuthContext";
+import {useAuth} from "../context/AuthContext";
 import {PackageSearch} from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Headset = () => {
   const [headset, setHeadset] = useState([]);
@@ -28,15 +30,16 @@ const Headset = () => {
       .then(({data}) => {
         setHeadset(data || []);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => toast.error(err))
       .finally(() => {
         setLoading(false);
       });
   }, []);
 
   return (
-    <>      
+    <>
       <main className="app-shell w-full text-black">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-5">
@@ -45,7 +48,9 @@ const Headset = () => {
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Headset</h2>
               </div>
               {!loading && (
-                <span className="premium-pill">{headset.length} {headset.length === 1 ? "product" : "products"}</span>
+                <span className="premium-pill">
+                  {headset.length} {headset.length === 1 ? "product" : "products"}
+                </span>
               )}
             </div>
 
@@ -69,7 +74,6 @@ const Headset = () => {
           </section>
         </div>
       </main>
-    
     </>
   );
 };

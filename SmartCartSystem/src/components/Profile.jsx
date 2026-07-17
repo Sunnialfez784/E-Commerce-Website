@@ -6,6 +6,8 @@ import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {BASE_URL} from "../apis";
 import Navbar from "./Navbar";
 import {Mail, Phone, User} from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Profile = () => {
   const {user, setUser} = useAuth();
@@ -39,20 +41,18 @@ const Profile = () => {
         },
         body: JSON.stringify({
           user_id: user.user_id,
-          firstName : firstName.trim().toLowerCase(),
-          lastName : lastName.trim().toLowerCase(),
-          email : email.trim().toLowerCase(),
+          firstName: firstName.trim().toLowerCase(),
+          lastName: lastName.trim().toLowerCase(),
+          email: email.trim().toLowerCase(),
           phone,
-          gender : gender.trim().toLowerCase(),
+          gender: gender.trim().toLowerCase(),
         }),
       });
 
       const data = await response.json();
 
-      console.log("UPDATED DATA:", data);
-
       if (!response.ok) {
-        throw new Error(data.errors[0]);
+        throw new Error(data?.errors?.[0] || data?.message || "Update failed");
       }
 
       const updatedUser = {
@@ -65,14 +65,12 @@ const Profile = () => {
       };
 
       localStorage.setItem("user", JSON.stringify(updatedUser));
-      
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-      
       setUser(updatedUser);
-      alert("Profile Updated Successfully");
-      
+
+      toast.success("Profile Updated Successfully");
     } catch (error) {
-      console.error("Error updating data:", error);
+      toast.error(error.message || "Error updating data");
     }
   };
 
@@ -81,6 +79,7 @@ const Profile = () => {
       <Navbar />
 
       <main className="app-shell w-full text-black">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-10">
           <div className="mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Account</p>

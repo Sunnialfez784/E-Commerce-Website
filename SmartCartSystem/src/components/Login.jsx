@@ -6,12 +6,14 @@ import {BASE_URL} from "../apis";
 import {useAuth} from "../context/AuthContext";
 import {AlertCircle, LogIn} from "lucide-react";
 import Loader from "./Loader";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-  const [showError, setShowError] = useState("");
+  // const [showError, setShowError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email,
+          email: email.trim().toLowerCase(),
           password,
           role: "user",
         }),
@@ -60,10 +62,13 @@ const Login = () => {
         accessToken,
       });
 
-      navigate("/", {replace: true});
+      toast.success("Login Successful");
+      setTimeout(() => {
+        navigate("/", {replace: true});
+      }, 1000);
     } catch (err) {
-      console.log(err);
-      setShowError(err.message);
+      toast.error(err.message);
+      // setShowError(err.message);
     } finally {
       setLoading(false);
     }
@@ -71,13 +76,14 @@ const Login = () => {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
+      <ToastContainer position="top-center" autoClose={2500} />
       <div className="relative mx-auto w-full max-w-md">
-        {showError && (
+        {/* {showError && (
           <div role="alert" className="mb-4 flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
             <span>{showError}</span>
           </div>
-        )}
+        )} */}
 
         <form onSubmit={handleLogin} className={`section-surface flex flex-col p-5 sm:p-7 md:p-9 ${loading ? "pointer-events-none select-none" : ""}`}>
           <span className="premium-pill mb-4 self-start">Welcome back</span>

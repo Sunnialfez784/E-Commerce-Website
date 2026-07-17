@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Navbar from "../components/Navbar";
 import {useLocation, useNavigate} from "react-router-dom";
 import {BASE_URL} from "../apis";
 import {useAuth} from "../context/AuthContext";
 import {Banknote, ShieldCheck, Truck} from "lucide-react";
-import Loader from '../components/Loader'
+import Loader from "../components/Loader";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Payment = () => {
   const location = useLocation();
@@ -52,15 +54,13 @@ const Payment = () => {
       console.log(data);
 
       if (data.success) {
-        // alert("Order placed successfully");
+        toast.error("Order placed successfully");
         navigate("/orders");
-      } 
-      // else {
-      //   alert(data.message);
-      // }
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
-      console.log(error);
-      // alert("Something went wrong");
+      toast.error(error);
     } finally {
       setLoading(false);
     }
@@ -69,6 +69,7 @@ const Payment = () => {
   return (
     <>
       <main className="app-shell w-full text-black">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell flex justify-center py-6 lg:py-10">
           <div className="w-full max-w-md">
             {loading ? (

@@ -6,6 +6,8 @@ import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
 import {PackageSearch} from "lucide-react";
 import Details from "../components/Details";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Camera = () => {
   const [camera, setCamera] = useState([]);
@@ -29,7 +31,7 @@ const Camera = () => {
       .then(({data}) => {
         setCamera(data || []);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => toast.error(err))
       .finally(() => {
         setLoading(false);
       });
@@ -38,6 +40,7 @@ const Camera = () => {
   return (
     <>
       <main className="app-shell w-full text-black">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-5">
@@ -46,7 +49,9 @@ const Camera = () => {
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Camera</h2>
               </div>
               {!loading && (
-                <span className="premium-pill">{camera.length} {camera.length === 1 ? "product" : "products"}</span>
+                <span className="premium-pill">
+                  {camera.length} {camera.length === 1 ? "product" : "products"}
+                </span>
               )}
             </div>
 

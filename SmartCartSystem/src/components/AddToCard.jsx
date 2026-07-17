@@ -7,6 +7,7 @@ import {BASE_URL} from "../apis";
 import BillingDetails from "../pages/BillingDetails";
 import Loader from "./Loader";
 import {Minus, Plus, ShieldCheck, ShoppingBag, Truck} from "lucide-react";
+import { ToastContainer } from "react-toastify";
 
 const AddToCard = () => {
   const [products, setProducts] = useState([]);
@@ -56,7 +57,7 @@ const AddToCard = () => {
       const quantities = products.filter((p) => p.checked).map((p) => Number(getQuantity(p.product_id)));
 
       if (productIds.length === 0) {
-        alert("Please select at least one product");
+        toast.success("Please select at least one product");
         return;
       }
 
@@ -69,7 +70,7 @@ const AddToCard = () => {
         const codData = await codRes.json();
 
         if (!codRes.ok || !codData.success) {
-          alert(codData.message || "Order could not be placed. Please try again.");
+          toast.error(codData.message || "Order could not be placed. Please try again.");
           return;
         }
 
@@ -85,13 +86,13 @@ const AddToCard = () => {
       const orderData = await orderRes.json();
 
       if (!orderData.success) {
-        alert(orderData.message);
+        toast.error(orderData.message);
         return;
       }
 
       const razorpayOrder = orderData.data.order;
       if (!window.Razorpay) {
-        alert("Razorpay SDK failed to load");
+        toast.error("Razorpay SDK failed to load");
         return;
       }
 
@@ -104,7 +105,7 @@ const AddToCard = () => {
         description: "Pay by any UPI",
         handler: async function (response) {
           if (!response.razorpay_order_id || !response.razorpay_payment_id || !response.razorpay_signature) {
-            alert("Payment verification data missing");
+            toast.error("Payment verification data missing");
             return;
           }
           try {
@@ -124,7 +125,7 @@ const AddToCard = () => {
             if (verifyData.success) {
               navigate("/orders", {state: {paymentMethod: "RAZORPAY", total: subtotal + 40}});
             } else {
-              alert(verifyData.errors[0] || "Payment verification failed");
+              toast.error(verifyData.errors[0] || "Payment verification failed");
             }
           } catch (error) {
             console.log(error.errors[0]);
@@ -135,7 +136,7 @@ const AddToCard = () => {
       const razor = new window.Razorpay(options);
       razor.open();
     } catch (error) {
-      console.log(error.errors[0]);
+      toast.error(error.errors[0]);
     } finally {
       setLoading(false);
     }
@@ -151,7 +152,7 @@ const AddToCard = () => {
       const result = await res.json();
       if (result.success) setProducts(products.filter((item) => item.cart_item_id !== id));
     } catch (err) {
-      alert("You have been blocked by admin for some reasons");
+      toast.error("You have been blocked by admin for some reasons");
     } finally {
       setLoading(false);
     }
@@ -163,6 +164,7 @@ const AddToCard = () => {
     <>
       <Navbar />
       <main className="app-shell w-full text-black">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-10">
           <div className="mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Checkout</p>
@@ -201,8 +203,8 @@ const AddToCard = () => {
                               <p className="mt-2 text-lg font-bold tracking-tight text-slate-950">₹{formatNumber((Number(item.itemPrice) / Number(item.itemQuantity || item.quantity || 1)) * getQuantity(item.product_id))}</p>
                             </div>
                           </div>
-
-=                          <div className="mt-3 flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
+                          {" "}
+                          <div className="mt-3 flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
                             <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1 shadow-sm">
                               <button onClick={() => minusBtn(item.product_id)} className="flex h-8 w-8 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100" aria-label="Decrease">
                                 <Minus className="h-3.5 w-3.5" />

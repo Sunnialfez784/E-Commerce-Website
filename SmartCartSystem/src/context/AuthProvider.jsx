@@ -77,6 +77,7 @@ export const AuthProvider = ({children}) => {
 
         token,
         user,
+        setUser,
 
         savedAddresses,
         setSavedAddresses,

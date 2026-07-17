@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext";
 import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const SendingEmail = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +17,7 @@ const SendingEmail = () => {
     e.preventDefault();
 
     if (!email) {
-      alert("Please enter your email");
+      toast.warn("Please enter your email");
       return;
     }
 
@@ -35,8 +37,6 @@ const SendingEmail = () => {
 
       const data = await res.json();
 
-      console.log("OTP RESPONSE =>", data);
-
       if (data.success) {
         navigate("/forgotpassword", {
           state: {
@@ -44,11 +44,11 @@ const SendingEmail = () => {
           },
         });
       } else {
-        alert(data.message || "Email not found");
+        toast.error(data.message || "Email not found");
       }
     } catch (error) {
-      console.log(error);
-      alert("Something went wrong");
+      toast.error(error);
+      // toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -56,6 +56,7 @@ const SendingEmail = () => {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
+      <ToastContainer position="top-center" autoClose={2500} />
       <div className="relative w-full max-w-md">
         <form onSubmit={handleSubmit} className={`section-surface flex flex-col p-7 sm:p-9 transition-all duration-200 ${loading ? "pointer-events-none select-none" : ""}`}>
           <span className="premium-pill mb-4 self-start">Send Email</span>

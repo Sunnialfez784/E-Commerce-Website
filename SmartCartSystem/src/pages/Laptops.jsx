@@ -5,6 +5,8 @@ import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
 import {PackageSearch} from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Laptops = () => {
   const [laptopData, setLaptopData] = useState([]);
@@ -28,7 +30,7 @@ const Laptops = () => {
       .then(({data}) => {
         setLaptopData(data || []);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => toast.error(err))
       .finally(() => {
         setLoading(false);
       });
@@ -37,6 +39,7 @@ const Laptops = () => {
   return (
     <>
       <main className="app-shell w-full text-black">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-5">
@@ -45,7 +48,9 @@ const Laptops = () => {
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Laptops</h2>
               </div>
               {!loading && (
-                <span className="premium-pill">{laptopData.length} {laptopData.length === 1 ? "product" : "products"}</span>
+                <span className="premium-pill">
+                  {laptopData.length} {laptopData.length === 1 ? "product" : "products"}
+                </span>
               )}
             </div>
 

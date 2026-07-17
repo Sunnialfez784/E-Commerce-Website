@@ -5,6 +5,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {BASE_URL} from "../apis";
 import {UserPlus} from "lucide-react";
 import Loader from "./Loader";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -53,26 +55,6 @@ const Register = () => {
       return;
     }
 
-    // const users = JSON.parse(localStorage.getItem("registeredUsers") || "[]");
-    // const userExists = users.some((user) => user.email.toLowerCase() === email.toLowerCase() || user.phone === phone);
-
-    // if (userExists) {
-    //   alert("User already exists with this email");
-    //   return;
-    // }
-
-    // const newUser = {
-    //   id: Date.now(),
-    //   firstName: firstName.trim(),
-    //   lastName: lastName.trim(),
-    //   password,
-    //   email: email.trim().toLowerCase(),
-    //   phone: phone.trim(),
-    //   gender,
-    // };
-
-    // localStorage.setItem("registeredUsers", JSON.stringify([...users, newUser]));
-
     setLoading(true);
     fetch(`${BASE_URL}/users/register-user`, {
       method: "POST",
@@ -81,12 +63,12 @@ const Register = () => {
       },
       body: JSON.stringify({
         firstName: firstName.trim().toLowerCase(),
-        lastName : lastName.trim().toLowerCase(),
-        password ,
-        email : email.trim().toLowerCase(),
+        lastName: lastName.trim().toLowerCase(),
+        password,
+        email: email.trim().toLowerCase(),
         phone,
-        gender : gender.trim().toLowerCase(),
-        role: "user", 
+        gender: gender.trim().toLowerCase(),
+        role: "user",
       }),
     })
       .then(async (response) => {
@@ -103,14 +85,17 @@ const Register = () => {
         setPhone("");
         setGender("");
 
-        alert("Registration successful");
-        navigate("/login", {replace: true});
+        toast.success("Registration successful");
+
+        setTimeout(() => {
+          navigate("/login", {replace: true});
+        }, 1000);
 
         console.log("BASE_URL =", BASE_URL);
         console.log("ENV =", import.meta.env.VITE_BASE_URL);
       })
       .catch((err) => {
-        alert(err);
+        toast.error(err.message || "Something went wrong");
       })
       .finally(() => {
         setLoading(false);
@@ -121,6 +106,7 @@ const Register = () => {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
+      <ToastContainer position="top-center" autoClose={2500} />
       {loading ? (
         <Loader />
       ) : (
@@ -152,7 +138,15 @@ const Register = () => {
 
               <div>
                 <label className="premium-label">Number</label>
-                <input type="text" placeholder="+91xxxxxxxxxx" className="premium-input" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <input 
+                  type="text" 
+                  inputMode="numeric" 
+                  pattern="[0-9]*" 
+                  maxLength={10} 
+                  placeholder="+91xxxxxxxxxx" 
+                  className="premium-input" 
+                  value={phone} 
+                  onChange={(e) => setPhone(e.target.value)} />
                 {error.phone && <p className="premium-field-error">{error.phone}</p>}
               </div>
             </div>

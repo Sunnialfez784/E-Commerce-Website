@@ -5,6 +5,8 @@ import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
 import {PackageSearch} from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Beauty = () => {
   const [beauty, setBeauty] = useState([]);
@@ -30,13 +32,14 @@ const Beauty = () => {
       .then(({data}) => {
         setBeauty(data || []);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => toast.success(err))
       .finally(() => setLoading(false));
   }, [token]);
 
   return (
     <>
       <main className="app-shell w-full text-black">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-5">
@@ -45,7 +48,9 @@ const Beauty = () => {
                 <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">beauty</h2>
               </div>
               {!loading && (
-                <span className="premium-pill">{beauty.length} {beauty.length === 1 ? "product" : "products"}</span>
+                <span className="premium-pill">
+                  {beauty.length} {beauty.length === 1 ? "product" : "products"}
+                </span>
               )}
             </div>
 

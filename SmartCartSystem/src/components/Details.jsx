@@ -6,6 +6,8 @@ import {BASE_URL} from "../apis";
 import Loader from "./Loader";
 import {Heart, Minus, Plus, ShieldCheck, ShoppingBag, Star, Truck} from "lucide-react";
 import Cards from "./Cards";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Details = () => {
   const {state} = useLocation();
@@ -35,12 +37,12 @@ const Details = () => {
       });
       const data = await res.json();
       if (data.success) {
-        alert("Product added successfully, Go to the cart Item!");
+        toast.success("Product added successfully, Go to the cart Item!");
       } else {
-        alert(data.errors[0]);
+        toast.error(data.errors[0]);
       }
     } catch (error) {
-      alert("Product not added");
+      toast.error("Product not added");
     } finally {
       setLoading(false);
     }
@@ -129,6 +131,7 @@ const Details = () => {
     <>
       <Navbar />
       <main className="app-shell">
+        <ToastContainer position="top-center" autoClose={2500} />
         {loading ? (
           <Loader />
         ) : (

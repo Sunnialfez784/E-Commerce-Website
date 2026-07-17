@@ -1,5 +1,7 @@
 import React from "react";
 import {CreditCard} from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const RazorPay = () => {
   const handlePayment = () => {
@@ -19,7 +21,7 @@ const RazorPay = () => {
       handler: function (response) {
         console.log("Payment Success:", response);
 
-        alert("Payment Successful");
+        toast.success("Payment Successful");
       },
 
       prefill: {
@@ -42,7 +44,7 @@ const RazorPay = () => {
     razor.on("payment.failed", function (response) {
       console.log(response.error);
 
-      alert("Payment Failed");
+      toast.error("Payment Failed");
     });
 
     razor.open();
@@ -50,6 +52,7 @@ const RazorPay = () => {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4">
+      <ToastContainer position="top-center" autoClose={2500} />
       <div className="section-surface flex flex-col items-center p-9 text-center">
         <span className="premium-pill mb-4">Secure payment</span>
         <h1 className="text-xl font-semibold tracking-tight text-slate-950 sm:text-2xl">Complete your payment</h1>

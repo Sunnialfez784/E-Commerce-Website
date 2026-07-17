@@ -5,6 +5,8 @@ import {BASE_URL} from "../apis";
 import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
 import {PackageSearch} from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Watch = () => {
   const [watch, setWatch] = useState([]);
@@ -28,7 +30,7 @@ const Watch = () => {
       .then(({data}) => {
         setWatch(data || []);
       })
-      .catch((err) => console.error(err))
+      .catch((err) => toast.error(err))
       .finally(() => {
         setLoading(false);
       });
@@ -37,6 +39,7 @@ const Watch = () => {
   return (
     <>
       <main className="app-shell w-full text-black">
+        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-5">

@@ -3,6 +3,8 @@ import React, {useEffect, useState} from "react";
 import {BASE_URL} from "../apis";
 import {useAuth} from "../context/AuthContext";
 import {MapPin, Plus, X} from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const BillingDetails = () => {
   const [fullName, setFullName] = useState("");
@@ -41,16 +43,6 @@ const BillingDetails = () => {
     console.log(savedAddresses);
   }, [savedAddresses]);
 
-  // const deleteAddress = (deleteItem) => {
-  //   const updatedAddresses = savedAddresses.filter((item) => item && !(item.email === deleteItem.email && item.address === deleteItem.address));
-  //   setSavedAddresses(updatedAddresses);
-  //   const currentUserAddresses = savedAddresses.filter((item) => item && item.user_id === user?.id);
-  //   setUserAddresses(currentUserAddresses);
-  //   if (selectedAddress?.address === deleteItem.address) {
-  //     setSelectedAddress(currentUserAddresses[0] || null);
-  //   }
-  // };
-
   const deleteAddress = async (deleteItem) => {
     if (!window.confirm("Are you Sure ?")) return;
 
@@ -67,7 +59,7 @@ const BillingDetails = () => {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        alert(data.message || "Address delete faild!");
+        toast.error(data.message || "Address delete faild!");
         return;
       }
 
@@ -80,10 +72,10 @@ const BillingDetails = () => {
         setSelectedAddress(updatedAddresses[0] || null);
       }
 
-      alert("Address delete Sucessfully!");
+      toast.success("Address delete Sucessfully!");
     } catch (error) {
       console.error(error);
-      alert("Something went wrong while deleting address");
+      toast.error("Something went wrong while deleting address");
     }
   };
 
@@ -128,7 +120,7 @@ const BillingDetails = () => {
     const alreadyExist = userAddresses.some((item) => item.address.trim().toLowerCase() === address.trim().toLowerCase() && item.city.trim().toLowerCase() === city.trim().toLowerCase() && item.state.trim().toLowerCase() === state.trim().toLowerCase() && item.pincode === pincode);
 
     if (alreadyExist) {
-      alert("Address already exists");
+      toast.error("Address already exists");
       return;
     }
 
@@ -155,15 +147,15 @@ const BillingDetails = () => {
 
       if (!res.ok || !data.success) {
         if (data.errors?.length) {
-          alert(data.errors.join("\n"));
+          toast.error(data.errors.join("\n"));
         } else {
-          alert(data.message);
+          toast.error(data.message);
         }
 
         return;
       }
 
-      alert("Address added successfully");
+      toast.success("Address added successfully");
 
       const response = await fetch(`${BASE_URL}/users/get-address`, {
         headers: {
@@ -182,12 +174,13 @@ const BillingDetails = () => {
 
       setShowForm(false);
     } catch (error) {
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 
   return (
     <div className="w-full text-black">
+      <ToastContainer position="top-center" autoClose={2500} />
       {selectedAddress && (
         <div className="section-surface flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
           <div className="flex items-start gap-3">

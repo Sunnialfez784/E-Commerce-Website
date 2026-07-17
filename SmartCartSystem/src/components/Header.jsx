@@ -9,6 +9,8 @@ import appsile2 from "../assets/Nav/shop7.png";
 import {TiShoppingCart} from "react-icons/ti";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from "react-toastify";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -69,7 +71,7 @@ const Header = () => {
         const [product] = await Promise.all([fetch(`${BASE_URL}/products/all-products`, {headers}).then((res) => res.json())]);
         setAllProducts([...(product?.data || [])]);
       } catch (error) {
-        console.log("Fetch error:", error);
+        toast.error("Fetch error:", error);
       } finally {
         setLoading(false);
       }
@@ -94,7 +96,7 @@ const Header = () => {
           return false;
         });
       })
-    : []; 
+    : [];
 
   const handleLogout = async () => {
     if (!token) {
@@ -178,6 +180,7 @@ const Header = () => {
 
   return (
     <div className="w-full space-y-3 sm:space-y-4">
+      <ToastContainer position="top-center" autoClose={2500} />
       <div className="flex items-center justify-between gap-3">
         <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-3 text-slate-900">
           <img src={Appsile} alt="Novo Trends" className=" h-10 w-10 rounded-2xl border border-slate-200 bg-white object-cover shadow-sm lg:h-12 lg:w-12" />
