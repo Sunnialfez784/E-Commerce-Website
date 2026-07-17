@@ -19,7 +19,6 @@ const Profile = () => {
 
   const {token} = useAuth();
 
-  console.log(user, "hello");
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName || "");

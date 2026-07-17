@@ -80,13 +80,13 @@ const Register = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        firstName,
-        lastName,
-        password,
-        email,
+        firstName: fullName.trim().toLowerCase(),
+        lastName : lastName.trim().toLowerCase(),
+        password ,
+        email : email.trim().toLowerCase(),
         phone,
-        gender,
-        role: "user",
+        gender : gender.trim().toLowerCase(),
+        role: "user", 
       }),
     })
       .then(async (response) => {
