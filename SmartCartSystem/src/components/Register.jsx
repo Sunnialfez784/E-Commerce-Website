@@ -80,7 +80,7 @@ const Register = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        firstName: fullName.trim().toLowerCase(),
+        firstName: firstName.trim().toLowerCase(),
         lastName : lastName.trim().toLowerCase(),
         password ,
         email : email.trim().toLowerCase(),
@@ -110,7 +110,7 @@ const Register = () => {
         console.log("ENV =", import.meta.env.VITE_BASE_URL);
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       })
       .finally(() => {
         setLoading(false);

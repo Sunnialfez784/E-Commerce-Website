@@ -39,11 +39,11 @@ const Profile = () => {
         },
         body: JSON.stringify({
           user_id: user.user_id,
-          firstName,
-          lastName,
-          email,
+          firstName : firstName.trim().toLowerCase(),
+          lastName : lastName.trim().toLowerCase(),
+          email : email.trim().toLowerCase(),
           phone,
-          gender,
+          gender : gender.trim().toLowerCase(),
         }),
       });
 
