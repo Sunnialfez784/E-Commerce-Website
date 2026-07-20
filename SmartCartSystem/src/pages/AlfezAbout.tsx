@@ -55,7 +55,7 @@ const E_COMMERCE_PROJECT = {
   name: "E-Commerce Platform",
   description:
     "A full-stack e-commerce application with complete shopping experience — product listings, cart management, secure checkout, and an admin dashboard for inventory & order management.",
-  tags: ["MySql","Sequelize", "Express", "React.js", "Node.js", "JWT", "RazorPay"],
+  tags: ["MySql","Sequelize", "Express", "React.js", "Node.js", "Tailwind Css", "JWT", "RazorPay"],
   highlights: [
     "User authentication & authorization with JWT",
     "Product search, filter & pagination",
@@ -409,10 +409,10 @@ function AlfezAbout() {
                     I enjoy writing clean, maintainable code with TypeScript and designing intuitive interfaces with
                     Tailwind CSS. I'm passionate about performance, developer experience, and turning ideas into polished products.
                   </p>
-                  <p>
+                  {/* <p>
                     Currently focused on sharpening my backend architecture skills and diving deeper into cloud deployments.
                     Always up for interesting projects and collaborations.
-                  </p>
+                  </p> */}
                 </div>
                 <div className="md:col-span-2 flex flex-col gap-1">
                   {[
