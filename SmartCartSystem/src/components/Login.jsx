@@ -7,7 +7,7 @@ import {useAuth} from "../context/AuthContext";
 import {LogIn} from "lucide-react";
 import Loader from "./Loader";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 import {useGoogleLogin} from "@react-oauth/google";
 import axios from "axios";
 
@@ -35,7 +35,7 @@ const Login = () => {
             access_token: tokenResponse.access_token,
           })
         });
-// ?access_token=${tokenResponse.access_token}
+
         const data = await res.json();
 
         if (!res.ok) {
@@ -107,7 +107,6 @@ const Login = () => {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
-      <ToastContainer position="top-center" autoClose={2500} />
       <div className="relative mx-auto w-full max-w-md">
         <form onSubmit={handleLogin} className={`section-surface flex flex-col p-5 sm:p-7 md:p-9 ${loading ? "pointer-events-none select-none" : ""}`}>
           <span className="premium-pill mb-4 self-start">Welcome back</span>

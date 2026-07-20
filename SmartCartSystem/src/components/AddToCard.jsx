@@ -7,7 +7,7 @@ import {BASE_URL} from "../apis";
 import BillingDetails from "../pages/BillingDetails";
 import Loader from "./Loader";
 import {Minus, Plus, ShieldCheck, ShoppingBag, Truck} from "lucide-react";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 const AddToCard = () => {
   const [products, setProducts] = useState([]);
@@ -164,7 +164,6 @@ const AddToCard = () => {
     <>
       <Navbar />
       <main className="app-shell w-full text-black">
-        <ToastContainer position="top-center" autoClose={2500} hideProgressBar={false} closeOnClick pauseOnHover={false} pauseOnFocusLoss={false} draggable newestOnTop />
         <div className="page-shell py-6 lg:py-10">
           <div className="mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Checkout</p>

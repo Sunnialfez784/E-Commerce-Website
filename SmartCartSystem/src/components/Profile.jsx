@@ -7,7 +7,7 @@ import {BASE_URL} from "../apis";
 import Navbar from "./Navbar";
 import {Mail, Phone, User} from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const Profile = () => {
   const {user, setUser} = useAuth();
@@ -79,7 +79,6 @@ const Profile = () => {
       <Navbar />
 
       <main className="app-shell w-full text-black">
-        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-10">
           <div className="mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Account</p>

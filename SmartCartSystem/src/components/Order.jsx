@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 import {FaFileInvoice} from "react-icons/fa";
 import {PackageSearch} from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
@@ -27,7 +27,6 @@ const Order = () => {
     <>
       <Navbar />
       <main className="app-shell w-full text-black">
-        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-10">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>

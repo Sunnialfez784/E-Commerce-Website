@@ -4,7 +4,7 @@ import {BASE_URL} from "../apis";
 import {useAuth} from "../context/AuthContext";
 import {MapPin, Plus, X} from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const BillingDetails = () => {
   const [fullName, setFullName] = useState("");
@@ -180,7 +180,6 @@ const BillingDetails = () => {
 
   return (
     <div className="w-full text-black">
-      <ToastContainer position="top-center" autoClose={2500} />
       {selectedAddress && (
         <div className="section-surface flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
           <div className="flex items-start gap-3">

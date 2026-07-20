@@ -6,7 +6,7 @@ import {BASE_URL} from "../apis";
 import {UserPlus} from "lucide-react";
 import Loader from "./Loader";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -106,7 +106,6 @@ const Register = () => {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#f7f7fb] px-4 py-10 text-black">
-      <ToastContainer position="top-center" autoClose={2500} />
       {loading ? (
         <Loader />
       ) : (

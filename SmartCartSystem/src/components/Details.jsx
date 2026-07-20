@@ -7,7 +7,7 @@ import Loader from "./Loader";
 import {Heart, Minus, Plus, ShieldCheck, ShoppingBag, Star, Truck} from "lucide-react";
 import Cards from "./Cards";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const Details = () => {
   const {state} = useLocation();
@@ -131,7 +131,6 @@ const Details = () => {
     <>
       <Navbar />
       <main className="app-shell">
-        <ToastContainer position="top-center" autoClose={2500} hideProgressBar={false} closeOnClick pauseOnHover={false} pauseOnFocusLoss={false} draggable newestOnTop />
         {loading ? (
           <Loader />
         ) : (

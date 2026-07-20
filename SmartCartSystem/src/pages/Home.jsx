@@ -27,7 +27,7 @@ import Loader from "../components/Loader";
 import {useAuth} from "../context/AuthContext";
 import {data, Link} from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const Home = () => {
   const sliderItems = [
@@ -145,7 +145,6 @@ const Home = () => {
       <Navbar isButton />
 
       <main className="app-shell w-full text-black">
-        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface overflow-hidden px-5 py-8 sm:px-8 sm:py-10">
             <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">

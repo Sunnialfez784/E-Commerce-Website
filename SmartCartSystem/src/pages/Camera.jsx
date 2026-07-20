@@ -7,7 +7,7 @@ import {useAuth} from "../context/AuthContext";
 import {PackageSearch} from "lucide-react";
 import Details from "../components/Details";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const Camera = () => {
   const [camera, setCamera] = useState([]);
@@ -40,7 +40,6 @@ const Camera = () => {
   return (
     <>
       <main className="app-shell w-full text-black">
-        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-8">
           <section className="section-surface p-5 sm:p-6">
             <div className="flex items-end justify-between gap-4 border-b border-slate-200 pb-5">

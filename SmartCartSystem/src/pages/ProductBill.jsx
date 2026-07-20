@@ -6,7 +6,7 @@ import {useAuth} from "../context/AuthContext";
 import {useLocation} from "react-router-dom";
 import {Phone, Mail, Printer} from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const ProductBill = () => {
   const [bill, setBill] = useState(null);
@@ -36,7 +36,6 @@ const ProductBill = () => {
     <>
       <Navbar />
       <main className="app-shell w-full">
-        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell py-6 lg:py-10">
           {bill && (
             <div className="section-surface overflow-hidden">

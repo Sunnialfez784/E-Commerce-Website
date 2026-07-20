@@ -6,7 +6,7 @@ import {useAuth} from "../context/AuthContext";
 import {Banknote, ShieldCheck, Truck} from "lucide-react";
 import Loader from "../components/Loader";
 import "react-toastify/dist/ReactToastify.css";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 
 const Payment = () => {
   const location = useLocation();
@@ -69,7 +69,6 @@ const Payment = () => {
   return (
     <>
       <main className="app-shell w-full text-black">
-        <ToastContainer position="top-center" autoClose={2500} />
         <div className="page-shell flex justify-center py-6 lg:py-10">
           <div className="w-full max-w-md">
             {loading ? (
