@@ -131,7 +131,7 @@ const Details = () => {
     <>
       <Navbar />
       <main className="app-shell">
-        <ToastContainer position="top-center" autoClose={2500} />
+        <ToastContainer position="top-center" autoClose={2500} hideProgressBar={false} closeOnClick pauseOnHover={false} pauseOnFocusLoss={false} draggable newestOnTop />
         {loading ? (
           <Loader />
         ) : (

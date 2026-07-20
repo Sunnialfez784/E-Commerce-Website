@@ -7,7 +7,7 @@ import {BASE_URL} from "../apis";
 import BillingDetails from "../pages/BillingDetails";
 import Loader from "./Loader";
 import {Minus, Plus, ShieldCheck, ShoppingBag, Truck} from "lucide-react";
-import { toast, ToastContainer } from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 
 const AddToCard = () => {
   const [products, setProducts] = useState([]);
@@ -164,7 +164,7 @@ const AddToCard = () => {
     <>
       <Navbar />
       <main className="app-shell w-full text-black">
-        <ToastContainer position="top-center" autoClose={2500} />
+        <ToastContainer position="top-center" autoClose={2500} hideProgressBar={false} closeOnClick pauseOnHover={false} pauseOnFocusLoss={false} draggable newestOnTop />
         <div className="page-shell py-6 lg:py-10">
           <div className="mb-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Checkout</p>
@@ -202,8 +202,7 @@ const AddToCard = () => {
                               <p className="mt-1 text-sm text-slate-500 line-clamp-1">{item.productDetails}</p>
                               <p className="mt-2 text-lg font-bold tracking-tight text-slate-950">₹{formatNumber((Number(item.itemPrice) / Number(item.itemQuantity || item.quantity || 1)) * getQuantity(item.product_id))}</p>
                             </div>
-                          </div>
-                          {" "}
+                          </div>{" "}
                           <div className="mt-3 flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
                             <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1 shadow-sm">
                               <button onClick={() => minusBtn(item.product_id)} className="flex h-8 w-8 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100" aria-label="Decrease">
