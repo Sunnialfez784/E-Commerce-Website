@@ -128,7 +128,7 @@ function AdminOrders({searchTerm = ""}) {
                     setPage(1);
                   }}>
                   {orderStatuses.map((item) => (
-                    <option key={item}>{item}</option>
+                    <option key={item} className="dark:bg-gray-950">{item}</option>
                   ))}
                 </select>
                 <select
@@ -139,7 +139,7 @@ function AdminOrders({searchTerm = ""}) {
                     setPage(1);
                   }}>
                   {paymentStatuses.map((item) => (
-                    <option key={item}>{item}</option>
+                    <option key={item} className="dark:bg-gray-950">{item}</option>
                   ))}
                 </select>
               </div>

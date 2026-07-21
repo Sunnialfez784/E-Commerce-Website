@@ -27,7 +27,7 @@ function AdminProducts({searchTerm = ""}) {
   const {data, loading, error, reload} = useAdminResource(fetchOrders);
   const [items, setItems] = useState(null);
   const [search, setSearch] = useState(searchTerm);
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("all");
   const [view, setView] = useState("grid");
   const [page, setPage] = useState(1);
 
@@ -61,7 +61,7 @@ function AdminProducts({searchTerm = ""}) {
           .includes(query),
       );
 
-      const matchesCategory = category === "All" || product.category === category;
+      const matchesCategory = category === "All" || category === "all" || product.productType === category;
 
       return matchesSearch && matchesCategory;
     });
