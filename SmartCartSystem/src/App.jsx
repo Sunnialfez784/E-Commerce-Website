@@ -11,7 +11,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Details from "./components/Details";
-import AddToCard from "./components/AddToCard";
+import AddToCart from "./components/AddToCart";
 import Order from "./components/Order";
 import Profile from "./components/Profile";
 import Fashion from "./pages/Fashion";
@@ -240,10 +240,10 @@ function App() {
         />
 
         <Route
-          path="/addtocard"
+          path="/addtocart"
           element={
             <ProtectedRoute>
-              <AddToCard />
+              <AddToCart />
             </ProtectedRoute>
           }
         />

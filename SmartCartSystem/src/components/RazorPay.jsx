@@ -19,7 +19,7 @@ const RazorPay = () => {
       image: "https://cdn.razorpay.com/logos/GhRQcyean79PqE_medium.png",
 
       handler: function (response) {
-        console.log("Payment Success:", response);
+        toast.success("Payment Success:", response);
 
         toast.success("Payment Successful");
       },
@@ -42,7 +42,7 @@ const RazorPay = () => {
     const razor = new window.Razorpay(options);
 
     razor.on("payment.failed", function (response) {
-      console.log(response.error);
+      toast.error(response.error);
 
       toast.error("Payment Failed");
     });

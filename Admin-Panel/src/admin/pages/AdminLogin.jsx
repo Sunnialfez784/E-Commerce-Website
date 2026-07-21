@@ -109,7 +109,6 @@ function AdminLogin() {
               <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Sign in to continue to the operations dashboard.</p>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-xs text-cyan-800 dark:border-cyan-500/20 dark:bg-cyan-500/10 dark:text-cyan-200">Demo account: admin@shoplane.com / admin1234</div>
 
             <div className="mt-6 space-y-5">
               <Label>

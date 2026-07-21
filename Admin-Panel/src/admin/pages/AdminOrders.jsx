@@ -97,8 +97,6 @@ function AdminOrders({searchTerm = ""}) {
     showToast(`Order status updated to ${status}.`, "success");
   }
 
-  console.log(selectedOrder, "sek");
-
   return (
     <div>
       <AdminPageHeader eyebrow="Orders" title="Order management" description="Track fulfillment, payment status, and detailed order information while keeping the queue searchable and easy to filter." />

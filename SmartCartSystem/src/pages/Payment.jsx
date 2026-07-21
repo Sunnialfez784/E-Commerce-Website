@@ -55,7 +55,7 @@ const Payment = () => {
 
       if (data.success) {
         toast.success("Order placed successfully");
-        navigate("/orders");
+        navigate("/orders", { replace: true });
       } else {
         toast.error(data.message);
       }

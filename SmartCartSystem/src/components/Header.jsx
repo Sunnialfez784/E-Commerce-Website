@@ -196,7 +196,7 @@ const Header = () => {
             {searchOpen ? <X className="h-4 w-4" /> : <Search className="h-4 w-4" />}
           </button>
 
-          <Link to="/addtocard" className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Cart">
+          <Link to="/addtocart" className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:text-slate-900" aria-label="Cart">
             <TiShoppingCart className="h-5 w-5" />
           </Link>
 
@@ -256,7 +256,7 @@ const Header = () => {
           </div>
           <div className="relative flex items-center">
             <button className="premium-btn-secondary min-w-[112px] px-4 py-0.5">
-              <Link to="/addtocard" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" aria-label="Cart">
+              <Link to="/addtocart" className="inline-flex w-full cursor-pointer items-center rounded-2xl p-3 transition hover:bg-slate-50" aria-label="Cart">
                 <TiShoppingCart className="h-4 w-4 me-2" /> Cart
               </Link>
             </button>

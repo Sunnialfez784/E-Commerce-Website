@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import {Minus, Plus, ShieldCheck, ShoppingBag, Truck} from "lucide-react";
 import {toast} from "react-toastify";
 
-const AddToCard = () => {
+const AddToCart = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -288,4 +288,4 @@ const AddToCard = () => {
   );
 };
 
-export default AddToCard;
+export default AddToCart;
