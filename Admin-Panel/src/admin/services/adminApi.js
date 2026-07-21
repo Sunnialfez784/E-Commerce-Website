@@ -34,7 +34,7 @@ export const adminApi = {
 
   async adminRegister({firstName, lastName, email, password, phone, gender}) {
     try {
-      const response = await fetch(`${BASE_URL}/admin/register-user`, {
+      const response = await fetch(`${BASE_URL}/users/register-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export const adminApi = {
         body: JSON.stringify({
           email,
           password,
-          role: 'admin',
+          role: "admin",
         }),
       });
 
@@ -103,8 +103,6 @@ export const adminApi = {
   },
 
   async getProducts(accessToken) {
-    console.log("GET PRODUCTS CALLED", accessToken);
-
     try {
       const response = await fetch(`${BASE_URL}/admin/get-products`, {
         method: "GET",
@@ -119,7 +117,6 @@ export const adminApi = {
       }
 
       const data = await response.json();
-      console.log("hello", data);
 
       return data.data;
     } catch (error) {
@@ -149,9 +146,9 @@ export const adminApi = {
     return response.data;
   },
 
-  deleteProduct: async (productId,user_id ,token) => {
+  deleteProduct: async (productId, user_id, token) => {
     const response = await axios.delete(`${BASE_URL}/admin/delete-product`, {
-      data: {product_id :productId ,user_id},
+      data: {product_id: productId, user_id},
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -175,7 +172,6 @@ export const adminApi = {
       }
 
       const data = await response.json();
-      console.log(data);
 
       return data.data;
     } catch (error) {
@@ -186,7 +182,6 @@ export const adminApi = {
   },
 
   async getUsers(accessToken) {
-    console.log("GET USERS START", accessToken);
     try {
       const response = await fetch(`${BASE_URL}/admin/get-users`, {
         method: "GET",
@@ -195,14 +190,12 @@ export const adminApi = {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      console.log("TOKEN:", accessToken);
 
       if (!response.ok) {
         throw new Error("Failed to fetch orders");
       }
 
       const data = await response.json();
-      console.log(data);
 
       return data.data;
     } catch (error) {
