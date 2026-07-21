@@ -22,6 +22,25 @@ const BillingDetails = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const {token, user, savedAddresses, setSavedAddresses} = useAuth();
 
+  // Add this helper above the component or inside it
+  const normalizeAddress = (item) => {
+    if (!item?.Address) return null;
+
+    return {
+      id: item.Address.id,
+      fullName: `${item.firstName || ""} ${item.lastName || ""}`.trim(),
+      address: item.Address.address || "",
+      city: item.Address.city_state || "", // backend sends combined city_state, splitting not possible reliably
+      state: item.Address.city_state || "", // TODO: ask backend to send city & state separately
+      pincode: item.Address.pincode || "",
+      country: item.Address.country || "india",
+      phone: item.phone || "",
+      email: item.email || "",
+    };
+  };
+
+  const normalizeAddressList = (data) => (Array.isArray(data) ? data.map(normalizeAddress).filter(Boolean) : []);
+
   useEffect(() => {
     if (!token || !user) return;
 
@@ -46,14 +65,16 @@ const BillingDetails = () => {
   const deleteAddress = async (deleteItem) => {
     if (!window.confirm("Are you Sure ?")) return;
 
-    const addressId = deleteItem.id ?? deleteItem._id;
+    const addressId = deleteItem?.id;
+    if (!addressId) {
+      toast.error("Invalid address, cannot delete");
+      return;
+    }
 
     try {
       const res = await fetch(`${BASE_URL}/users/delete-address?id=${addressId}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: {Authorization: `Bearer ${token}`},
       });
 
       const data = await res.json();
@@ -63,12 +84,12 @@ const BillingDetails = () => {
         return;
       }
 
-      const updatedAddresses = savedAddresses.filter((item) => item && (item.id ?? item._id) !== addressId);
+      const updatedAddresses = savedAddresses.filter((item) => item?.id !== addressId);
 
       setSavedAddresses(updatedAddresses);
       setUserAddresses(updatedAddresses);
 
-      if (selectedAddress && (selectedAddress.id ?? selectedAddress._id) === addressId) {
+      if (selectedAddress?.id === addressId) {
         setSelectedAddress(updatedAddresses[0] || null);
       }
 
@@ -83,17 +104,16 @@ const BillingDetails = () => {
     if (!token) return;
 
     fetch(`${BASE_URL}/users/get-address`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: {Authorization: `Bearer ${token}`},
     })
       .then((res) => res.json())
       .then(({data}) => {
-        setUserAddresses(data || []);
-        setSavedAddresses(data || []);
+        const cleaned = normalizeAddressList(data);
+        setUserAddresses(cleaned);
+        setSavedAddresses(cleaned);
 
-        if (data?.length > 0) {
-          setSelectedAddress(data[0]);
+        if (cleaned.length > 0) {
+          setSelectedAddress(cleaned[0]);
           setShowForm(false);
         } else {
           setSelectedAddress(null);
@@ -116,8 +136,13 @@ const BillingDetails = () => {
       setError(newError);
       return;
     }
+    if (!phone) {
+      newError.phone = "Phone required";
+    } else if (phone.length !== 10) {
+      newError.phone = "Phone must be 10 digits";
+    }
 
-    const alreadyExist = userAddresses.some((item) => item.address.trim().toLowerCase() === address.trim().toLowerCase() && item.city.trim().toLowerCase() === city.trim().toLowerCase() && item.state.trim().toLowerCase() === state.trim().toLowerCase() && item.pincode === pincode);
+    const alreadyExist = userAddresses.some((item) => item?.address?.trim().toLowerCase() === address.trim().toLowerCase() && item?.city?.trim().toLowerCase() === city.trim().toLowerCase() && item?.state?.trim().toLowerCase() === state.trim().toLowerCase() && item?.pincode === pincode && item?.phone === phone);
 
     if (alreadyExist) {
       toast.error("Address already exists");
@@ -139,7 +164,7 @@ const BillingDetails = () => {
           address: address.trim().toLowerCase(),
           country: country.trim().toLowerCase(),
           email: user?.email?.trim().toLowerCase(),
-          phone: user?.phone,
+          phone,
         }),
       });
 
@@ -164,12 +189,13 @@ const BillingDetails = () => {
       });
 
       const result = await response.json();
+      const cleaned = normalizeAddressList(result.data);
 
-      setSavedAddresses(result.data || []);
-      setUserAddresses(result.data || []);
+      setSavedAddresses(cleaned);
+      setUserAddresses(cleaned);
 
-      if (result.data?.length > 0) {
-        setSelectedAddress(result.data[result.data.length - 1]);
+      if (cleaned.length > 0) {
+        setSelectedAddress(cleaned[cleaned.length - 1]);
       }
 
       setShowForm(false);
@@ -269,7 +295,26 @@ const BillingDetails = () => {
                   {error.city && <p className="premium-field-error">{error.city}</p>}
                 </div>
               </div>
+              <div>
+                <label className="premium-label">Phone</label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  placeholder="+91 xxxxxxxx"
+                  className="premium-input"
+                  value={phone}
+                  maxLength={10}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
 
+                    if (value.length <= 10) {
+                      setPhone(value);
+                    }
+                  }}
+                />
+                {error.phone && <p className="premium-field-error">{error.phone}</p>}
+              </div>
               <button type="submit" className="premium-btn-primary mt-2 w-full py-3.5 text-base">
                 Save Address
               </button>

@@ -33,7 +33,7 @@ const Login = () => {
           },
           body: JSON.stringify({
             access_token: tokenResponse.access_token,
-          })
+          }),
         });
 
         const data = await res.json();
@@ -43,11 +43,18 @@ const Login = () => {
         }
 
         const accessToken = data?.data?.accessToken;
+        const googleUser = data?.data?.user;
 
-        login({
-          user: data.data,
-          accessToken,
-        });
+        const user = {
+          user_id: googleUser?.user_id,
+          firstName: googleUser?.firstName,
+          lastName: googleUser?.lastName,
+          email: googleUser?.email,
+          phone: googleUser?.phone,
+          gender: googleUser?.gender,
+        };
+
+        login({user, accessToken});
 
         toast.success("Login Successful");
         navigate("/", {replace: true});

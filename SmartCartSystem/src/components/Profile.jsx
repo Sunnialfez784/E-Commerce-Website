@@ -5,28 +5,25 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {BASE_URL} from "../apis";
 import Navbar from "./Navbar";
-import {Mail, Phone, User} from "lucide-react";
+import {Mail, User} from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from "react-toastify";
 
 const Profile = () => {
-  const {user, setUser} = useAuth();
+  const {user, setUser, token} = useAuth();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
-  const [phone, setPhone] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const {token} = useAuth();
-
+  // user already has correct data — whichever API (login or google) populated it at login time
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName || "");
       setLastName(user.lastName || "");
       setEmail(user.email || "");
-      setPhone(user.phone || "");
       setGender(user.gender || "");
     }
   }, [user]);
@@ -44,7 +41,6 @@ const Profile = () => {
           firstName: firstName.trim().toLowerCase(),
           lastName: lastName.trim().toLowerCase(),
           email: email.trim().toLowerCase(),
-          phone,
           gender: gender.trim().toLowerCase(),
         }),
       });
@@ -60,12 +56,10 @@ const Profile = () => {
         firstName,
         lastName,
         email,
-        phone,
         gender,
       };
 
       localStorage.setItem("user", JSON.stringify(updatedUser));
-      localStorage.setItem("currentUser", JSON.stringify(updatedUser));
       setUser(updatedUser);
 
       toast.success("Profile Updated Successfully");
@@ -77,7 +71,6 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-
       <main className="app-shell w-full text-black">
         <div className="page-shell py-6 lg:py-10">
           <div className="mb-6">
@@ -102,10 +95,7 @@ const Profile = () => {
                     <Mail className="h-4 w-4 shrink-0 text-slate-500" />
                     <p className="truncate text-sm text-slate-700">{email || "No email added"}</p>
                   </div>
-                  <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3">
-                    <Phone className="h-4 w-4 shrink-0 text-slate-500" />
-                    <p className="truncate text-sm text-slate-700">{phone || "No phone added"}</p>
-                  </div>
+
                   <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3">
                     <User className="h-4 w-4 shrink-0 text-slate-500" />
                     <p className="truncate text-sm capitalize text-slate-700">{gender || "Gender not set"}</p>
@@ -124,7 +114,6 @@ const Profile = () => {
                     <label className="premium-label">First Name</label>
                     <input type="text" placeholder="First name" className="premium-input" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                   </div>
-
                   <div>
                     <label className="premium-label">Last Name</label>
                     <input type="text" placeholder="Last name" className="premium-input" value={lastName} onChange={(e) => setLastName(e.target.value)} />
@@ -138,23 +127,17 @@ const Profile = () => {
                   </div>
 
                   <div>
-                    <label className="premium-label">Number</label>
-                    <input type="text" placeholder="+91xxxxxxxxxx" className="premium-input" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="premium-label">Gender</label>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <label className={`premium-radio-tile ${gender === "male" ? "is-active" : ""}`}>
-                      <input type="radio" name="gender" value="male" checked={gender === "male"} onChange={(e) => setGender(e.target.value)} className="h-4 w-4 text-slate-950 focus:ring-slate-950" />
-                      <span className="text-sm font-medium text-slate-800">Male</span>
-                    </label>
-
-                    <label className={`premium-radio-tile ${gender === "female" ? "is-active" : ""}`}>
-                      <input type="radio" name="gender" value="female" checked={gender === "female"} onChange={(e) => setGender(e.target.value)} className="h-4 w-4 text-slate-950 focus:ring-slate-950" />
-                      <span className="text-sm font-medium text-slate-800">Female</span>
-                    </label>
+                    <label className="premium-label">Gender</label>
+                    <div className="flex flex-wrap items-center gap-3 pt-2.5">
+                      <label className={`premium-radio-tile ${gender === "male" ? "is-active" : ""}`}>
+                        <input type="radio" name="gender" value="male" checked={gender === "male"} onChange={(e) => setGender(e.target.value)} className="h-4 w-4 text-slate-950 focus:ring-slate-950" />
+                        <span className="text-sm font-medium text-slate-800">Male</span>
+                      </label>
+                      <label className={`premium-radio-tile ${gender === "female" ? "is-active" : ""}`}>
+                        <input type="radio" name="gender" value="female" checked={gender === "female"} onChange={(e) => setGender(e.target.value)} className="h-4 w-4 text-slate-950 focus:ring-slate-950" />
+                        <span className="text-sm font-medium text-slate-800">Female</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
 
