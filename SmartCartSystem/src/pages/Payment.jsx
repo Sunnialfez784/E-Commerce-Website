@@ -54,7 +54,7 @@ const Payment = () => {
       console.log(data);
 
       if (data.success) {
-        toast.error("Order placed successfully");
+        toast.success("Order placed successfully");
         navigate("/orders");
       } else {
         toast.error(data.message);

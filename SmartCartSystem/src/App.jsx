@@ -38,7 +38,7 @@ import AlfezAbout from "./pages/AlfezAbout";
 import AboutSection from "./pages/AboutSection";
 import Books from "./pages/Books";
 import Layout from "./components/Layout";
-import { ToastContainer } from "react-toastify";
+import {ToastContainer} from "react-toastify";
 
 function App() {
   return (
@@ -266,20 +266,25 @@ function App() {
           }
         />
 
-        <Route path="/invoice" element={<ProductBill />} />
-        <Route path="/razor" element={<RazorPay />} />
+        <Route
+          path="/invoice"
+          element={
+            <ProtectedRoute>
+              <ProductBill />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/razor"
+          element={
+            <ProtectedRoute>
+              <RazorPay />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
-      <ToastContainer
-        position="top-center"
-        autoClose={2500}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover={false}
-        pauseOnFocusLoss={false}
-        draggable
-        newestOnTop
-      />
+      <ToastContainer position="top-center" autoClose={2500} hideProgressBar={false} closeOnClick pauseOnHover={false} pauseOnFocusLoss={false} draggable newestOnTop />
     </div>
   );
 }
