@@ -20,7 +20,7 @@ function AdminDashboard() {
 
   const {data: ordersData, loading: ordersLoading} = useAdminResource(fetchOrders);
 
-  const recentOrders = ordersData?.slice(0, 5) || [];  
+  const recentOrders = ordersData?.slice(0, 5) || [];
 
   const fetchHighlights = useCallback(() => {
     return adminApi.getHighlight(accessToken);
@@ -45,6 +45,13 @@ function AdminDashboard() {
       accent: "from-cyan-500 to-sky-500",
     },
     {
+      label: "Revenue",
+      value: (highlights.revenue ?? 0).toLocaleString(),
+      delta: "+8.4%",
+      icon: MoneyIcon,
+      accent: "from-emerald-500 to-teal-500",
+    },
+    {
       label: "Total Products",
       value: (highlights.totalProduct ?? 0).toLocaleString(),
       delta: "+13.7%",
@@ -56,13 +63,6 @@ function AdminDashboard() {
       value: (highlights.totalOrders ?? 0).toLocaleString(),
       delta: "+5.4%",
       icon: CartIcon,
-      accent: "from-emerald-500 to-teal-500",
-    },
-    {
-      label: "Revenue",
-      value: (highlights.revenue ?? 0).toLocaleString(),
-      delta: "+8.4%",
-      icon: MoneyIcon,
       accent: "from-emerald-500 to-teal-500",
     },
   ];
@@ -203,13 +203,13 @@ function AdminDashboard() {
                 <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                   {recentOrders.map((order) => (
                     <tr key={order["Orders.order_id"]} className="text-sm">
-                      <td className="py-3 pr-4 font-medium text-slate-900 dark:text-white">{`${order?.firstName} ${order?.lastName}`}</td>
-                      <td className="py-3 pr-4 text-slate-600 dark:text-slate-300">ORD-{order["Orders.order_id"]}</td>
-                      <td className="py-3 pr-4 font-medium text-slate-900 dark:text-white">{formatCurrency(order["Orders.total_amount"])}</td>
+                      <td className="py-3 pr-4 font-medium text-slate-900 dark:text-white">{`${order?.User?.firstName} ${order?.User?.lastName}`}</td>
+                      <td className="py-3 pr-4 text-slate-600 dark:text-slate-300">ORD-{order.order_id}</td>
+                      <td className="py-3 pr-4 font-medium text-slate-900 dark:text-white">{formatCurrency(order.total_amount)}</td>
                       <td className="py-3 pr-4">
-                        <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusTone(order["Orders.order_status"])}`}>{order["Orders.order_status"]}</span>
+                        <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusTone(order.order_status)}`}>{order.order_status}</span>
                       </td>
-                      <td className="py-3 text-slate-500 dark:text-slate-400">{formatDate(order["Orders.createdAt"])}</td>
+                      <td className="py-3 text-slate-500 dark:text-slate-400">{formatDate(order.createdAt)}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -10,15 +10,11 @@ import {useAdminToast} from "../context/AdminToastContext";
 import {SearchIcon} from "../../icons";
 import {adminCardClass, adminInputClass, adminPrimaryButtonClass} from "../utils/theme";
 
-const orderStatuses = ["All", "Pending", "Shipped", "Delivered", "Cancelled"];
+const orderStatuses = ["All", "Pending", "Delivered", "Cancelled"];
 const paymentStatuses = ["All", "Paid", "Pending", "Refunded"];
 
 function AdminOrders({searchTerm = ""}) {
-  // console.log("ADMIN PRODUCTS ORDER RENDER");
-
   const accessToken = localStorage.getItem("accessToken") || "";
-
-  // console.log("TOKEN:", accessToken);
 
   const fetchOrders = useCallback(() => {
     return adminApi.getOrders(accessToken);
@@ -49,7 +45,7 @@ function AdminOrders({searchTerm = ""}) {
     const query = search.toLowerCase();
 
     return sourceItems.filter((order) => {
-      const matchesSearch = [order.id, order.orderId, order.customer, order.email].some((value) =>
+      const matchesSearch = [order.id, order.order_id, order.customer, order.email].some((value) =>
         String(value || "")
           .toLowerCase()
           .includes(query),
@@ -128,7 +124,9 @@ function AdminOrders({searchTerm = ""}) {
                     setPage(1);
                   }}>
                   {orderStatuses.map((item) => (
-                    <option key={item} className="dark:bg-gray-950">{item}</option>
+                    <option key={item} className="dark:bg-gray-950">
+                      {item}
+                    </option>
                   ))}
                 </select>
                 <select
@@ -139,7 +137,9 @@ function AdminOrders({searchTerm = ""}) {
                     setPage(1);
                   }}>
                   {paymentStatuses.map((item) => (
-                    <option key={item} className="dark:bg-gray-950">{item}</option>
+                    <option key={item} className="dark:bg-gray-950">
+                      {item}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -149,6 +149,7 @@ function AdminOrders({searchTerm = ""}) {
                   <thead>
                     <tr className="text-left text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                       <th className="pb-3 pr-4">Order</th>
+                      <th className="pb-3 pr-4">Product</th>
                       <th className="pb-3 pr-4">Customer</th>
                       <th className="pb-3 pr-4">Amount</th>
                       <th className="pb-3 pr-4">Status</th>
@@ -159,23 +160,24 @@ function AdminOrders({searchTerm = ""}) {
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-white/5">
                     {paged.map((order) => (
-                      <tr key={order.id || order["Orders.order_id"]} className="text-sm hover:bg-slate-50/80 dark:hover:bg-white/5">
-                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">ORD-{order["Orders.order_id"]}</td>
-                        <td className="py-3 pr-4 text-slate-600 dark:text-slate-300">{`${order?.firstName} ${order?.lastName}`}</td>
-                        <td className="py-3 pr-4 font-medium text-slate-900 dark:text-white">{formatCurrency(order["Orders.total_amount"])}</td>
+                      <tr key={order.id || order.order_id} className="text-sm hover:bg-slate-50/80 dark:hover:bg-white/5">
+                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">ORD-{order.order_id}</td>
+                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">{order.Order_Items[0].Product.productName}</td>
+                        <td className="py-3 pr-4 text-slate-600 dark:text-slate-300">{`${order?.User?.firstName} ${order?.User?.lastName}`}</td>
+                        <td className="py-3 pr-4 font-medium text-slate-900 dark:text-white">{formatCurrency(order.total_amount)}</td>
                         <td className="py-3 pr-4">
-                          <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusTone(order["Orders.order_status"])}`}>{order["Orders.order_status"]}</span>
+                          <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusTone(order.order_status)}`}>{order.order_status}</span>
                         </td>
                         <td className="py-3 pr-4">
-                          <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusTone(order["Orders.payment_status"])}`}>{order["Orders.payment_status"]}</span>
+                          <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusTone(order.payment_status)}`}>{order.payment_status}</span>
                         </td>
-                        <td className="py-3 pr-4 text-slate-500 dark:text-slate-400">{formatDate(order["Orders.createdAt"])}</td>
+                        <td className="py-3 pr-4 text-slate-500 dark:text-slate-400">{formatDate(order.createdAt)}</td>
                         <td className="py-3">
                           <button
                             className={`${adminPrimaryButtonClass} px-3 py-2 text-xs`}
                             onClick={() => {
-                              console.log("Clicked:", order["Orders.order_id"]);
-                              setSelectedOrderId(order["Orders.order_id"]);
+                              console.log("Clicked:", order.order_id);
+                              setSelectedOrderId(order.order_id);
                             }}
                             type="button">
                             View details
@@ -194,28 +196,28 @@ function AdminOrders({searchTerm = ""}) {
           <Card className={`h-fit ${adminCardClass}`}>
             <CardBody className="p-5">
               <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">Selected order</p>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white">ORD-{selectedOrder?.["Orders.order_id"]}</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white">ORD-{selectedOrder?.order_id}</h3>
               {selectedOrder ? (
                 <div className="mt-5 space-y-4 text-sm">
                   <div className="rounded-2xl bg-slate-100 p-4 dark:bg-white/5">
                     <p className="text-slate-500 dark:text-slate-400">Customer</p>
-                    <p className="mt-1 font-semibold text-slate-900 dark:text-white">{`${selectedOrder?.firstName} ${selectedOrder?.lastName}`}</p>
-                    <p className="text-slate-500 dark:text-slate-400">{selectedOrder.email}</p>
+                    <p className="mt-1 font-semibold text-slate-900 dark:text-white">{`${selectedOrder?.User?.firstName} ${selectedOrder?.User?.lastName}`}</p>
+                    {/* <p className="text-slate-500 dark:text-slate-400">{selectedOrder.email}</p> */}
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div className="rounded-2xl bg-slate-100 p-4 dark:bg-white/5">
                       <p className="text-slate-500 dark:text-slate-400">Amount</p>
-                      <p className="mt-1 font-semibold text-slate-900 dark:text-white">{formatCurrency(selectedOrder["Orders.total_amount"])}</p>
+                      <p className="mt-1 font-semibold text-slate-900 dark:text-white">{formatCurrency(selectedOrder.total_amount)}</p>
                     </div>
                     <div className="rounded-2xl bg-slate-100 p-4 dark:bg-white/5">
                       <p className="text-slate-500 dark:text-slate-400">Status</p>
-                      <p className="mt-1 font-semibold text-slate-900 dark:text-white">{selectedOrder["Orders.order_status"]}</p>
+                      <p className="mt-1 font-semibold text-slate-900 dark:text-white">{selectedOrder.order_status}</p>
                     </div>
                   </div>
                   <div>
                     <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Update order status</label>
-                    <select className={`${adminInputClass} mt-2 w-full px-4 py-3`} value={selectedOrder["Orders.order_status"]} onChange={(event) => handleStatusUpdate(selectedOrder["Orders.order_id"], event.target.value)}>
-                      {["Pending", "Shipped", "Delivered", "Cancelled"].map((item) => (
+                    <select className={`${adminInputClass} mt-2 w-full px-4 py-3`} value={selectedOrder.order_status} onChange={(event) => handleStatusUpdate(selectedOrder.order_id, event.target.value)}>
+                      {["Pending", "Delivered", "Cancelled"].map((item) => (
                         <option key={item} className="text-sm font-semibold text-slate-700 dark:bg-gray-900">
                           {item}
                         </option>

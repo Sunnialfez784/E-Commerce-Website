@@ -35,24 +35,20 @@ function AdminInvoices({searchTerm = ""}) {
     if (!invoiceData.length) return [];
 
     return invoiceData.flatMap((user) =>
-      (user.Order_Items || []).flatMap((item) =>
-        (item.Order_Bills || []).map((bill) => ({
-          ...bill,
-
-          invoiceId: bill.invoiceId,
-
-          user_id: user.user_id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-
-          order_id: item.Order?.order_id,
-
-          payment_status: item.Order?.payment_status,
-
-          productName: item.itemName,
-
-          totalPrice: item.itemPrice,
-        })),
+      (user.Orders || []).flatMap((order) =>
+        (order.Order_Items || []).flatMap((item) =>
+          (item.Order_Bills || []).map((bill) => ({
+            ...bill,
+            invoiceId: bill.invoiceId,
+            user_id: user.user_id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            order_id: order.order_id,
+            payment_status: order.payment_status,
+            productName: item.itemName,
+            totalPrice: item.itemPrice,
+          })),
+        ),
       ),
     );
   }, [invoiceData]);
@@ -186,7 +182,7 @@ function AdminInvoices({searchTerm = ""}) {
                         <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">{invoice.bill_id}</td>
                         <td className="py-3 pr-4 text-slate-600 dark:text-slate-300">{`${invoice.firstName} ${invoice.lastName}`}</td>
                         <td className="py-3 pr-4 font-medium text-slate-900 dark:text-white">{formatCurrency(invoice.totalPrice)}</td>
-                        <td className="py-3 pr-4">
+                        <td>
                           <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${getStatusTone(invoice.payment_status)}`}>{invoice.payment_status}</span>
                         </td>
                         <td className="py-3 pr-4 text-slate-500 dark:text-slate-400">{formatDate(invoice.bill_date)}</td>
