@@ -84,17 +84,11 @@ const Header = () => {
     ? allProducts.filter((item) => {
         const keyword = search.toLowerCase().trim();
 
-        return Object.values(item).some((value) => {
-          if (typeof value === "string") {
-            return value.toLowerCase().includes(keyword);
-          }
+        const name = (item.productName || "").toLowerCase();
 
-          if (typeof value === "object" && value !== null) {
-            return Object.values(value).some((v) => typeof v === "string" && v.toLowerCase().includes(keyword));
-          }
+        const category = typeof item.category === "string" ? item.category.toLowerCase() : (item.category?.name || "").toLowerCase();
 
-          return false;
-        });
+        return name.includes(keyword) || category.includes(keyword);
       })
     : [];
 
