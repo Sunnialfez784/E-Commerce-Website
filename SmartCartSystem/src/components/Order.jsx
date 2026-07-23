@@ -27,6 +27,8 @@ const Order = () => {
       .finally(() => setLoading(false));
   }, [token]);
 
+  const formatNumber = (num) => Number(num).toLocaleString("en-IN", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
   return (
     <>
       <Navbar />
@@ -59,7 +61,7 @@ const Order = () => {
                           </div>
                           <div className="min-w-0">
                             <h2 className="text-base font-semibold text-slate-950 line-clamp-2 sm:text-lg">{order.itemName}</h2>
-                            <p className="mt-1 text-lg font-bold tracking-tight text-slate-950">₹{order.itemPrice}</p>
+                            <p className="mt-1 text-lg font-bold tracking-tight text-slate-950">₹{formatNumber(order.itemPrice)}</p>
                           </div>
                         </div>
 

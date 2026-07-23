@@ -39,7 +39,7 @@ const Details = () => {
       if (data.success) {
         toast.success("Product added successfully, Go to the cart Item!");
       } else {
-        toast.error(data.errors[0]);
+        toast.error(data.message);
       }
     } catch (error) {
       toast.error("Product not added");

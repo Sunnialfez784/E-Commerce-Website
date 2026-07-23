@@ -18,7 +18,6 @@ const Profile = () => {
   const [gender, setGender] = useState("");
   const [visible, setVisible] = useState(false);
 
-  // user already has correct data — whichever API (login or google) populated it at login time
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName || "");

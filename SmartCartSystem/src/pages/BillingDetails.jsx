@@ -22,7 +22,6 @@ const BillingDetails = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const {token, user, savedAddresses, setSavedAddresses} = useAuth();
 
-  // Add this helper above the component or inside it
   const normalizeAddress = (item) => {
     if (!item?.Address) return null;
 
@@ -30,8 +29,8 @@ const BillingDetails = () => {
       id: item.Address.id,
       fullName: `${item.firstName || ""} ${item.lastName || ""}`.trim(),
       address: item.Address.address || "",
-      city: item.Address.city_state || "", // backend sends combined city_state, splitting not possible reliably
-      state: item.Address.city_state || "", // TODO: ask backend to send city & state separately
+      city: item.Address.city_state || "", 
+      state: item.Address.city_state || "",
       pincode: item.Address.pincode || "",
       country: item.Address.country || "india",
       phone: item.phone || "",
@@ -58,9 +57,9 @@ const BillingDetails = () => {
     }
   }, [savedAddresses, user, token]);
 
-  useEffect(() => {
-    console.log(savedAddresses);
-  }, [savedAddresses]);
+  // useEffect(() => {
+  //   console.log(savedAddresses);
+  // }, [savedAddresses]);
 
   const deleteAddress = async (deleteItem) => {
     if (!window.confirm("Are you Sure ?")) return;
