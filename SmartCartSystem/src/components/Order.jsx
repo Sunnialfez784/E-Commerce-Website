@@ -74,10 +74,16 @@ const Order = () => {
                             <p className="text-xs text-slate-500">{order.createdAt}</p>
                             {order.message && <p className="text-xs text-slate-400">{order.message}</p>}
                           </div>
-
-                          <Link to="/invoice" state={{order_item_id: order.order_item_id}} className="icon-btn h-11 w-11 text-rose-700 hover:text-rose-700" aria-label="View invoice">
-                            <FaFileInvoice className="h-4 w-4" />
-                          </Link>
+                          <button className="p-2 bg-red-700 text-black">Cancel</button>
+                          {order.order_status === "Pending" ? (
+                            <button disabled className="icon-btn h-11 w-11 text-gray-400 cursor-not-allowed" aria-label="Invoice not available">
+                              <FaFileInvoice className="h-4 w-4" />
+                            </button>
+                          ) : (
+                            <Link to="/invoice" state={{order_item_id: order.order_item_id}} className="icon-btn h-11 w-11 text-rose-700 hover:text-rose-700" aria-label="View invoice">
+                              <FaFileInvoice className="h-4 w-4" />
+                            </Link>
+                          )}
                         </div>
                       </div>
                     </div>
