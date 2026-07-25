@@ -181,6 +181,33 @@ export const adminApi = {
     // return respond(orders)
   },
 
+  // NEW: persists an order's status change to the backend.
+  // NOTE: verify `/admin/update-order-status` and the body shape
+  // ({order_id, order_status}) against your actual backend route —
+  // this follows the same axios.post pattern as `userBlocked` below.
+  
+  async updateOrderStatus(accessToken, orderId, status) {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/admin/order-status-filter`,
+        {
+          order_id: orderId,
+          order_status: status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw new Error(error?.response?.data?.message || "Failed to update order status");
+    }
+  },
+
   async getUsers(accessToken) {
     try {
       const response = await fetch(`${BASE_URL}/admin/get-users`, {

@@ -12,6 +12,7 @@ import {adminCardClass, adminInputClass, adminPrimaryButtonClass} from "../utils
 
 const orderStatuses = ["All", "Pending", "Delivered", "Cancelled"];
 const paymentStatuses = ["All", "Paid", "Pending", "Refunded"];
+const updatableStatuses = ["Pending", "Delivered", "Cancelled"];
 
 function AdminOrders({searchTerm = ""}) {
   const accessToken = localStorage.getItem("accessToken") || "";
@@ -26,23 +27,23 @@ function AdminOrders({searchTerm = ""}) {
   const [statusFilter, setStatusFilter] = useState("All");
   const [paymentFilter, setPaymentFilter] = useState("All");
   const [page, setPage] = useState(1);
+  const [updatingOrderId, setUpdatingOrderId] = useState(null);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const {showToast} = useAdminToast();
+  const pageSize = 5;
 
   useEffect(() => {
     setSearch(searchTerm);
     setPage(1);
   }, [searchTerm]);
-  const [selectedOrderId, setSelectedOrderId] = useState(null);
-  const {showToast} = useAdminToast();
-  const pageSize = 5;
 
   const sourceItems = useMemo(() => {
     const rawData = items ?? data ?? [];
-
     return Array.isArray(rawData) ? rawData : [];
   }, [items, data]);
 
   const filtered = useMemo(() => {
-    const query = search.toLowerCase();
+    const query = search.toLowerCase().trim();
 
     return sourceItems.filter((order) => {
       const matchesSearch = [order.id, order.order_id, order.customer, order.email].some((value) =>
@@ -51,46 +52,65 @@ function AdminOrders({searchTerm = ""}) {
           .includes(query),
       );
 
-      const matchesStatus = statusFilter === "All" || order.status === statusFilter;
+      const orderStatusValue = String(order.order_status || "")
+        .toLowerCase()
+        .trim();
+      const matchesStatus = statusFilter === "All" || orderStatusValue === statusFilter.toLowerCase().trim();
 
-      const matchesPayment = paymentFilter === "All" || order.paymentStatus === paymentFilter;
+      const paymentStatusValue = String(order.payment_status || "")
+        .toLowerCase()
+        .trim();
+      const matchesPayment = paymentFilter === "All" || paymentStatusValue === paymentFilter.toLowerCase().trim();
 
       return matchesSearch && matchesStatus && matchesPayment;
     });
   }, [sourceItems, search, statusFilter, paymentFilter]);
 
   const selectedOrder = useMemo(() => {
-    if (!sourceItems.length) {
-      return null;
-    }
-
-    if (selectedOrderId) {
-      return sourceItems.find((order) => order["Orders.order_id"] === selectedOrderId) || sourceItems[0];
-    }
-
-    return sourceItems[0];
+    if (!sourceItems.length) return null;
+    return sourceItems.find((order) => order.order_id === selectedOrderId) || sourceItems[0];
   }, [sourceItems, selectedOrderId]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const paged = filtered.slice((page - 1) * pageSize, page * pageSize);
 
-  function handleStatusUpdate(id, status) {
-    setItems((current) => {
-      const currentItems = current ?? data ?? [];
+  const moveOrderToTop = useCallback(
+    (orderId) => {
+      setItems((current) => {
+        const currentItems = current ?? data ?? [];
+        const target = currentItems.find((order) => order.order_id === orderId);
+        if (!target) return currentItems;
 
-      return currentItems.map((order) =>
-        order["Orders.order_id"] === id
-          ? {
-              ...order,
-              "Orders.order_status": status,
-            }
-          : order,
-      );
-    });
+        const rest = currentItems.filter((order) => order.order_id !== orderId);
+        return [target, ...rest];
+      });
+    },
+    [data],
+  );
 
-    setSelectedOrderId(id);
+  async function handleStatusUpdate(id, status) {
+    setUpdatingOrderId(id);
 
-    showToast(`Order status updated to ${status}.`, "success");
+    try {
+      await adminApi.updateOrderStatus(accessToken, id, status);
+
+      setItems((current) => {
+        const currentItems = current ?? data ?? [];
+        const updated = currentItems.map((order) => (order.order_id === id ? {...order, order_status: status} : order));
+
+        const movedOrder = updated.find((order) => order.order_id === id);
+        const rest = updated.filter((order) => order.order_id !== id);
+        return movedOrder ? [movedOrder, ...rest] : updated;
+      });
+
+      setSelectedOrderId(id);
+      setPage(1);
+      showToast(`Order status updated to ${status}.`, "success");
+    } catch (err) {
+      showToast(err?.message || "Failed to update order status. Please try again.", "error");
+    } finally {
+      setUpdatingOrderId(null);
+    }
   }
 
   return (
@@ -116,6 +136,7 @@ function AdminOrders({searchTerm = ""}) {
                     }}
                   />
                 </div>
+
                 <select
                   className={`${adminInputClass} px-4 py-3`}
                   value={statusFilter}
@@ -124,11 +145,12 @@ function AdminOrders({searchTerm = ""}) {
                     setPage(1);
                   }}>
                   {orderStatuses.map((item) => (
-                    <option key={item} className="dark:bg-gray-950">
+                    <option key={item} value={item} className="dark:bg-gray-950">
                       {item}
                     </option>
                   ))}
                 </select>
+
                 <select
                   className={`${adminInputClass} px-4 py-3`}
                   value={paymentFilter}
@@ -137,7 +159,7 @@ function AdminOrders({searchTerm = ""}) {
                     setPage(1);
                   }}>
                   {paymentStatuses.map((item) => (
-                    <option key={item} className="dark:bg-gray-950">
+                    <option key={item} value={item} className="dark:bg-gray-950">
                       {item}
                     </option>
                   ))}
@@ -162,7 +184,7 @@ function AdminOrders({searchTerm = ""}) {
                     {paged.map((order) => (
                       <tr key={order.id || order.order_id} className="text-sm hover:bg-slate-50/80 dark:hover:bg-white/5">
                         <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">ORD-{order.order_id}</td>
-                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">{order.Order_Items[0].Product.productName}</td>
+                        <td className="py-3 pr-4 font-semibold text-slate-900 dark:text-white">{order?.Order_Items?.[0]?.Product?.productName || "N/A"}</td>
                         <td className="py-3 pr-4 text-slate-600 dark:text-slate-300">{`${order?.User?.firstName} ${order?.User?.lastName}`}</td>
                         <td className="py-3 pr-4 font-medium text-slate-900 dark:text-white">{formatCurrency(order.total_amount)}</td>
                         <td className="py-3 pr-4">
@@ -176,8 +198,9 @@ function AdminOrders({searchTerm = ""}) {
                           <button
                             className={`${adminPrimaryButtonClass} px-3 py-2 text-xs`}
                             onClick={() => {
-                              console.log("Clicked:", order.order_id);
                               setSelectedOrderId(order.order_id);
+                              moveOrderToTop(order.order_id);
+                              setPage(1);
                             }}
                             type="button">
                             View details
@@ -196,33 +219,30 @@ function AdminOrders({searchTerm = ""}) {
           <Card className={`h-fit ${adminCardClass}`}>
             <CardBody className="p-5">
               <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">Selected order</p>
-              <h3 className="text-xl font-semibold text-slate-900 dark:text-white">ORD-{selectedOrder?.order_id}</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{selectedOrder ? `ORD-${selectedOrder.order_id}` : "No order selected"}</h3>
+
               {selectedOrder ? (
                 <div className="mt-5 space-y-4 text-sm">
                   <div className="rounded-2xl bg-slate-100 p-4 dark:bg-white/5">
                     <p className="text-slate-500 dark:text-slate-400">Customer</p>
                     <p className="mt-1 font-semibold text-slate-900 dark:text-white">{`${selectedOrder?.User?.firstName} ${selectedOrder?.User?.lastName}`}</p>
-                    {/* <p className="text-slate-500 dark:text-slate-400">{selectedOrder.email}</p> */}
                   </div>
+                  
+                  <div className="rounded-2xl bg-slate-100 p-4 dark:bg-white/5">
+                    <p className="text-slate-500 dark:text-slate-400">Customer</p>
+                    <p className="mt-1 font-semibold text-slate-900 dark:text-white">{`${selectedOrder?.Order_Items?.[0]?.Product?.productName || "N/A"}`}</p>
+                  </div>
+
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div className="rounded-2xl bg-slate-100 p-4 dark:bg-white/5">
                       <p className="text-slate-500 dark:text-slate-400">Amount</p>
                       <p className="mt-1 font-semibold text-slate-900 dark:text-white">{formatCurrency(selectedOrder.total_amount)}</p>
                     </div>
+
                     <div className="rounded-2xl bg-slate-100 p-4 dark:bg-white/5">
                       <p className="text-slate-500 dark:text-slate-400">Status</p>
                       <p className="mt-1 font-semibold text-slate-900 dark:text-white">{selectedOrder.order_status}</p>
                     </div>
-                  </div>
-                  <div>
-                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Update order status</label>
-                    <select className={`${adminInputClass} mt-2 w-full px-4 py-3`} value={selectedOrder.order_status} onChange={(event) => handleStatusUpdate(selectedOrder.order_id, event.target.value)}>
-                      {["Pending", "Delivered", "Cancelled"].map((item) => (
-                        <option key={item} className="text-sm font-semibold text-slate-700 dark:bg-gray-900">
-                          {item}
-                        </option>
-                      ))}
-                    </select>
                   </div>
                 </div>
               ) : null}
