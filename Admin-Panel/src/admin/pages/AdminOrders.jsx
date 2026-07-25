@@ -11,7 +11,7 @@ import {SearchIcon} from "../../icons";
 import {adminCardClass, adminInputClass, adminPrimaryButtonClass} from "../utils/theme";
 
 const orderStatuses = ["All", "Pending", "Delivered", "Cancelled"];
-const paymentStatuses = ["All", "Paid", "Failed", "No-data"];
+const paymentStatuses = ["All", "Paid", "Failed", "No-data","Un-paid"];
 const updatableStatuses = ["Pending", "Delivered", "Cancelled"];
 
 function AdminOrders({searchTerm = ""}) {
