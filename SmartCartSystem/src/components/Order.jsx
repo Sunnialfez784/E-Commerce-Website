@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import Navbar from "./Navbar";
 import {CheckCircleIcon, ClockIcon} from "@heroicons/react/24/solid";
 import {useAuth} from "../context/AuthContext";
@@ -15,17 +15,26 @@ const Order = () => {
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(`${BASE_URL}/orders/complete-order`, {
-      method: "GET",
-      headers: {Authorization: `Bearer ${token}`},
-    })
-      .then((res) => res.json())
-      .then(({data}) => setOrders(data || []))
-      .catch((err) => toast.error(err.errors[0]))
-      .finally(() => setLoading(false));
+  const fetchOrders = useCallback(async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`${BASE_URL}/orders/complete-order`, {
+        method: "GET",
+        headers: {Authorization: `Bearer ${token}`},
+      });
+
+      const {data} = await res.json();
+      setOrders(data || []);
+    } catch (err) {
+      toast.error(err?.errors?.[0] || err?.message || "Failed to load orders");
+    } finally {
+      setLoading(false);
+    }
   }, [token]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
 
   const orderCancel = async (order_item_id) => {
     try {
@@ -49,6 +58,9 @@ const Order = () => {
       }
 
       toast.success("Order Cancel Successful");
+
+      // Refresh the orders list so updated status reflects immediately.
+      await fetchOrders();
     } catch (err) {
       toast.error(err.message);
     } finally {
