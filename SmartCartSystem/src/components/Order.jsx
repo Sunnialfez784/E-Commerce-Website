@@ -117,7 +117,7 @@ const Order = () => {
                             {order.message && <p className="text-xs text-slate-400">{order.message}</p>}
                           </div>
                           {order.order_status === "Delivered" || order.order_status === "Cancelled" ? (
-                            <button className="hodden p-2 bg-red-700 font-semibold text-sm text-black hover:text-black" onClick={() => orderCancel(order.order_item_id)} disabled>
+                            <button className="p-2 bg-red-700 font-semibold text-sm text-black hover:text-black" onClick={() => orderCancel(order.order_item_id)} disabled>
                               Cancel
                             </button>
                           ) : (
