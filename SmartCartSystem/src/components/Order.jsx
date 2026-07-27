@@ -9,11 +9,13 @@ import {PackageSearch} from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
 import {toast} from "react-toastify";
 import Loader from "./Loader";
+import moment from "moment";
 
 const Order = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
+  const moment = require("moment");
 
   const fetchOrders = useCallback(async () => {
     try {
@@ -112,11 +114,11 @@ const Order = () => {
                               {isDelivered ? <CheckCircleIcon className="h-3.5 w-3.5" /> : <ClockIcon className="h-3.5 w-3.5" />}
                               {order.order_status}
                             </span>
-                            <p className="text-xs text-slate-500">{order.createdAt}</p>
+                            <p className="text-xs text-slate-500">{moment(order.createdAt).format("MMMM Do YYYY, h:mm:ss a")}</p>
                             {order.message && <p className="text-xs text-slate-400">{order.message}</p>}
                           </div>
                           {order.order_status === "Delivered" || order.order_status === "Cancelled" ? (
-                            <button className="p-2 bg-red-700 font-semibold text-sm text-black" onClick={() => orderCancel(order.order_item_id)} disabled>
+                            <button className="p-2 bg-red-700 font-semibold text-sm text-black hover:text-black" onClick={() => orderCancel(order.order_item_id)} disabled>
                               Cancel
                             </button>
                           ) : (
