@@ -113,7 +113,7 @@ const Order = () => {
                               {isDelivered ? <CheckCircleIcon className="h-3.5 w-3.5" /> : <ClockIcon className="h-3.5 w-3.5" />}
                               {order.order_status}
                             </span>
-                            <p className="text-xs text-slate-500">{moment(order.createdAt).format("MMMM Do YYYY, h:mm:ss a")}</p>
+                            <p className="text-xs text-slate-500">{moment.utc(order.createdAt).local().format("MMMM Do YYYY, h:mm:ss a")}</p>
                             {order.message && <p className="text-xs text-slate-400">{order.message}</p>}
                           </div>
                           {order.order_status === "Delivered" || order.order_status === "Cancelled" ? (
