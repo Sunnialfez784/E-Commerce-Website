@@ -15,7 +15,6 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const {token} = useAuth();
-  const moment = require("moment");
 
   const fetchOrders = useCallback(async () => {
     try {
